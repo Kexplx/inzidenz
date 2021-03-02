@@ -1,6 +1,8 @@
 import { Spin } from "antd";
+import Text from "antd/lib/typography/Text";
 import { useEffect, useState } from "react";
 import CountyCard from "./CountyCard";
+import { getGermanDateFormat } from "./date-helpers";
 
 const countyCodes = [9362, 9562, 9162, 9564];
 const URL =
@@ -40,9 +42,17 @@ function App() {
 
   return (
     <div className="container">
-      <h1>COVID-19 | 7 Tage Inzidenz</h1>
+      <h1>COVID-19 | 7-Tage-Inzidenz</h1>
       {counties.length ? (
-        counties.map((c) => <CountyCard key={c.name} county={c} />)
+        <>
+          <Text type="secondary">
+            Aktualisiert am:{" "}
+            {getGermanDateFormat(new Date(counties[0].lastUpdated))}
+          </Text>
+          {counties.map((c) => (
+            <CountyCard key={c.name} county={c} />
+          ))}
+        </>
       ) : (
         <div className="spinner-container">
           <Spin size="large" />

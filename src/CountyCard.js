@@ -1,27 +1,23 @@
 import { Card, Col, Row, Statistic } from "antd";
-import Text from "antd/lib/typography/Text";
-import { getGermanDateFormat } from "./date-helpers";
 
 const CountyCard = ({ county }) => {
-  const { lastUpdated, casesPer100k, casesTotal, deathsTotal } = county;
-
-  const getNiceDate = (isoString) => {
-    const date = new Date(isoString);
-
-    return getGermanDateFormat(date);
-  };
+  const { casesPer100k, casesTotal, deathsTotal } = county;
 
   return (
-    <Card
-      className="mt-1"
-      title={county.name}
-      extra={<Text type="secondary">{getNiceDate(lastUpdated)}</Text>}
-    >
+    <Card className="mt-1" title={county.name}>
       <Row gutter={16}>
         <Col span={8}>
           <Statistic
             decimalSeparator=","
-            title="7 Tage Inzidenz pro 100T"
+            title="7-Tage-Inzidenz"
+            valueStyle={{
+              color:
+                casesPer100k < 35
+                  ? "green"
+                  : casesPer100k < 50
+                  ? "orange"
+                  : "red",
+            }}
             value={casesPer100k}
             precision={2}
           />
