@@ -1,4 +1,4 @@
-import { Card, Col, Row, Statistic } from "antd";
+import { Card, Col, Row, Statistic } from 'antd';
 
 const CountyCard = ({ county }) => {
   const { casesPer100k, casesTotal, deathsTotal } = county;
@@ -11,30 +11,17 @@ const CountyCard = ({ county }) => {
             decimalSeparator=","
             title="7-Tage-Inzidenz"
             valueStyle={{
-              color:
-                casesPer100k < 35
-                  ? "#27ae60"
-                  : casesPer100k < 50
-                  ? "#e67e22"
-                  : "#c0392b",
+              color: casesPer100k < 35 ? '#27ae60' : casesPer100k < 50 ? '#e67e22' : '#c0392b',
             }}
             value={casesPer100k}
             precision={2}
           />
         </Col>
         <Col span={8}>
-          <Statistic
-            groupSeparator="."
-            title="Fälle insgesamt"
-            value={casesTotal}
-          />
+          <Statistic groupSeparator="." title="Fälle insgesamt" value={casesTotal} />
         </Col>
         <Col span={8}>
-          <Statistic
-            groupSeparator="."
-            title="Tode insgesamt"
-            value={deathsTotal}
-          />
+          <Statistic groupSeparator="." title="Tode insgesamt" value={deathsTotal} />
         </Col>
       </Row>
     </Card>

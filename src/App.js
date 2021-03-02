@@ -1,39 +1,39 @@
-import { Spin } from "antd";
-import Text from "antd/lib/typography/Text";
-import { useEffect, useState } from "react";
-import CountyCard from "./CountyCard";
-import { getGermanDateFormat } from "./date-helpers";
+import { Spin } from 'antd';
+import Text from 'antd/lib/typography/Text';
+import { useEffect, useState } from 'react';
+import CountyCard from './CountyCard';
+import { getGermanDateFormat } from './date-helpers';
 
-const countyCodes = [9362, 9562, 9162, 9564];
+const countyCodes = [9362, 9562, 9162, 9564, 9461, 9663];
 const URL =
-  "https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,deaths,last_update";
+  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,deaths,last_update';
 
 function App() {
   const [counties, setCounties] = useState([]);
 
   useEffect(() => {
-    let query = "";
-    for (const code of countyCodes) {
-      query += "admunitid:" + code + " OR ";
+    async function fetchCounties() {
+      const query = countyCodes
+        .reduce((acc, curr) => (acc += `admunitid:${curr} OR `), '')
+        .replace(/ OR $/, ''); // Strip off trailing ' OR '
+
+      const responseJson = await fetch(URL.replace('$$$', query));
+      const response = await responseJson.json();
+
+      setCounties(
+        response.records
+          .map(({ fields: { name, last_update, cases7_per_100k, deaths, cases } }) => ({
+            name,
+            lastUpdated: last_update,
+            casesPer100k: cases7_per_100k,
+            casesTotal: cases,
+            deathsTotal: deaths,
+          }))
+          .sort((a, _) => (a.name === 'Regensburg' ? -1 : 0)),
+      );
     }
 
-    query = query.replace(/ OR $/, "");
-
-    fetch(URL.replace("$$$", query))
-      .then((resp) => resp.json())
-      .then((data) => {
-        setCounties(
-          data.records
-            .map((r) => ({
-              name: r.fields.name,
-              lastUpdated: r.fields.last_update,
-              casesPer100k: r.fields.cases7_per_100k,
-              casesTotal: r.fields.cases,
-              deathsTotal: r.fields.deaths,
-            }))
-            .sort((a, b) => (a.name === "Regensburg" ? -1 : 0))
-        );
-      });
+    fetchCounties();
   }, []);
 
   return (
@@ -42,10 +42,9 @@ function App() {
       {counties.length ? (
         <>
           <Text type="secondary">
-            Aktualisiert am:{" "}
-            {getGermanDateFormat(new Date(counties[0].lastUpdated))}
+            Aktualisiert am: {getGermanDateFormat(new Date(counties[0].lastUpdated))}, Quelle: RKI
           </Text>
-          {counties.map((c) => (
+          {counties.map(c => (
             <CountyCard key={c.name} county={c} />
           ))}
         </>
