@@ -4,8 +4,8 @@ const CountyCard = ({ county }) => {
   const { casesPer100k, casesTotal, deathsTotal } = county;
 
   return (
-    <Card className="mt-1" title={county.name}>
-      <Row gutter={16}>
+    <Card type="inner" className="mt-2" title={county.name}>
+      <Row>
         <Col span={8}>
           <Statistic
             decimalSeparator=","
@@ -13,10 +13,10 @@ const CountyCard = ({ county }) => {
             valueStyle={{
               color:
                 casesPer100k < 35
-                  ? "green"
+                  ? "#27ae60"
                   : casesPer100k < 50
-                  ? "orange"
-                  : "red",
+                  ? "#e67e22"
+                  : "#c0392b",
             }}
             value={casesPer100k}
             precision={2}
