@@ -5,7 +5,7 @@ const CountyCard = ({ county }) => {
 
   return (
     <Card type="inner" className="mt-2" title={county.name}>
-      <Row>
+      <Row gutter={8}>
         <Col span={8}>
           <Statistic
             decimalSeparator=","
@@ -29,7 +29,6 @@ const CountyCard = ({ county }) => {
             value={casesTotal}
           />
         </Col>
-
         <Col span={8}>
           <Statistic
             groupSeparator="."
