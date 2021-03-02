@@ -4,13 +4,27 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { getGermanDateFormat } from './date-helpers';
 
-const countyCodes = [9362, 9562, 9162, 9564, 9461, 9663];
+const countyCodes = [9362, 9562, 9162, 9564, 9461, 9663, 9372];
 const URL =
-  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,deaths,last_update';
+  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,deaths,last_update,bez,admunitid';
 
 function App() {
   const [counties, setCounties] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
+  // Load favorites from local storage
+  useEffect(() => {
+    const favoritesJSON = localStorage.getItem('favorites');
+
+    if (favoritesJSON) {
+      setFavorites(JSON.parse(favoritesJSON));
+    }
+  }, []);
+
+  // Save favorites to localstorage on unload
+  window.onbeforeunload = () => localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  // Load counties from API
   useEffect(() => {
     async function fetchCounties() {
       const query = countyCodes
@@ -21,20 +35,46 @@ function App() {
       const response = await responseJson.json();
 
       setCounties(
-        response.records
-          .map(({ fields: { name, last_update, cases7_per_100k, deaths, cases } }) => ({
+        response.records.map(
+          ({ fields: { name, last_update, admunitid, cases7_per_100k, bez, deaths, cases } }) => ({
+            id: admunitid,
             name,
             lastUpdated: last_update,
             casesPer100k: cases7_per_100k,
+            type: bez,
             casesTotal: cases,
             deathsTotal: deaths,
-          }))
-          .sort((a, _) => (a.name === 'Regensburg' ? -1 : 0)),
+          }),
+        ),
       );
     }
 
     fetchCounties();
   }, []);
+
+  const handleFavorite = (id, fav) => {
+    if (!fav) {
+      setFavorites(favorites.filter(i => i !== id));
+      return;
+    }
+
+    setFavorites([...favorites, id]);
+  };
+
+  const compare = (a, b) => {
+    if (
+      (favorites.includes(a.id) && favorites.includes(b.id)) ||
+      (!favorites.includes(a.id) && !favorites.includes(b.id))
+    ) {
+      return 0;
+    }
+
+    if (favorites.includes(a.id)) {
+      return -1;
+    }
+
+    return 1;
+  };
 
   return (
     <div className="container">
@@ -44,8 +84,13 @@ function App() {
           <Text type="secondary">
             Aktualisiert am: {getGermanDateFormat(new Date(counties[0].lastUpdated))}, Quelle: RKI
           </Text>
-          {counties.map(c => (
-            <CountyCard key={c.name} county={c} />
+          {counties.sort(compare).map(c => (
+            <CountyCard
+              isFavorite={favorites.includes(c.id)}
+              onFavorite={handleFavorite}
+              key={c.id}
+              county={c}
+            />
           ))}
         </>
       ) : (

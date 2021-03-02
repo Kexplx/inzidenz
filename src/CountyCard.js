@@ -1,10 +1,31 @@
-import { Card, Col, Row, Statistic } from 'antd';
+import { Card, Col, Rate, Row, Statistic } from 'antd';
+import Text from 'antd/lib/typography/Text';
+import { useState } from 'react';
 
-const CountyCard = ({ county }) => {
-  const { casesPer100k, casesTotal, deathsTotal } = county;
+const CountyCard = ({ county, onFavorite, isFavorite }) => {
+  const { casesPer100k, casesTotal, deathsTotal, id, name, type } = county;
+  const [value, setValue] = useState(isFavorite ? 1 : 0);
 
   return (
-    <Card type="inner" className="mt-2" title={county.name}>
+    <Card
+      className="mt-2"
+      extra={
+        <Rate
+          value={value}
+          onChange={v => {
+            setValue(v);
+            onFavorite(id, v);
+          }}
+          style={{ color: '#2ecc71' }}
+          count={1}
+        />
+      }
+      title={
+        <>
+          {name} <Text type="secondary">({type})</Text>
+        </>
+      }
+    >
       <Row gutter={8}>
         <Col span={8}>
           <Statistic
