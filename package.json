@@ -2,6 +2,7 @@
   "name": "inzidenz",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://kexplx.github.io/inzidenz",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
@@ -9,9 +10,7 @@
     "antd": "^4.13.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3",
-    "rxjs": "^6.6.6",
-    "web-vitals": "^1.1.0"
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
