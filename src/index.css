@@ -5,7 +5,8 @@ html {
   margin: 0;
 }
 
-.container {
+.container,
+.ant-drawer-body /* Container of the FAQ Drawer */ {
   max-width: 600px;
   padding: 50px 10px 100px 10px;
   margin: 0 auto;
@@ -27,9 +28,4 @@ html {
 
 .ant-rate-star-second {
   color: #dfdfdf;
-}
-
-.drawer-container {
-  max-width: 600px;
-  margin: 0 auto;
 }
