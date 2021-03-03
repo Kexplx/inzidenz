@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { getGermanDateFormat } from './date-helpers';
 
-let countyCodes = [9362, 9562, 9162, 9564, 9372, 9248, 9278];
+let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278];
 
 // County codes can also be bassed in URL
 // inzidenz?q=2919,91228,21992
