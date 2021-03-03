@@ -119,7 +119,7 @@ function App() {
         </>
       ) : (
         <div className="spinner-container">
-          <Spin tip="Daten werden geladen" size="large" />
+          <Spin tip="Daten werden geladen" />
         </div>
       )}
 

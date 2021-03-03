@@ -5,7 +5,7 @@ import Text from 'antd/lib/typography/Text';
 const FaqDrawer = ({ onClose, isVisible }) => {
   return (
     <Drawer placement="bottom" height="100%" closable={false} visible={isVisible}>
-      <div className="container">
+      <div className="drawer-container">
         <h1>COVID-19 | 7-Tage-Inzidenz</h1>
         <Row justify="space-between">
           <h2>FAQ</h2>

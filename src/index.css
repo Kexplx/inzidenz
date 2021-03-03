@@ -28,3 +28,8 @@ html {
 .ant-rate-star-second {
   color: #dfdfdf;
 }
+
+.drawer-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
