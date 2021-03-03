@@ -6,13 +6,13 @@ const FaqDrawer = ({ onClose, isVisible }) => {
   return (
     <Drawer placement="bottom" height="100%" closable={false} visible={isVisible}>
       <div className="drawer-container">
-        <h1>COVID-19 | 7-Tage-Inzidenz</h1>
-        <Row justify="space-between">
-          <h2>FAQ</h2>
+        <Row align="middle" justify="space-between">
+          <h1>COVID-19 | 7-Tage-Inzidenz</h1>
           <Button onClick={onClose} type="default" aria-label="Close" shape="circle">
             <CloseOutlined />
           </Button>
         </Row>
+        <h2>FAQ</h2>
         <div style={{ textAlign: 'justify' }}>
           <h4>Was ist die 7-Tage-Inzidenz?</h4>
           Die 7-Tage-Inzidenz ist eine wichtige Grundlage für die Einschätzung der Entwicklung der
