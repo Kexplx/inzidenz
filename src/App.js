@@ -2,7 +2,7 @@ import { Button, Divider, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
-import { getGermanDateFormat } from './date-helpers';
+import { formatDate } from './date-helpers';
 import FaqDrawer from './FaqDrawer';
 
 let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278];
@@ -98,11 +98,7 @@ function App() {
       <h1>COVID-19 | 7-Tage-Inzidenz</h1>
       {counties.length ? (
         <>
-          <Divider orientation="left" plain>
-            <Text type="secondary">
-              Stand: {getGermanDateFormat(new Date(counties[0].lastUpdated))}
-            </Text>
-          </Divider>
+          <Text type="secondary">Stand: {formatDate(new Date(counties[0].lastUpdated))}</Text>
           {counties.sort(compare).map(c => (
             <CountyCard
               isFavorite={favorites.includes(c.id)}
@@ -111,7 +107,7 @@ function App() {
               county={c}
             />
           ))}
-          <Divider orientation="left">
+          <Divider>
             <Button onClick={() => setIsFaqVisible(true)} type="link">
               FAQ
             </Button>
