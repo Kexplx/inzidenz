@@ -9,7 +9,7 @@ const FaqDrawer = ({ onClose, isVisible }) => {
         <h1>COVID-19 | 7-Tage-Inzidenz</h1>
         <Row justify="space-between">
           <h2>FAQ</h2>
-          <Button onClick={onClose} type="text" aria-label="Close" shape="circle">
+          <Button onClick={onClose} type="default" aria-label="Close" shape="circle">
             <CloseOutlined />
           </Button>
         </Row>
