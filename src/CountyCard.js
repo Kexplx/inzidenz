@@ -3,11 +3,13 @@ import Text from 'antd/lib/typography/Text';
 import { useState } from 'react';
 
 const CountyCard = ({ county, onFavorite, isFavorite }) => {
-  const { casesPer100k, casesTotal, deathsTotal, id, name, type } = county;
+  const { casesPer100k, casesTotal, deathsTotal, id, state, name, type } = county;
   const [value, setValue] = useState(isFavorite ? 1 : 0);
 
   return (
     <Card
+      type="inner"
+      size="small"
       className="mt-2"
       extra={
         <Rate
@@ -16,13 +18,16 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             setValue(v);
             onFavorite(id, v);
           }}
-          style={{ color: '#2ecc71' }}
+          style={{ color: '#1890FF' }}
           count={1}
         />
       }
       title={
         <>
-          {name} <Text type="secondary">({type})</Text>
+          {name}{' '}
+          <Text style={{ fontWeight: '400' }} type="secondary">
+            ({type} in {state})
+          </Text>
         </>
       }
     >

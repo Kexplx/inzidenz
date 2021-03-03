@@ -1,14 +1,28 @@
-import { Spin } from 'antd';
+import { Button, Divider, Spin } from 'antd';
+import Modal from 'antd/lib/modal/Modal';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { getGermanDateFormat } from './date-helpers';
 
-const countyCodes = [9362, 9562, 9162, 9564, 9461, 9663, 9372];
+let countyCodes = [9362, 9562, 9162, 9564, 9372, 9248, 9278];
+
+// County codes can also be bassed in URL
+// inzidenz?q=2919,91228,21992
+const params = new URLSearchParams(window.location.search);
+
+if (params.has('q')) {
+  countyCodes = params
+    .get('q')
+    .split(',')
+    .map(c => parseInt(c.trim()));
+}
+
 const URL =
-  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,deaths,last_update,bez,admunitid';
+  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,bl,deaths,last_update,bez,admunitid';
 
 function App() {
+  const [isFaqOpen, setIsFaqOpen] = useState(false);
   const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
@@ -36,12 +50,15 @@ function App() {
 
       setCounties(
         response.records.map(
-          ({ fields: { name, last_update, admunitid, cases7_per_100k, bez, deaths, cases } }) => ({
+          ({
+            fields: { name, last_update, admunitid, cases7_per_100k, bl, bez, deaths, cases },
+          }) => ({
             id: admunitid,
             name,
             lastUpdated: last_update,
             casesPer100k: cases7_per_100k,
             type: bez,
+            state: bl,
             casesTotal: cases,
             deathsTotal: deaths,
           }),
@@ -81,9 +98,11 @@ function App() {
       <h1>COVID-19 | 7-Tage-Inzidenz</h1>
       {counties.length ? (
         <>
-          <Text type="secondary">
-            Aktualisiert am: {getGermanDateFormat(new Date(counties[0].lastUpdated))}, Quelle: RKI
-          </Text>
+          <Divider plain>
+            <Text type="secondary">
+              Stand: {getGermanDateFormat(new Date(counties[0].lastUpdated))}
+            </Text>
+          </Divider>
           {counties.sort(compare).map(c => (
             <CountyCard
               isFavorite={favorites.includes(c.id)}
@@ -95,9 +114,42 @@ function App() {
         </>
       ) : (
         <div className="spinner-container">
-          <Spin size="large" />
+          <Spin tip="Daten werden geladen" size="large" />
         </div>
       )}
+
+      <Divider>
+        <Button onClick={() => setIsFaqOpen(true)} type="link">
+          FAQ
+        </Button>
+      </Divider>
+
+      <Modal visible={isFaqOpen} onCancel={() => setIsFaqOpen(false)} footer={''} title="FAQ">
+        <div style={{ textAlign: 'justify' }}>
+          <h4>Was ist die 7-Tage-Inzidenz?</h4>
+          Die 7-Tage-Inzidenz ist eine wichtige Grundlage für die Einschätzung der Entwicklung der
+          Corona-Pandemie. Der Wert bildet die COVID Fälle pro 100.000 Einwohner*innen in den
+          letzten 7 Tagen ab.
+        </div>
+        <div style={{ textAlign: 'justify' }} className="mt-2">
+          <h4>Woher stammen die Daten?</h4>
+          Diese Anwendung verwendet eine API von{' '}
+          <a href="https://public.opendatasoft.com/explore/dataset/covid-19-germany-landkreise/api/">
+            opendatasoft
+          </a>
+          . Opendatasoft bezieht die Daten von dem offiziellen Datenhub des Robert-Koch-Instituts.
+        </div>
+        <div style={{ textAlign: 'justify' }} className="mt-2">
+          <h4>Wo sind die anderen Landkreise?</h4>
+          Sie können jeden Landkreis in Deutschland betrachten. Tragen Sie dazu den
+          Gemeindeschlüssel des jeweiligen Landkreises in der URL ein und laden Sie die Seite neu.
+          <br />
+          <br />
+          Mit der URL <Text code>https://kexplx.github.io/inzidenz?q=6412,5112</Text> werden bspw.
+          die Daten für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
+          Gemeindeschlüssel mit einem Komma!
+        </div>
+      </Modal>
     </div>
   );
 }
