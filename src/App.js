@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { COUNTY_URL } from './CountyUrl';
 import { formatDate } from './date-helpers';
-import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
 import Faq from './Faq';
 
 function App() {
@@ -115,7 +115,7 @@ function App() {
 
           <Divider>
             <Button onClick={handleFaqToggle}>
-              FAQ {isFaqVisible ? <DownOutlined /> : <RightOutlined />}
+              FAQ {isFaqVisible ? <CaretDownOutlined /> : <CaretRightOutlined />}
             </Button>
           </Divider>
           {isFaqVisible ? <Faq /> : ''}
