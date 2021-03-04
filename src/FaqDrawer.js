@@ -1,11 +1,3 @@
-import {
-  ArrowDownOutlined,
-  BackwardOutlined,
-  CaretDownOutlined,
-  CloseOutlined,
-  DownOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
 import { Button, Drawer, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
