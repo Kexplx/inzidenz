@@ -60,7 +60,7 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
           <Statistic groupSeparator="." title="Fälle insgesamt" value={casesTotal} />
         </Col>
         <Col span={8}>
-          <Statistic groupSeparator="." title="Tode insgesamt" value={deathsTotal} />
+          <Statistic groupSeparator="." title="Tote insgesamt" value={deathsTotal} />
         </Col>
       </Row>
     </Card>
