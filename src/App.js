@@ -1,9 +1,3 @@
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  InfoOutlined,
-  QuestionOutlined,
-} from '@ant-design/icons';
 import { Button, Divider, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
