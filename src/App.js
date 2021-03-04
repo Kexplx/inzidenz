@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { COUNTY_URL } from './CountyUrl';
 import { formatDate } from './date-helpers';
-import FaqDrawer from './FaqDrawer';
+import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import Faq from './Faq';
 
 function App() {
-  const [isFaqVisible, setIsFaqVisible] = useState(false);
   const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [isFaqVisible, setIsFaqVisible] = useState(false);
 
   // Load favorites from local storage
   useEffect(() => {
@@ -76,6 +77,23 @@ function App() {
     return a.casesPer100k - b.casesPer100k;
   };
 
+  const handleFaqToggle = () => {
+    if (isFaqVisible) {
+      setIsFaqVisible(false);
+      return;
+    }
+
+    setIsFaqVisible(true);
+  };
+
+  // Scroll FAQ into view when expanded
+  useEffect(() => {
+    if (isFaqVisible) {
+      const firstBlock = document.getElementById('firstFaqBlock');
+      firstBlock.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isFaqVisible]);
+
   return (
     <div className="container">
       <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
@@ -94,17 +112,19 @@ function App() {
               county={c}
             />
           ))}
+
           <Divider>
-            <Button onClick={() => setIsFaqVisible(true)}>FAQ</Button>
+            <Button onClick={handleFaqToggle}>
+              FAQ {isFaqVisible ? <DownOutlined /> : <RightOutlined />}
+            </Button>
           </Divider>
+          {isFaqVisible ? <Faq /> : ''}
         </>
       ) : (
         <div className="spinner-container">
           <Spin size="large" tip="Daten werden geladen" />
         </div>
       )}
-
-      <FaqDrawer onClose={() => setIsFaqVisible(false)} isVisible={isFaqVisible} />
     </div>
   );
 }

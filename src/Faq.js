@@ -1,12 +1,9 @@
-import { Button, Divider, Drawer } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
-const FaqDrawer = ({ onClose, isVisible }) => {
+const Faq = () => {
   return (
-    <Drawer placement="bottom" height="100%" closable={false} visible={isVisible}>
-      <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
-      <h2>FAQ</h2>
-      <div style={{ textAlign: 'justify' }}>
+    <>
+      <div id="firstFaqBlock" style={{ textAlign: 'justify' }}>
         <h4>Was ist die 7-Tage-Inzidenz?</h4>
         Die 7-Tage-Inzidenz ist eine wichtige Grundlage für die Einschätzung der Entwicklung der
         Corona-Pandemie. Der Wert bildet die COVID Fälle pro 100.000 Einwohner*innen in den letzten
@@ -26,18 +23,12 @@ const FaqDrawer = ({ onClose, isVisible }) => {
         des jeweiligen Landkreises in der URL ein und laden Sie die Seite neu.
         <br />
         <br />
-        Mit der URL <Text code>https://kexplx.github.io/inzidenz?q=6412,5112</Text> werden bspw. die
-        Daten für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
+        Mit der URL <Text keyboard>https://kexplx.github.io/inzidenz?q=6412,5112</Text> werden bspw.
+        die Daten für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
         Gemeindeschlüssel mit einem Komma!
-      </div>
-
-      <Divider>
-        <Button type="primary" onClick={onClose}>
-          Okay
-        </Button>
-      </Divider>
-    </Drawer>
+      </div>{' '}
+    </>
   );
 };
 
-export default FaqDrawer;
+export default Faq;
