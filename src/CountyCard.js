@@ -1,7 +1,7 @@
 import { Card, Col, Rate, Row, Statistic } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useState } from 'react';
-import { ReactComponent as CovidSvg } from './favicon.svg';
+import { ReactComponent as CovidSvg } from './covid.svg';
 import Icon from '@ant-design/icons';
 
 const CovidIcon = <Icon component={CovidSvg} />;
