@@ -1,6 +1,10 @@
 import { Card, Col, Rate, Row, Statistic } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useState } from 'react';
+import { ReactComponent as MySvg } from './favicon.svg';
+import Icon from '@ant-design/icons';
+
+const CovidIcon = <Icon component={MySvg} />;
 
 const CountyCard = ({ county, onFavorite, isFavorite }) => {
   const { casesPer100k, casesTotal, deathsTotal, id, state, name, type } = county;
@@ -18,7 +22,8 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             setValue(v);
             onFavorite(id, v);
           }}
-          style={{ color: '#1890FF' }}
+          style={{ opacity: isFavorite ? 1 : 0.2, color: 'transparent' }}
+          character={CovidIcon}
           count={1}
         />
       }

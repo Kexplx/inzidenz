@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { COUNTY_URL } from './CountyUrl';
 import { formatDate } from './date-helpers';
-import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import Faq from './Faq';
+import { DownOutlined, RightOutlined } from '@ant-design/icons';
 
 function App() {
   const [counties, setCounties] = useState([]);
