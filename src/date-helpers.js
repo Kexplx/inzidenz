@@ -6,5 +6,5 @@ export function formatDate(date) {
   const hours = date.getUTCHours() < 10 ? '0' + date.getUTCHours() : date.getUTCHours();
   const minutes = date.getUTCMinutes() < 10 ? '0' + date.getUTCMinutes() : date.getUTCMinutes();
 
-  return `${day}.${month}.${year} ${hours}:${minutes} Uhr`;
+  return `${day}.${month}.${year}, ${hours}:${minutes} Uhr`;
 }

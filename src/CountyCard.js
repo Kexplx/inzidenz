@@ -37,10 +37,18 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             decimalSeparator=","
             title="7-Tage-Inzidenz"
             valueStyle={{
-              color: casesPer100k < 35 ? '#27ae60' : casesPer100k < 50 ? '#e67e22' : '#c0392b',
+              color:
+                casesPer100k < 35
+                  ? '#27ae60'
+                  : casesPer100k < 50
+                  ? '#f1c40f'
+                  : casesPer100k < 100
+                  ? '#e67e22'
+                  : '#c0392b',
             }}
             value={casesPer100k}
             precision={2}
+            groupSeparator="."
           />
         </Col>
         <Col span={8}>

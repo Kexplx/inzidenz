@@ -82,7 +82,9 @@ function App() {
       {counties.length ? (
         <>
           <Text type="secondary">
-            Stand: {formatDate(new Date(counties[0].lastUpdated))}, Quelle: RKI
+            Stand: {formatDate(new Date(counties[0].lastUpdated))}
+            <br />
+            Quelle: RKI
           </Text>
           {counties.sort(compare).map(c => (
             <CountyCard

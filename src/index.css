@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+@import '~antd/dist/antd.dark.css';
 
 body,
 html {
@@ -32,8 +32,4 @@ h2 {
 .spinner-container {
   margin-top: 200px;
   text-align: center;
-}
-
-.ant-rate-star-second {
-  color: #dfdfdf;
 }
