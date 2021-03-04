@@ -1,5 +1,8 @@
 import Text from 'antd/lib/typography/Text';
+import { ReactComponent as CovidSvg } from './favicon.svg';
+import Icon from '@ant-design/icons';
 
+const CovidIcon = <Icon component={CovidSvg} />;
 const Faq = () => {
   return (
     <>
@@ -16,6 +19,11 @@ const Faq = () => {
           opendatasoft
         </a>
         . Opendatasoft bezieht die Daten von dem offiziellen Datenhub des Robert-Koch-Instituts.
+      </div>
+      <div id="firstFaqBlock" style={{ textAlign: 'justify' }} className="mt-2">
+        <h4>Kann ich die Landkreise sortieren?</h4>
+        Sie können Landkreise favorisieren um sie nach oben zu sortieren. Klicken Sie dazu auf das{' '}
+        {CovidIcon} Symbol am oberen rechten Rand der Landkreis Blöcke.
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
         <h4>Wo sind die anderen Landkreise?</h4>
