@@ -5,6 +5,14 @@ html {
   margin: 0;
 }
 
+h1 {
+  font-size: 1.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
 .container,
 .ant-drawer-body /* Container of the FAQ Drawer */ {
   max-width: 600px;

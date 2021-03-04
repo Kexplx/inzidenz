@@ -4,7 +4,7 @@ import Text from 'antd/lib/typography/Text';
 const FaqDrawer = ({ onClose, isVisible }) => {
   return (
     <Drawer placement="bottom" height="100%" closable={false} visible={isVisible}>
-      <h1>COVID-19 | 7-Tage-Inzidenz</h1>
+      <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
       <h2>FAQ</h2>
       <div style={{ textAlign: 'justify' }}>
         <h4>Was ist die 7-Tage-Inzidenz?</h4>

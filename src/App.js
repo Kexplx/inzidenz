@@ -2,24 +2,9 @@ import { Button, Divider, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
+import { COUNTY_URL } from './CountyUrl';
 import { formatDate } from './date-helpers';
 import FaqDrawer from './FaqDrawer';
-
-let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278];
-
-// County codes can also be bassed in URL
-// inzidenz?q=2919,91228,21992
-const params = new URLSearchParams(window.location.search);
-
-if (params.has('q')) {
-  countyCodes = params
-    .get('q')
-    .split(',')
-    .map(c => parseInt(c.trim()));
-}
-
-const URL =
-  'https://public.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-germany-landkreise&q=($$$)&rows=403&fields=cases7_per_100k,cases,name,bl,deaths,last_update,bez,admunitid';
 
 function App() {
   const [isFaqVisible, setIsFaqVisible] = useState(false);
@@ -41,11 +26,7 @@ function App() {
   // Load counties from API
   useEffect(() => {
     async function fetchCounties() {
-      const query = countyCodes
-        .reduce((acc, curr) => (acc += `admunitid:${curr} OR `), '')
-        .replace(/ OR $/, ''); // Strip off trailing ' OR '
-
-      const responseJson = await fetch(URL.replace('$$$', query));
+      const responseJson = await fetch(COUNTY_URL);
       const response = await responseJson.json();
 
       setCounties(
@@ -97,10 +78,12 @@ function App() {
 
   return (
     <div className="container">
-      <h1>COVID-19 | 7-Tage-Inzidenz</h1>
+      <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
       {counties.length ? (
         <>
-          <Text type="secondary">Stand: {formatDate(new Date(counties[0].lastUpdated))}</Text>
+          <Text type="secondary">
+            Stand: {formatDate(new Date(counties[0].lastUpdated))}, Quelle: RKI
+          </Text>
           {counties.sort(compare).map(c => (
             <CountyCard
               isFavorite={favorites.includes(c.id)}
