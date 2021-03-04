@@ -6,7 +6,7 @@ const CovidIcon = <Icon component={CovidSvg} />;
 const Faq = () => {
   return (
     <>
-      <div id="firstFaqBlock" style={{ textAlign: 'justify' }}>
+      <div style={{ textAlign: 'justify' }}>
         <h3>Was ist die 7-Tage-Inzidenz?</h3>
         Die 7-Tage-Inzidenz ist eine wichtige Grundlage für die Einschätzung der Entwicklung der
         Corona-Pandemie. Der Wert bildet die COVID Fälle pro 100.000 Einwohner*innen in den letzten
@@ -25,7 +25,7 @@ const Faq = () => {
         des Robert-Koch-Instituts. Die Daten werden vom RKI einmal täglich jeweils um 00:00 Uhr
         prozessiert und stehen dann in den frühen Morgenstunden zur Verfügung.
       </div>
-      <div id="firstFaqBlock" style={{ textAlign: 'justify' }} className="mt-2">
+      <div style={{ textAlign: 'justify' }} className="mt-2">
         <h3>Kann ich die Landkreise sortieren?</h3>
         Sie können Landkreise favorisieren um sie nach oben zu sortieren. Klicken Sie dazu auf das{' '}
         {CovidIcon} Symbol am oberen rechten Rand der Landkreis Blöcke.

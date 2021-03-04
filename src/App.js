@@ -1,6 +1,6 @@
 import { Button, Divider, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CountyCard from './CountyCard';
 import { COUNTY_URL } from './CountyUrl';
 import { formatDate } from './date-helpers';
@@ -11,6 +11,8 @@ function App() {
   const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [isFaqVisible, setIsFaqVisible] = useState(false);
+
+  const faqSpanRef = useRef(null);
 
   // Load favorites from local storage
   useEffect(() => {
@@ -89,8 +91,7 @@ function App() {
   // Scroll FAQ into view when expanded
   useEffect(() => {
     if (isFaqVisible) {
-      const firstBlock = document.getElementById('firstFaqBlock');
-      firstBlock.scrollIntoView();
+      faqSpanRef.current.scrollIntoView();
     }
   }, [isFaqVisible]);
 
@@ -113,6 +114,8 @@ function App() {
             />
           ))}
 
+          {/* Placeholder to scroll into */}
+          <span ref={faqSpanRef}></span>
           <Divider>
             <Button onClick={handleFaqToggle}>
               FAQ {isFaqVisible ? <CaretDownOutlined /> : <CaretRightOutlined />}
