@@ -7,13 +7,13 @@ const Faq = () => {
   return (
     <>
       <div id="firstFaqBlock" style={{ textAlign: 'justify' }}>
-        <h4>Was ist die 7-Tage-Inzidenz?</h4>
+        <h4 style={{ textDecoration: 'underline' }}>Was ist die 7-Tage-Inzidenz?</h4>
         Die 7-Tage-Inzidenz ist eine wichtige Grundlage für die Einschätzung der Entwicklung der
         Corona-Pandemie. Der Wert bildet die COVID Fälle pro 100.000 Einwohner*innen in den letzten
         7 Tagen ab.
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
-        <h4>Woher stammen die Daten?</h4>
+        <h4 style={{ textDecoration: 'underline' }}>Woher stammen die Daten?</h4>
         Diese Anwendung verwendet eine API von{' '}
         <a href="https://public.opendatasoft.com/explore/dataset/covid-19-germany-landkreise/api/">
           opendatasoft
@@ -21,12 +21,12 @@ const Faq = () => {
         . Opendatasoft bezieht die Daten von dem offiziellen Datenhub des Robert-Koch-Instituts.
       </div>
       <div id="firstFaqBlock" style={{ textAlign: 'justify' }} className="mt-2">
-        <h4>Kann ich die Landkreise sortieren?</h4>
+        <h4 style={{ textDecoration: 'underline' }}>Kann ich die Landkreise sortieren?</h4>
         Sie können Landkreise favorisieren um sie nach oben zu sortieren. Klicken Sie dazu auf das{' '}
         {CovidIcon} Symbol am oberen rechten Rand der Landkreis Blöcke.
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
-        <h4>Wo sind die anderen Landkreise?</h4>
+        <h4 style={{ textDecoration: 'underline' }}>Wo sind die anderen Landkreise?</h4>
         Sie können jeden Landkreis in Deutschland betrachten. Tragen Sie dazu den Gemeindeschlüssel
         des jeweiligen Landkreises in der URL ein und laden Sie die Seite neu.
         <br />
