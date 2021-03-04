@@ -79,10 +79,7 @@ function App() {
   };
 
   const compare = (a, b) => {
-    if (
-      (favorites.includes(a.id) && favorites.includes(b.id)) ||
-      (!favorites.includes(a.id) && !favorites.includes(b.id))
-    ) {
+    if (favorites.includes(a.id) && favorites.includes(b.id)) {
       return 0;
     }
 
@@ -90,7 +87,12 @@ function App() {
       return -1;
     }
 
-    return 1;
+    if (favorites.includes(b.id)) {
+      return 1;
+    }
+
+    // If nothing is favorited we sort by casesPer100k ascending
+    return a.casesPer100k - b.casesPer100k;
   };
 
   return (
