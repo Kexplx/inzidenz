@@ -1,4 +1,4 @@
-import { Button, Drawer, Row } from 'antd';
+import { Button, Divider, Drawer } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
 const FaqDrawer = ({ onClose, isVisible }) => {
@@ -30,11 +30,12 @@ const FaqDrawer = ({ onClose, isVisible }) => {
         Daten für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
         Gemeindeschlüssel mit einem Komma!
       </div>
-      <Row className="mt-2" justify="end">
-        <Button onClick={onClose} type="primary">
+
+      <Divider>
+        <Button type="primary" onClick={onClose}>
           Okay
         </Button>
-      </Row>
+      </Divider>
     </Drawer>
   );
 };
