@@ -1,4 +1,4 @@
-import { Button, Divider, Spin } from 'antd';
+import { Button, Divider, Result, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useRef, useState } from 'react';
 import CountyCard from './CountyCard';
@@ -9,6 +9,7 @@ import Faq from './Faq';
 function App() {
   const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [loadError, setLoadError] = useState(null);
   const [isFaqVisible, setIsFaqVisible] = useState(false);
 
   const faqSpanRef = useRef(null);
@@ -30,6 +31,11 @@ function App() {
     async function fetchCounties() {
       const responseJson = await fetch(COUNTY_URL);
       const response = await responseJson.json();
+
+      if (!response.features.length) {
+        setLoadError('Invalid codes');
+        return;
+      }
 
       setCounties(
         response.features.map(feature => ({
@@ -98,7 +104,7 @@ function App() {
           <Text type="secondary">
             Stand: {counties[0].lastUpdated}
             <br />
-            Quelle: RKI
+            Quelle: RKI Datenhub
           </Text>
           {counties.sort(compare).map(c => (
             <CountyCard
@@ -118,6 +124,8 @@ function App() {
           </Divider>
           {isFaqVisible ? <Faq /> : ''}
         </>
+      ) : loadError ? (
+        <Result status="error" title="Ungültige Anfrage" />
       ) : (
         <div className="spinner-container">
           <Spin size="large" tip="Daten werden geladen" />
