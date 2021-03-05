@@ -12,7 +12,6 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
 
   return (
     <Card
-      type="inner"
       size="small"
       className="mt-2"
       extra={

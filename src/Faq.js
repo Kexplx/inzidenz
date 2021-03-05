@@ -23,17 +23,15 @@ const Faq = () => {
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
         <h3>Kann ich die Landkreise sortieren?</h3>
-        Sie können Landkreise favorisieren um sie nach oben zu sortieren. Klicken Sie dazu auf das{' '}
-        {CovidIcon} Symbol am oberen rechten Rand der Landkreis Blöcke.
+        Sie können Landkreise favorisieren und sie dadurch nach oben sortieren. Klicken Sie dazu auf
+        das {CovidIcon} Symbol am oberen rechten Rand der Landkreis Blöcke.
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
         <h3>Wo sind die anderen Landkreise?</h3>
         Sie können jeden Landkreis in Deutschland betrachten. Tragen Sie dazu den Gemeindeschlüssel
-        des jeweiligen Landkreises in der URL ein und laden Sie die Seite neu.
-        <br />
-        <br />
-        Mit der URL <Text keyboard>https://kexplx.github.io/inzidenz?q=6412,5112</Text> werden bspw.
-        die Daten für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
+        des jeweiligen Landkreises in der URL ein und laden Sie die Seite neu. Mit der URL{' '}
+        <Text keyboard>https://kexplx.github.io/inzidenz?q=6412,5112</Text> werden bspw. die Daten
+        für Frankfurt (6412) und Duisburg (5112) geladen. Beachten Sie die Trennung der
         Gemeindeschlüssel mit einem Komma!
       </div>{' '}
     </>

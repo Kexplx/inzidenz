@@ -118,7 +118,7 @@ function App() {
           {/* Placeholder to scroll into */}
           <span ref={faqSpanRef}></span>
           <Divider>
-            <Button onClick={handleFaqToggle}>
+            <Button type="text" onClick={handleFaqToggle}>
               FAQ {isFaqVisible ? <CaretDownOutlined /> : <CaretRightOutlined />}
             </Button>
           </Divider>
