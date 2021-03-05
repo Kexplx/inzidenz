@@ -14,13 +14,9 @@ const Faq = () => {
       </div>
       <div style={{ textAlign: 'justify' }} className="mt-2">
         <h3>Woher stammen die Daten?</h3>
-        Diese Webseite verwendet eine Schnittstelle von{' '}
-        <a href="https://public.opendatasoft.com/explore/dataset/covid-19-germany-landkreise/api/">
-          opendatasoft
-        </a>
-        . Opendatasoft bezieht die Daten von dem offiziellen{' '}
+        Diese Webseite verwendet den offiziellen{' '}
         <a href="https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0">
-          Datenhub
+          COVID-19 Datenhub
         </a>{' '}
         des Robert-Koch-Instituts. Die Daten werden vom RKI einmal täglich jeweils um 00:00 Uhr
         prozessiert und stehen dann in den frühen Morgenstunden zur Verfügung.

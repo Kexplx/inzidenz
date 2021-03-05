@@ -3,7 +3,6 @@ import Text from 'antd/lib/typography/Text';
 import { useEffect, useRef, useState } from 'react';
 import CountyCard from './CountyCard';
 import { COUNTY_URL } from './CountyUrl';
-import { formatDate } from './date-helpers';
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
 import Faq from './Faq';
 
@@ -33,20 +32,16 @@ function App() {
       const response = await responseJson.json();
 
       setCounties(
-        response.records.map(
-          ({
-            fields: { name, last_update, admunitid, cases7_per_100k, bl, bez, deaths, cases },
-          }) => ({
-            id: admunitid,
-            name,
-            lastUpdated: last_update,
-            casesPer100k: cases7_per_100k,
-            type: bez,
-            state: bl,
-            casesTotal: cases,
-            deathsTotal: deaths,
-          }),
-        ),
+        response.features.map(feature => ({
+          id: feature.attributes.AdmUnitId,
+          name: feature.attributes.GEN,
+          lastUpdated: feature.attributes.last_update,
+          casesPer100k: feature.attributes.cases7_per_100k,
+          type: feature.attributes.BEZ,
+          state: feature.attributes.BL,
+          casesTotal: feature.attributes.cases,
+          deathsTotal: feature.attributes.deaths,
+        })),
       );
     }
 
@@ -101,7 +96,7 @@ function App() {
       {counties.length ? (
         <>
           <Text type="secondary">
-            Stand: {formatDate(new Date(counties[0].lastUpdated))}
+            Stand: {counties[0].lastUpdated}
             <br />
             Quelle: RKI
           </Text>
