@@ -10,8 +10,8 @@ if (params.has('q')) {
     .map(c => parseInt(c.trim()));
 }
 
-const where = countyCodes
+const filter = countyCodes
   .reduce((acc, curr) => (acc += `admunitid=${curr} OR `), '')
   .replace(/ OR $/, ''); // Strip off trailing ' OR '
 
-export const COUNTY_URL = `https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=${where}&outFields=GEN,BEZ,EWZ,KFL,DEBKG_ID,cases,deaths,BL,last_update,cases7_per_100k,AdmUnitId&returnGeometry=false&f=json`;
+export const COUNTY_URL = `https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=${filter}&outFields=GEN,BEZ,cases,deaths,BL,last_update,cases7_per_100k,AdmUnitId&returnGeometry=false&f=json`;

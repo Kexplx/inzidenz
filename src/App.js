@@ -9,7 +9,8 @@ import Faq from './Faq';
 function App() {
   const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [loadError, setLoadError] = useState(null);
+
+  const [error, setError] = useState(null);
   const [isFaqVisible, setIsFaqVisible] = useState(false);
 
   const faqSpanRef = useRef(null);
@@ -29,11 +30,12 @@ function App() {
   // Load counties from API
   useEffect(() => {
     async function fetchCounties() {
-      const responseJson = await fetch(COUNTY_URL);
-      const response = await responseJson.json();
+      const responseJSON = await fetch(COUNTY_URL);
+      const response = await responseJSON.json();
 
       if (!response.features.length) {
-        setLoadError('Invalid codes');
+        // API returned an empty features array
+        setError(1);
         return;
       }
 
@@ -80,14 +82,7 @@ function App() {
     return a.casesPer100k - b.casesPer100k;
   };
 
-  const handleFaqToggle = () => {
-    if (isFaqVisible) {
-      setIsFaqVisible(false);
-      return;
-    }
-
-    setIsFaqVisible(true);
-  };
+  const handleFaqToggle = () => setIsFaqVisible(!isFaqVisible);
 
   // Scroll FAQ into view when expanded
   useEffect(() => {
@@ -108,10 +103,10 @@ function App() {
           </Text>
           {counties.sort(compare).map(c => (
             <CountyCard
-              isFavorite={favorites.includes(c.id)}
-              onFavorite={handleFavorite}
               key={c.id}
               county={c}
+              isFavorite={favorites.includes(c.id)}
+              onFavorite={handleFavorite}
             />
           ))}
 
@@ -122,9 +117,9 @@ function App() {
               FAQ {isFaqVisible ? <CaretDownOutlined /> : <CaretRightOutlined />}
             </Button>
           </Divider>
-          {isFaqVisible ? <Faq /> : ''}
+          {isFaqVisible && <Faq />}
         </>
-      ) : loadError ? (
+      ) : error ? (
         <Result status="error" title="Ungültige Anfrage" />
       ) : (
         <div className="spinner-container">
