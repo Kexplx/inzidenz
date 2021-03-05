@@ -120,7 +120,11 @@ function App() {
           {isFaqVisible && <Faq />}
         </>
       ) : error ? (
-        <Result status="error" title="Ungültige Anfrage" />
+        <Result
+          status="404"
+          title="Ungültige Anfrage"
+          subTitle="Überprüfen sie die URL auf Korrektheit."
+        />
       ) : (
         <div className="spinner-container">
           <Spin size="large" tip="Daten werden geladen" />
