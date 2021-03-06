@@ -28,22 +28,24 @@ function App() {
   // Load counties from API
   async function fetchCounties() {
     setCounties([]);
+
+    const start = Date.now();
     const { data } = await axios.get(countyUrl);
 
-    setTimeout(() => {
-      setCounties(
-        data.features.map(feature => ({
-          id: feature.attributes.AdmUnitId,
-          name: feature.attributes.GEN,
-          lastUpdated: feature.attributes.last_update,
-          casesPer100k: feature.attributes.cases7_per_100k,
-          type: feature.attributes.BEZ,
-          state: feature.attributes.BL,
-          casesTotal: feature.attributes.cases,
-          deathsTotal: feature.attributes.deaths,
-        })),
-      );
-    }, 567);
+    const mappedData = data.features.map(feature => ({
+      id: feature.attributes.AdmUnitId,
+      name: feature.attributes.GEN,
+      lastUpdated: feature.attributes.last_update,
+      casesPer100k: feature.attributes.cases7_per_100k,
+      type: feature.attributes.BEZ,
+      state: feature.attributes.BL,
+      casesTotal: feature.attributes.cases,
+      deathsTotal: feature.attributes.deaths,
+    }));
+
+    // If the request takes less than 700ms, we add a fake delay.
+    const fakeDelay = 700 - (Date.now() - start);
+    setTimeout(() => setCounties(mappedData), fakeDelay);
   }
 
   useEffect(() => fetchCounties(), []);
