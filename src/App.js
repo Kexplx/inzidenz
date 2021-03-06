@@ -85,12 +85,7 @@ function App() {
           <br />
           Quelle: RKI-Datenhub
         </Text>
-        <Button
-          loading={!counties.length}
-          icon={<ReloadOutlined />}
-          onClick={fetchCounties}
-          type="primary"
-        >
+        <Button disabled={!counties.length} onClick={fetchCounties} type="primary">
           Aktualisieren
         </Button>
       </Row>
