@@ -78,7 +78,7 @@ function App() {
   return (
     <div className="container">
       <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
-      <Row justify="space-between">
+      <Row justify="space-between" align="middle">
         <Text type="secondary">
           Stand: {counties.length ? counties[0].lastUpdated : '00.00.0000, 00:00 Uhr'}
           <br />
