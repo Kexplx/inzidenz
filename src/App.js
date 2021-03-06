@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { parseRequest } from './parseRequest';
 import axios from 'axios';
-import { ReloadOutlined } from '@ant-design/icons';
 
 // We use `countyCount` to render placeholder cards below.
 const [countyUrl, countyCount] = parseRequest();
