@@ -44,7 +44,7 @@ function App() {
     }));
 
     // If the request takes less than 700ms, we add a fake delay.
-    const fakeDelay = 700 - (Date.now() - start);
+    const fakeDelay = 600 - (Date.now() - start);
     setTimeout(() => setCounties(mappedData), fakeDelay);
   }
 
@@ -85,7 +85,12 @@ function App() {
           <br />
           Quelle: RKI-Datenhub
         </Text>
-        <Button icon={<ReloadOutlined />} onClick={fetchCounties} type="primary">
+        <Button
+          loading={!counties.length}
+          icon={<ReloadOutlined />}
+          onClick={fetchCounties}
+          type="primary"
+        >
           Aktualisieren
         </Button>
       </Row>
