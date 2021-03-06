@@ -30,18 +30,20 @@ function App() {
     setCounties([]);
     const { data } = await axios.get(countyUrl);
 
-    setCounties(
-      data.features.map(feature => ({
-        id: feature.attributes.AdmUnitId,
-        name: feature.attributes.GEN,
-        lastUpdated: feature.attributes.last_update,
-        casesPer100k: feature.attributes.cases7_per_100k,
-        type: feature.attributes.BEZ,
-        state: feature.attributes.BL,
-        casesTotal: feature.attributes.cases,
-        deathsTotal: feature.attributes.deaths,
-      })),
-    );
+    setTimeout(() => {
+      setCounties(
+        data.features.map(feature => ({
+          id: feature.attributes.AdmUnitId,
+          name: feature.attributes.GEN,
+          lastUpdated: feature.attributes.last_update,
+          casesPer100k: feature.attributes.cases7_per_100k,
+          type: feature.attributes.BEZ,
+          state: feature.attributes.BL,
+          casesTotal: feature.attributes.cases,
+          deathsTotal: feature.attributes.deaths,
+        })),
+      );
+    }, 567);
   }
 
   useEffect(() => fetchCounties(), []);
@@ -77,7 +79,7 @@ function App() {
       <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
       <Row justify="space-between">
         <Text type="secondary">
-          Stand: {counties.length ? counties[0].lastUpdated : '00.00.0000, 00:00'}
+          Stand: {counties.length ? counties[0].lastUpdated : '00.00.0000, 00:00 Uhr'}
           <br />
           Quelle: RKI-Datenhub
         </Text>
