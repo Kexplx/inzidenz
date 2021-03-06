@@ -7,19 +7,19 @@ import Icon from '@ant-design/icons';
 const CovidIcon = <Icon component={CovidSvg} />;
 
 const CountyCard = ({ county, onFavorite, isFavorite }) => {
-  const { casesPer100k, casesTotal, deathsTotal, id, state, name, type } = county;
   const [value, setValue] = useState(isFavorite ? 1 : 0);
 
   return (
     <Card
       size="small"
+      loading={county === null}
       className="mt-2"
       extra={
         <Rate
           value={value}
           onChange={v => {
             setValue(v);
-            onFavorite(id, v);
+            onFavorite(county?.id, v);
           }}
           style={{ opacity: isFavorite ? 1 : 0.2, color: 'transparent' }}
           character={CovidIcon}
@@ -28,9 +28,9 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
       }
       title={
         <>
-          {name}{' '}
+          {county?.name}{' '}
           <Text style={{ fontWeight: '400' }} type="secondary">
-            ({type} in {state})
+            ({county?.type} in {county?.state})
           </Text>
         </>
       }
@@ -42,24 +42,24 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             title="7-Tage-Inzidenz"
             valueStyle={{
               color:
-                casesPer100k < 35
+                county?.casesPer100k < 35
                   ? '#27ae60'
-                  : casesPer100k < 50
+                  : county?.casesPer100k < 50
                   ? '#f1c40f'
-                  : casesPer100k < 100
+                  : county?.casesPer100k < 100
                   ? '#e67e22'
                   : '#c0392b',
             }}
-            value={casesPer100k}
+            value={county?.casesPer100k}
             precision={2}
             groupSeparator="."
           />
         </Col>
         <Col span={8}>
-          <Statistic groupSeparator="." title="Fälle insgesamt" value={casesTotal} />
+          <Statistic groupSeparator="." title="Fälle insgesamt" value={county?.casesTotal} />
         </Col>
         <Col span={8}>
-          <Statistic groupSeparator="." title="Tote insgesamt" value={deathsTotal} />
+          <Statistic groupSeparator="." title="Tote insgesamt" value={county?.deathsTotal} />
         </Col>
       </Row>
     </Card>
