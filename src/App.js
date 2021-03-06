@@ -1,16 +1,15 @@
-import { Button, Card, Row } from 'antd';
+import { Button, Card, Col, Divider, Row, Statistic } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
-import { parseRequest } from './parseRequest';
-import axios from 'axios';
-
-// We use `countyCount` to render placeholder cards below.
-const [countyUrl, countyCount] = parseRequest();
+import { useCounties } from './useCounties';
+import { useGermany } from './useGermany';
 
 function App() {
-  const [counties, setCounties] = useState([]);
   const [favorites, setFavorites] = useState([]);
+
+  const [counties, countiesLength, reloadCounties] = useCounties();
+  const [germany, reloadGermany] = useGermany();
 
   // Load favorites from local storage
   useEffect(() => {
@@ -23,31 +22,6 @@ function App() {
 
   // Save favorites to localstorage on unload
   window.onbeforeunload = () => localStorage.setItem('favorites', JSON.stringify(favorites));
-
-  // Load counties from API
-  async function fetchCounties() {
-    setCounties([]);
-
-    const start = Date.now();
-    const { data } = await axios.get(countyUrl);
-
-    const mappedData = data.features.map(feature => ({
-      id: feature.attributes.AdmUnitId,
-      name: feature.attributes.GEN,
-      lastUpdated: feature.attributes.last_update,
-      casesPer100k: feature.attributes.cases7_per_100k,
-      type: feature.attributes.BEZ,
-      state: feature.attributes.BL,
-      casesTotal: feature.attributes.cases,
-      deathsTotal: feature.attributes.deaths,
-    }));
-
-    // If the request takes less than 700ms, we add a fake delay.
-    const fakeDelay = 600 - (Date.now() - start);
-    setTimeout(() => setCounties(mappedData), fakeDelay);
-  }
-
-  useEffect(() => fetchCounties(), []);
 
   const handleFavorite = (id, fav) => {
     if (!fav) {
@@ -84,12 +58,54 @@ function App() {
           <br />
           Quelle: RKI-Datenhub
         </Text>
-        <Button disabled={!counties.length} onClick={fetchCounties} type="primary">
+        <Button
+          disabled={!counties.length}
+          onClick={() => {
+            reloadCounties();
+            reloadGermany();
+          }}
+          type="primary"
+        >
           Aktualisieren
         </Button>
       </Row>
+      {germany !== null ? (
+        <Card className="mt-2" size="small" title="Deutschland">
+          <Row gutter={8}>
+            <Col span={8}>
+              <Statistic
+                decimalSeparator=","
+                title="7-Tage-Inzidenz"
+                valueStyle={{
+                  color:
+                    germany?.inzidenz < 35
+                      ? '#27ae60'
+                      : germany?.inzidenz < 50
+                      ? '#f1c40f'
+                      : germany?.inzidenz < 100
+                      ? '#e67e22'
+                      : '#c0392b',
+                }}
+                value={germany?.inzidenz}
+                precision={2}
+                groupSeparator="."
+              />
+            </Col>
+            <Col span={8}>
+              <Statistic groupSeparator="." title="Fälle insgesamt" value={germany?.cases} />
+            </Col>
+            <Col span={8}>
+              <Statistic groupSeparator="." title="Tote insgesamt" value={germany?.deaths} />
+            </Col>
+          </Row>
+        </Card>
+      ) : (
+        <Card size="small" className="mt-2" loading></Card>
+      )}
+
       {counties.length ? (
         <>
+          <Divider orientation="left">Landkreise</Divider>
           {counties.sort(compare).map(c => (
             <CountyCard
               key={c.id}
@@ -101,7 +117,7 @@ function App() {
         </>
       ) : (
         // Placeholder cards for the counties.
-        Array(countyCount)
+        Array(countiesLength)
           .fill(null)
           .map((_, i) => <Card key={i} size="small" className="mt-2" loading></Card>)
       )}
