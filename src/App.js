@@ -1,15 +1,11 @@
-import { Button, Card, Row } from 'antd';
+import { Button, Card, Divider, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
-import { parseRequest } from './parseRequest';
-import axios from 'axios';
-
-// We use `countyCount` to render placeholder cards below.
-const [countyUrl, countyCount] = parseRequest();
+import { useCounties } from './useCounties';
 
 function App() {
-  const [counties, setCounties] = useState([]);
+  const [counties, countiesCount, reloadCounties] = useCounties();
   const [favorites, setFavorites] = useState([]);
 
   // Load favorites from local storage
@@ -24,31 +20,6 @@ function App() {
   // Save favorites to localstorage on unload
   window.onbeforeunload = () => localStorage.setItem('favorites', JSON.stringify(favorites));
 
-  // Load counties from API
-  async function fetchCounties() {
-    setCounties([]);
-
-    const start = Date.now();
-    const { data } = await axios.get(countyUrl);
-
-    const mappedData = data.features.map(feature => ({
-      id: feature.attributes.AdmUnitId,
-      name: feature.attributes.GEN,
-      lastUpdated: feature.attributes.last_update,
-      casesPer100k: feature.attributes.cases7_per_100k,
-      type: feature.attributes.BEZ,
-      state: feature.attributes.BL,
-      casesTotal: feature.attributes.cases,
-      deathsTotal: feature.attributes.deaths,
-    }));
-
-    // If the request takes less than 700ms, we add a fake delay.
-    const fakeDelay = 600 - (Date.now() - start);
-    setTimeout(() => setCounties(mappedData), fakeDelay);
-  }
-
-  useEffect(() => fetchCounties(), []);
-
   const handleFavorite = (id, fav) => {
     if (!fav) {
       setFavorites(favorites.filter(i => i !== id));
@@ -58,22 +29,7 @@ function App() {
     setFavorites([...favorites, id]);
   };
 
-  const compare = (a, b) => {
-    if (favorites.includes(a.id) && favorites.includes(b.id)) {
-      return 0;
-    }
-
-    if (favorites.includes(a.id)) {
-      return -1;
-    }
-
-    if (favorites.includes(b.id)) {
-      return 1;
-    }
-
-    // If nothing is favorited we sort by casesPer100k ascending
-    return a.casesPer100k - b.casesPer100k;
-  };
+  const compare = (a, b) => a.casesPer100k - b.casesPer100k;
 
   return (
     <div className="container">
@@ -84,25 +40,30 @@ function App() {
           <br />
           Quelle: RKI-Datenhub
         </Text>
-        <Button disabled={!counties.length} onClick={fetchCounties} type="primary">
+        <Button disabled={!counties.length} onClick={reloadCounties}>
           Aktualisieren
         </Button>
       </Row>
       {counties.length ? (
         <>
-          {counties.sort(compare).map(c => (
-            <CountyCard
-              key={c.id}
-              county={c}
-              isFavorite={favorites.includes(c.id)}
-              onFavorite={handleFavorite}
-            />
-          ))}
+          {counties
+            .filter(c => favorites.includes(c.id))
+            .sort(compare)
+            .map(c => (
+              <CountyCard key={c.id} county={c} isFavorite onFavorite={handleFavorite} />
+            ))}
+          {favorites.length !== 0 && favorites.length < counties.length && <Divider></Divider>}
+          {counties
+            .filter(c => !favorites.includes(c.id))
+            .sort(compare)
+            .map(c => (
+              <CountyCard key={c.id} county={c} isFavorite={false} onFavorite={handleFavorite} />
+            ))}
         </>
       ) : (
         // Placeholder cards for the counties.
-        Array(countyCount)
-          .fill(null)
+        Array(countiesCount)
+          .fill()
           .map((_, i) => <Card key={i} size="small" className="mt-2" loading></Card>)
       )}
     </div>

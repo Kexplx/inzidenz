@@ -1,18 +1,14 @@
 import { Card, Col, Rate, Row, Statistic } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useState } from 'react';
-import { ReactComponent as CovidSvg } from './covid.svg';
-import Icon from '@ant-design/icons';
-
-const CovidIcon = <Icon component={CovidSvg} />;
 
 const CountyCard = ({ county, onFavorite, isFavorite }) => {
   const [value, setValue] = useState(isFavorite ? 1 : 0);
 
   return (
     <Card
-      size="small"
-      loading={county === null}
+      size={isFavorite ? 'default' : 'small'}
+      loading={!county}
       className="mt-2"
       extra={
         <Rate
@@ -21,17 +17,19 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             setValue(v);
             onFavorite(county?.id, v);
           }}
-          style={{ opacity: isFavorite ? 1 : 0.2, color: 'transparent' }}
-          character={CovidIcon}
+          style={{ opacity: isFavorite ? 1 : 0.7, color: 'white' }}
           count={1}
         />
       }
       title={
         <>
-          {county?.name}{' '}
-          <Text style={{ fontWeight: '400' }} type="secondary">
-            ({county?.type} in {county?.state})
-          </Text>
+          {county?.name}
+          {county.type.includes('kreis') && (
+            <Text style={{ fontWeight: '400' }} type="secondary">
+              {' '}
+              ({county?.type})
+            </Text>
+          )}
         </>
       }
     >
