@@ -1,9 +1,10 @@
-import { Card } from 'antd';
+import { Button, Card, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { parseRequest } from './parseRequest';
 import axios from 'axios';
+import { ReloadOutlined } from '@ant-design/icons';
 
 // We use `countyCount` to render placeholder cards below.
 const [countyUrl, countyCount] = parseRequest();
@@ -25,26 +26,25 @@ function App() {
   window.onbeforeunload = () => localStorage.setItem('favorites', JSON.stringify(favorites));
 
   // Load counties from API
-  useEffect(() => {
-    async function fetchCounties() {
-      const { data } = await axios.get(countyUrl);
+  async function fetchCounties() {
+    setCounties([]);
+    const { data } = await axios.get(countyUrl);
 
-      setCounties(
-        data.features.map(feature => ({
-          id: feature.attributes.AdmUnitId,
-          name: feature.attributes.GEN,
-          lastUpdated: feature.attributes.last_update,
-          casesPer100k: feature.attributes.cases7_per_100k,
-          type: feature.attributes.BEZ,
-          state: feature.attributes.BL,
-          casesTotal: feature.attributes.cases,
-          deathsTotal: feature.attributes.deaths,
-        })),
-      );
-    }
+    setCounties(
+      data.features.map(feature => ({
+        id: feature.attributes.AdmUnitId,
+        name: feature.attributes.GEN,
+        lastUpdated: feature.attributes.last_update,
+        casesPer100k: feature.attributes.cases7_per_100k,
+        type: feature.attributes.BEZ,
+        state: feature.attributes.BL,
+        casesTotal: feature.attributes.cases,
+        deathsTotal: feature.attributes.deaths,
+      })),
+    );
+  }
 
-    fetchCounties();
-  }, []);
+  useEffect(() => fetchCounties(), []);
 
   const handleFavorite = (id, fav) => {
     if (!fav) {
@@ -75,18 +75,16 @@ function App() {
   return (
     <div className="container">
       <h1>7-Tage-Inzidenz pro 100.000 Einwohner</h1>
-      <Text type="secondary">
-        Stand: {counties.length ? counties[0].lastUpdated : '00.00.0000, 00:00'}
-        <br />
-        Quelle:{' '}
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href="https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0"
-        >
-          RKI Datenhub
-        </a>
-      </Text>
+      <Row justify="space-between">
+        <Text type="secondary">
+          Stand: {counties.length ? counties[0].lastUpdated : '00.00.0000, 00:00'}
+          <br />
+          Quelle: RKI-Datenhub
+        </Text>
+        <Button icon={<ReloadOutlined />} onClick={fetchCounties} type="primary">
+          Aktualisieren
+        </Button>
+      </Row>
       {counties.length ? (
         <>
           {counties.sort(compare).map(c => (
