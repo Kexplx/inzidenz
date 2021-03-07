@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function getUrl() {
-  let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278, 3241, 9262];
+  let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278, 9262];
 
   // County codes can also be passed as query params in the url
   const params = new URLSearchParams(window.location.search);
@@ -20,10 +20,10 @@ function getUrl() {
 
   const url = `https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=${filter}&outFields=GEN,BEZ,cases,deaths,last_update,cases7_per_100k,AdmUnitId&returnGeometry=false&f=json`;
 
-  return [url, countyCodes.length];
+  return url;
 }
 
-const [url, countiesCount] = getUrl();
+const url = getUrl();
 
 export function useCounties() {
   const [counties, setCounties] = useState([]);
@@ -32,8 +32,6 @@ export function useCounties() {
 
   const fetchCounties = async () => {
     setCounties([]);
-
-    const start = Date.now();
     const { data } = await axios(url);
 
     const mappedData = data.features.map(feature => ({
@@ -43,14 +41,12 @@ export function useCounties() {
       inzidenz: feature.attributes.cases7_per_100k,
       type: feature.attributes.BEZ,
       state: feature.attributes.BL,
-      casesTotal: feature.attributes.cases,
-      deathsTotal: feature.attributes.deaths,
+      cases: feature.attributes.cases,
+      deaths: feature.attributes.deaths,
     }));
 
-    // If the request takes less than 400ms, we add a fake delay.
-    const fakeDelay = 400 - (Date.now() - start);
-    setTimeout(() => setCounties(mappedData), fakeDelay);
+    setCounties(mappedData);
   };
 
-  return [counties, countiesCount, () => fetchCounties()];
+  return [counties, () => fetchCounties()];
 }

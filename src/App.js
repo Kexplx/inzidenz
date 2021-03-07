@@ -1,14 +1,12 @@
-import { Button, Card, Divider, Row } from 'antd';
+import { Button, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import CountyCard from './CountyCard';
-import { useCounties } from './useCounties';
+import CountyTable from './CountyTable';
 import { useFavorites } from './useFavorites';
+import { useCounties } from './useCounties';
 
 function App() {
-  const [counties, countiesCount, reloadCounties] = useCounties();
-  const [favorites, handleFavorite] = useFavorites();
-
-  const compare = (a, b) => a.inzidenz - b.inzidenz;
+  const [counties, reloadCounties] = useCounties();
+  const [favorites, onFavorite] = useFavorites();
 
   return (
     <div className="container">
@@ -19,41 +17,11 @@ function App() {
           <br />
           Quelle: RKI-Datenhub
         </Text>
-        <Button disabled={!counties.length} onClick={reloadCounties}>
+        <Button onClick={reloadCounties} disabled={!counties.length}>
           Aktualisieren
         </Button>
       </Row>
-      {counties.length ? (
-        <>
-          {/* Favorite counties */}
-          {counties
-            .filter(c => favorites.includes(c.id))
-            .sort(compare)
-            .map(c => (
-              <CountyCard
-                key={c.id}
-                county={c}
-                isFavorite
-                onFavorite={() => handleFavorite(c.id)}
-              />
-            ))}
-
-          {favorites.length !== 0 && favorites.length < counties.length && <Divider></Divider>}
-
-          {/* Unfavorited counties */}
-          {counties
-            .filter(c => !favorites.includes(c.id))
-            .sort(compare)
-            .map(c => (
-              <CountyCard key={c.id} county={c} onFavorite={() => handleFavorite(c.id)} />
-            ))}
-        </>
-      ) : (
-        // Placeholder cards for all counties
-        Array(countiesCount)
-          .fill()
-          .map((_, i) => <Card key={i} size="small" className="mt-2" loading></Card>)
-      )}
+      <CountyTable counties={counties} onFavorite={onFavorite} favorites={favorites} />
     </div>
   );
 }
