@@ -2,7 +2,7 @@ import { Card, Col, Rate, Row, Statistic } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import { useState } from 'react';
 
-const CountyCard = ({ county, onFavorite, isFavorite }) => {
+const CountyCard = ({ county, onFavorite, isFavorite = false }) => {
   const [value, setValue] = useState(isFavorite ? 1 : 0);
 
   return (
@@ -15,7 +15,7 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
           value={value}
           onChange={v => {
             setValue(v);
-            onFavorite(county?.id, v);
+            onFavorite(county?.id);
           }}
           style={{ opacity: 1, color: 'white' }}
           count={1}

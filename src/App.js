@@ -30,7 +30,12 @@ function App() {
             .filter(c => favorites.includes(c.id))
             .sort(compare)
             .map(c => (
-              <CountyCard key={c.id} county={c} isFavorite onFavorite={handleFavorite} />
+              <CountyCard
+                key={c.id}
+                county={c}
+                isFavorite
+                onFavorite={() => handleFavorite(c.id)}
+              />
             ))}
 
           {favorites.length !== 0 && favorites.length < counties.length && <Divider></Divider>}
@@ -40,7 +45,7 @@ function App() {
             .filter(c => !favorites.includes(c.id))
             .sort(compare)
             .map(c => (
-              <CountyCard key={c.id} county={c} isFavorite={false} onFavorite={handleFavorite} />
+              <CountyCard key={c.id} county={c} onFavorite={() => handleFavorite(c.id)} />
             ))}
         </>
       ) : (
