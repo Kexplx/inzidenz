@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const oldFavorites = JSON.parse(localStorage.getItem('favorites') ?? '[]');
 
-export function useFavorties() {
+export function useFavorites() {
   const [favorties, setFavorites] = useState(oldFavorites);
 
   function handleFavorite(id) {

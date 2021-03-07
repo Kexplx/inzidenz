@@ -2,11 +2,11 @@ import { Button, Card, Divider, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import CountyCard from './CountyCard';
 import { useCounties } from './useCounties';
-import { useFavorties } from './useFavorites';
+import { useFavorites } from './useFavorites';
 
 function App() {
   const [counties, countiesCount, reloadCounties] = useCounties();
-  const [favorites, handleFavorite] = useFavorties();
+  const [favorites, handleFavorite] = useFavorites();
 
   const compare = (a, b) => a.inzidenz - b.inzidenz;
 
@@ -49,7 +49,7 @@ function App() {
             ))}
         </>
       ) : (
-        // Placeholder cards for the counties.
+        // Placeholder cards for all counties
         Array(countiesCount)
           .fill()
           .map((_, i) => <Card key={i} size="small" className="mt-2" loading></Card>)
