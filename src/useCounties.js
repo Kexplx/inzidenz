@@ -18,7 +18,7 @@ function getUrl() {
     .reduce((acc, curr) => (acc += `admunitid=${curr} OR `), '')
     .replace(/ OR $/, ''); // Strip off trailing ' OR '
 
-  const url = `https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=${filter}&outFields=GEN,BEZ,cases,deaths,BL,last_update,cases7_per_100k,AdmUnitId&returnGeometry=false&f=json`;
+  const url = `https://services7.arcgis.com/mOBPykOjAyBO2ZKk/arcgis/rest/services/RKI_Landkreisdaten/FeatureServer/0/query?where=${filter}&outFields=GEN,BEZ,cases,deaths,last_update,cases7_per_100k,AdmUnitId&returnGeometry=false&f=json`;
 
   return [url, countyCodes.length];
 }
@@ -28,7 +28,6 @@ const [url, countiesCount] = getUrl();
 export function useCounties() {
   const [counties, setCounties] = useState([]);
 
-  // Fetch county covid data.
   useEffect(() => fetchCounties(), []);
 
   const fetchCounties = async () => {
@@ -41,15 +40,15 @@ export function useCounties() {
       id: feature.attributes.AdmUnitId,
       name: feature.attributes.GEN,
       lastUpdated: feature.attributes.last_update,
-      casesPer100k: feature.attributes.cases7_per_100k,
+      inzidenz: feature.attributes.cases7_per_100k,
       type: feature.attributes.BEZ,
       state: feature.attributes.BL,
       casesTotal: feature.attributes.cases,
       deathsTotal: feature.attributes.deaths,
     }));
 
-    // If the request takes less than 700ms, we add a fake delay.
-    const fakeDelay = 600 - (Date.now() - start);
+    // If the request takes less than 400ms, we add a fake delay.
+    const fakeDelay = 400 - (Date.now() - start);
     setTimeout(() => setCounties(mappedData), fakeDelay);
   };
 

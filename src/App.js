@@ -1,35 +1,14 @@
 import { Button, Card, Divider, Row } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import { useEffect, useState } from 'react';
 import CountyCard from './CountyCard';
 import { useCounties } from './useCounties';
+import { useFavorties } from './useFavorites';
 
 function App() {
   const [counties, countiesCount, reloadCounties] = useCounties();
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, handleFavorite] = useFavorties();
 
-  // Load favorites from local storage
-  useEffect(() => {
-    const favoritesJSON = localStorage.getItem('favorites');
-
-    if (favoritesJSON) {
-      setFavorites(JSON.parse(favoritesJSON));
-    }
-  }, []);
-
-  // Save favorites to localstorage on unload
-  window.onbeforeunload = () => localStorage.setItem('favorites', JSON.stringify(favorites));
-
-  const handleFavorite = (id, fav) => {
-    if (!fav) {
-      setFavorites(favorites.filter(i => i !== id));
-      return;
-    }
-
-    setFavorites([...favorites, id]);
-  };
-
-  const compare = (a, b) => a.casesPer100k - b.casesPer100k;
+  const compare = (a, b) => a.inzidenz - b.inzidenz;
 
   return (
     <div className="container">
@@ -46,13 +25,17 @@ function App() {
       </Row>
       {counties.length ? (
         <>
+          {/* Favorite counties */}
           {counties
             .filter(c => favorites.includes(c.id))
             .sort(compare)
             .map(c => (
               <CountyCard key={c.id} county={c} isFavorite onFavorite={handleFavorite} />
             ))}
+
           {favorites.length !== 0 && favorites.length < counties.length && <Divider></Divider>}
+
+          {/* Unfavorited counties */}
           {counties
             .filter(c => !favorites.includes(c.id))
             .sort(compare)

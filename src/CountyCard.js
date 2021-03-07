@@ -17,7 +17,7 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             setValue(v);
             onFavorite(county?.id, v);
           }}
-          style={{ opacity: isFavorite ? 1 : 0.7, color: 'white' }}
+          style={{ opacity: 1, color: 'white' }}
           count={1}
         />
       }
@@ -40,15 +40,15 @@ const CountyCard = ({ county, onFavorite, isFavorite }) => {
             title="7-Tage-Inzidenz"
             valueStyle={{
               color:
-                county?.casesPer100k < 35
+                county?.inzidenz < 35
                   ? '#27ae60'
-                  : county?.casesPer100k < 50
+                  : county?.inzidenz < 50
                   ? '#f1c40f'
-                  : county?.casesPer100k < 100
+                  : county?.inzidenz < 100
                   ? '#e67e22'
                   : '#c0392b',
             }}
-            value={county?.casesPer100k}
+            value={county?.inzidenz}
             precision={2}
             groupSeparator="."
           />

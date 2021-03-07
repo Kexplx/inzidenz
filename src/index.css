@@ -5,13 +5,10 @@ html {
   margin: 0;
 }
 
-h1 {
-  font-size: 1.4rem;
-  color: white !important;
-}
-
-h2 {
-  font-size: 1.2rem;
+@media (max-width: 800px) {
+  h1 {
+    font-size: 1.3rem;
+  }
 }
 
 .container {
@@ -22,16 +19,6 @@ h2 {
 
 .mt-2 {
   margin-top: 20px;
-}
-
-.input-hint {
-  text-align: right;
-  margin-top: 4px;
-}
-
-.spinner-container {
-  margin-top: 200px;
-  text-align: center;
 }
 
 .ant-typography-secondary {
