@@ -26,12 +26,12 @@ function getUrl() {
 const url = getUrl();
 
 export function useCounties() {
-  const [counties, setCounties] = useState([]);
+  const [counties, setCounties] = useState(null);
 
   useEffect(() => fetchCounties(), []);
 
   const fetchCounties = async () => {
-    setCounties([]);
+    setCounties(null);
     const { data } = await axios(url);
 
     const mappedData = data.features.map(feature => ({
@@ -48,5 +48,5 @@ export function useCounties() {
     setCounties(mappedData);
   };
 
-  return [counties, () => fetchCounties()];
+  return [counties, fetchCounties];
 }

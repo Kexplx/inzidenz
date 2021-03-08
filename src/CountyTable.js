@@ -21,6 +21,7 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
 
   const columns = [
     {
+      title: 'Name',
       render: r =>
         r.type.includes('kreis') ? (
           <>
@@ -34,16 +35,18 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
         ),
     },
     {
+      title: '7-Tage-Inzidenz',
       dataIndex: 'inzidenz',
       key: 'inzidenz',
       align: 'center',
       render: inzidenz => (
         <Tag
+          style={{ fontSize: '14px' }}
           color={
-            inzidenz < 35 ? 'green' : inzidenz < 50 ? 'yellow' : inzidenz < 100 ? 'orange' : 'red'
+            inzidenz < 35 ? 'green' : inzidenz < 50 ? 'orange' : inzidenz < 100 ? 'volcano' : 'red'
           }
         >
-          {inzidenz.toFixed(2)}
+          {inzidenz.toFixed(0)}
         </Tag>
       ),
     },
@@ -61,10 +64,9 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
 
   return (
     <Table
-      showHeader={false}
+      size="middle"
       bordered
       pagination={false}
-      className="mt-2"
       locale={{ emptyText: 'Keine Daten' }}
       columns={columns}
       dataSource={data.sort(compare)}
