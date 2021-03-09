@@ -5,9 +5,7 @@ const AlertDate = ({ date, source }) => {
   return (
     <Alert
       style={{
-        borderBottom: 0,
-        borderBottomRightRadius: 0,
-        borderBottomLeftRadius: 0,
+        marginBottom: '10px',
       }}
       message={
         <>

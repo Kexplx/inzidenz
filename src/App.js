@@ -17,7 +17,7 @@ function App() {
       <h1>COVID-19 Daten</h1>
       <Row className="m-2" justify="space-between">
         <h3>Deutschland insgesamt</h3>
-        <Button type="primary" onClick={reloadGermany}>
+        <Button onClick={reloadGermany}>
           Aktualisieren
           <Text style={{ marginLeft: '3px' }} type="secondary">
             (2.9 kB)
@@ -49,7 +49,7 @@ function App() {
       <Row className="m-2" justify="space-between">
         <h3>Städte und Landkreise</h3>
 
-        <Button type="primary" onClick={reloadCounties}>
+        <Button onClick={reloadCounties}>
           Aktualisieren
           <Text style={{ marginLeft: '3px' }} type="secondary">
             (1.3 kB)

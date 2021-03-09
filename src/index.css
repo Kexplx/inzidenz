@@ -24,10 +24,3 @@ html {
 .m-2 {
   margin: 20px 0;
 }
-
-#root > div > div.ant-descriptions.ant-descriptions-middle.ant-descriptions-bordered > div,
-#root > div > div.ant-table-wrapper > div > div > div > div,
-.ant-table-cell {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0 !important;
-}

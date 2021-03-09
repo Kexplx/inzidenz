@@ -1,5 +1,6 @@
-import { Rate, Table, Tag } from 'antd';
+import { Descriptions, Rate, Tag } from 'antd';
 import Text from 'antd/lib/typography/Text';
+import React from 'react';
 
 const CountyTable = ({ counties, favorites, onFavorite }) => {
   const compare = (a, b) => {
@@ -19,58 +20,48 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
     return a.inzidenz - b.inzidenz;
   };
 
-  const columns = [
-    {
-      title: 'Name',
-      render: r =>
-        r.type.includes('kreis') ? (
-          <>
-            {r.isFavorite ? <Text strong>{r.name}</Text> : r.name}{' '}
-            <Text type="secondary">({r.type})</Text>
-          </>
-        ) : r.isFavorite ? (
-          <Text strong>{r.name}</Text>
-        ) : (
-          r.name
-        ),
-    },
-    {
-      title: '7-Tage-Inzidenz',
-      dataIndex: 'inzidenz',
-      key: 'inzidenz',
-      align: 'center',
-      render: inzidenz => (
-        <Tag
-          style={{ fontSize: '14px' }}
-          color={
-            inzidenz < 35 ? 'green' : inzidenz < 50 ? 'orange' : inzidenz < 100 ? 'volcano' : 'red'
-          }
-        >
-          {inzidenz.toFixed(0)}
-        </Tag>
-      ),
-    },
-    {
-      align: 'center',
-      render: r => (
-        <Rate onChange={() => onFavorite(r.key)} count={1} value={r.isFavorite ? 1 : 0}></Rate>
-      ),
-    },
-  ];
-
-  const data = counties
-    .sort(compare)
-    .map(c => ({ ...c, key: c.id, isFavorite: favorites.includes(c.id) }));
+  const data = counties.sort(compare).map(c => ({ ...c, isFavorite: favorites.includes(c.id) }));
 
   return (
-    <Table
-      size="middle"
-      bordered
-      pagination={false}
-      locale={{ emptyText: 'Keine Daten' }}
-      columns={columns}
-      dataSource={data.sort(compare)}
-    />
+    <Descriptions column={2} size="middle" bordered>
+      {data.map(c => (
+        <React.Fragment key={c.id}>
+          <Descriptions.Item
+            label={
+              c.type.includes('kreis') ? (
+                <>
+                  {c.isFavorite ? <Text strong>{c.name}</Text> : c.name}{' '}
+                  <Text type="secondary">({c.type})</Text>
+                </>
+              ) : c.isFavorite ? (
+                <Text strong>{c.name}</Text>
+              ) : (
+                c.name
+              )
+            }
+            contentStyle={{ textAlign: 'center' }}
+          >
+            <Tag
+              style={{ fontSize: '14px' }}
+              color={
+                c.inzidenz < 35
+                  ? 'green'
+                  : c.inzidenz < 50
+                  ? 'orange'
+                  : c.inzidenz < 100
+                  ? 'volcano'
+                  : 'red'
+              }
+            >
+              {c.inzidenz.toFixed(0)}
+            </Tag>
+          </Descriptions.Item>
+          <Descriptions.Item contentStyle={{ textAlign: 'center' }}>
+            <Rate onChange={() => onFavorite(c.id)} count={1} value={c.isFavorite ? 1 : 0}></Rate>
+          </Descriptions.Item>
+        </React.Fragment>
+      ))}
+    </Descriptions>
   );
 };
 
