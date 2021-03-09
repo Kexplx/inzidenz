@@ -10,8 +10,8 @@ const GermanyDescription = ({ germany }) => {
       <Descriptions.Item label="7-Tage-Inzidenz">
         <InizidenzTag inzidenz={inzidenz} />
       </Descriptions.Item>
-      <Descriptions.Item label="Infektionen insges.">{cases}</Descriptions.Item>
-      <Descriptions.Item label="Todes­fälle insges.">{deaths}</Descriptions.Item>
+      <Descriptions.Item label="Infektionen insgesamt">{cases}</Descriptions.Item>
+      <Descriptions.Item label="Todes­fälle insgesamt">{deaths}</Descriptions.Item>
     </Descriptions>
   );
 };

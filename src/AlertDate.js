@@ -1,20 +1,14 @@
-import { Alert } from 'antd';
 import Text from 'antd/lib/typography/Text';
 
-const AlertDate = ({ date, source }) => {
+const AlertDate = ({ date }) => {
   return (
-    <Alert
+    <div
       style={{
-        marginBottom: '10px',
+        marginBottom: '5px',
       }}
-      message={
-        <>
-          <Text>Stand: {date}</Text>
-          <Text type="secondary"> (Quelle: {source})</Text>
-        </>
-      }
-      type="info"
-    />
+    >
+      <Text type="secondary">Stand: {date}</Text>
+    </div>
   );
 };
 
