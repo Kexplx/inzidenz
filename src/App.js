@@ -1,6 +1,6 @@
 import { Button, Row, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import CountyTable from './CountyTable';
+import CountyDescription from './CountyDescription';
 import { useFavorites } from './useFavorites';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
@@ -20,7 +20,7 @@ function App() {
         <Button onClick={reloadGermany}>
           Aktualisieren
           <Text style={{ marginLeft: '3px' }} type="secondary">
-            (2.9 kB)
+            (14.7 kB)
           </Text>
         </Button>
       </Row>
@@ -74,7 +74,7 @@ function App() {
               </a>
             }
           />
-          <CountyTable counties={counties} onFavorite={onFavorite} favorites={favorites} />
+          <CountyDescription counties={counties} onFavorite={onFavorite} favorites={favorites} />
         </>
       )}
     </div>

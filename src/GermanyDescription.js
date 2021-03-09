@@ -1,27 +1,17 @@
-import { Descriptions, Tag } from 'antd';
+import { Descriptions } from 'antd';
+import InizidenzTag from './InzidenzTag';
 
 const GermanyDescription = ({ germany }) => {
+  const { newCases, inzidenz, cases, deaths } = germany;
+
   return (
-    <Descriptions column={2} size="middle" bordered>
-      <Descriptions.Item label="Neuinfektionen">{germany?.newCases}</Descriptions.Item>
+    <Descriptions column={{ sm: 2, xs: 1 }} size="middle" bordered>
+      <Descriptions.Item label="Neuinfektionen">{newCases}</Descriptions.Item>
       <Descriptions.Item label="7-Tage-Inzidenz">
-        <Tag
-          style={{ fontSize: '14px' }}
-          color={
-            germany?.inzidenz < 35
-              ? 'green'
-              : germany?.inzidenz < 50
-              ? 'orange'
-              : germany?.inzidenz < 100
-              ? 'volcano'
-              : 'red'
-          }
-        >
-          {germany?.inzidenz}
-        </Tag>
+        <InizidenzTag inzidenz={inzidenz} />
       </Descriptions.Item>
-      <Descriptions.Item label="Infektionen insges.">{germany?.cases}</Descriptions.Item>
-      <Descriptions.Item label="Todes­fälle insges.">{germany?.deaths}</Descriptions.Item>
+      <Descriptions.Item label="Infektionen insges.">{cases}</Descriptions.Item>
+      <Descriptions.Item label="Todes­fälle insges.">{deaths}</Descriptions.Item>
     </Descriptions>
   );
 };

@@ -1,8 +1,9 @@
-import { Descriptions, Rate, Tag } from 'antd';
+import { Descriptions, Rate } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React from 'react';
+import InizidenzTag from './InzidenzTag';
 
-const CountyTable = ({ counties, favorites, onFavorite }) => {
+const CountyDescription = ({ counties, favorites, onFavorite }) => {
   const compare = (a, b) => {
     if (favorites.includes(a.id) && favorites.includes(b.id)) {
       return 0;
@@ -41,20 +42,7 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
             }
             contentStyle={{ textAlign: 'center' }}
           >
-            <Tag
-              style={{ fontSize: '14px' }}
-              color={
-                c.inzidenz < 35
-                  ? 'green'
-                  : c.inzidenz < 50
-                  ? 'orange'
-                  : c.inzidenz < 100
-                  ? 'volcano'
-                  : 'red'
-              }
-            >
-              {c.inzidenz.toFixed(0)}
-            </Tag>
+            <InizidenzTag inzidenz={c.inzidenz} />
           </Descriptions.Item>
           <Descriptions.Item contentStyle={{ textAlign: 'center' }}>
             <Rate onChange={() => onFavorite(c.id)} count={1} value={c.isFavorite ? 1 : 0}></Rate>
@@ -65,4 +53,4 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
   );
 };
 
-export default CountyTable;
+export default CountyDescription;
