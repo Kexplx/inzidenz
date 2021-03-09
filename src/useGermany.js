@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JSDOM } from 'jsdom';
+import { parse } from 'node-html-parser';
 import { useEffect, useState } from 'react';
 
 const rkiUrlWithProxy =
@@ -33,14 +33,14 @@ export function useGermany() {
     setGermany(null);
 
     const { data } = await axios(rkiUrlWithProxy);
-    const dom = new JSDOM(data);
+    const root = parse(data);
 
-    const newCases = dom.window.document.body.querySelector(newCasesSelector).textContent;
-    const inzidenz = +dom.window.document.body.querySelector(inzidenzSelector).textContent;
-    const cases = dom.window.document.body.querySelector(casesSelector).textContent;
-    const deaths = dom.window.document.body.querySelector(deathsSelector).textContent;
+    const newCases = root.querySelector(newCasesSelector).textContent;
+    const inzidenz = +root.querySelector(inzidenzSelector).textContent;
+    const cases = root.querySelector(casesSelector).textContent;
+    const deaths = root.querySelector(deathsSelector).textContent;
 
-    const lastUpdatedUgly = dom.window.document.body.querySelector(lastUpdatedSelector).textContent;
+    const lastUpdatedUgly = root.querySelector(lastUpdatedSelector).textContent;
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
 
     setGermany({ newCases, inzidenz, cases, deaths, lastUpdated });
