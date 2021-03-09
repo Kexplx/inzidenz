@@ -2,7 +2,7 @@ import { Descriptions, Tag } from 'antd';
 
 const GermanyDescription = ({ germany }) => {
   return (
-    <Descriptions column={2} size="middle" bordered>
+    <Descriptions column={{ sm: 2, xs: 1 }} size="middle" bordered>
       <Descriptions.Item label="Neuinfektionen">{germany?.newCases}</Descriptions.Item>
       <Descriptions.Item label="7-Tage-Inzidenz">
         <Tag
@@ -20,8 +20,8 @@ const GermanyDescription = ({ germany }) => {
           {germany?.inzidenz}
         </Tag>
       </Descriptions.Item>
-      <Descriptions.Item label="Infektionen insges.">{germany?.cases}</Descriptions.Item>
-      <Descriptions.Item label="Todes­fälle insges.">{germany?.deaths}</Descriptions.Item>
+      <Descriptions.Item label="Infektionen insgesamt">{germany?.cases}</Descriptions.Item>
+      <Descriptions.Item label="Todes­fälle insgesamt">{germany?.deaths}</Descriptions.Item>
     </Descriptions>
   );
 };

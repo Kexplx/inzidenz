@@ -57,7 +57,12 @@ const CountyTable = ({ counties, favorites, onFavorite }) => {
             </Tag>
           </Descriptions.Item>
           <Descriptions.Item contentStyle={{ textAlign: 'center' }}>
-            <Rate onChange={() => onFavorite(c.id)} count={1} value={c.isFavorite ? 1 : 0}></Rate>
+            <Rate
+              style={{ color: 'white' }}
+              onChange={() => onFavorite(c.id)}
+              count={1}
+              value={c.isFavorite ? 1 : 0}
+            ></Rate>
           </Descriptions.Item>
         </React.Fragment>
       ))}

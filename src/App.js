@@ -1,11 +1,11 @@
 import { Button, Row, Spin } from 'antd';
-import Text from 'antd/lib/typography/Text';
 import CountyTable from './CountyTable';
 import { useFavorites } from './useFavorites';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
 import GermanyDescription from './GermanyDescription';
 import AlertDate from './AlertDate';
+import { ReloadOutlined } from '@ant-design/icons';
 
 function App() {
   const [counties, reloadCounties] = useCounties();
@@ -17,12 +17,7 @@ function App() {
       <h1>COVID-19 Daten</h1>
       <Row className="m-2" justify="space-between">
         <h3>Deutschland insgesamt</h3>
-        <Button onClick={reloadGermany}>
-          Aktualisieren
-          <Text style={{ marginLeft: '3px' }} type="secondary">
-            (2.9 kB)
-          </Text>
-        </Button>
+        <Button onClick={reloadGermany} shape="circle" icon={<ReloadOutlined />} />
       </Row>
       {germany === null ? (
         <Row justify="center">
@@ -30,31 +25,14 @@ function App() {
         </Row>
       ) : (
         <>
-          <AlertDate
-            date={germany.lastUpdated}
-            source={
-              <a
-                href="https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html"
-                target="_blank"
-                rel="noreferrer"
-              >
-                RKI Webseite
-              </a>
-            }
-          />
+          <AlertDate date={germany.lastUpdated} />
           <GermanyDescription germany={germany} />
         </>
       )}
 
       <Row className="m-2" justify="space-between">
         <h3>Städte und Landkreise</h3>
-
-        <Button onClick={reloadCounties}>
-          Aktualisieren
-          <Text style={{ marginLeft: '3px' }} type="secondary">
-            (1.3 kB)
-          </Text>
-        </Button>
+        <Button onClick={reloadCounties} shape="circle" icon={<ReloadOutlined />}></Button>
       </Row>
       {counties === null ? (
         <Row justify="center">
@@ -62,18 +40,7 @@ function App() {
         </Row>
       ) : (
         <>
-          <AlertDate
-            date={counties[0].lastUpdated}
-            source={
-              <a
-                href="https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets"
-                target="_blank"
-                rel="noreferrer"
-              >
-                RKI Datenhub
-              </a>
-            }
-          />
+          <AlertDate date={counties[0].lastUpdated} />
           <CountyTable counties={counties} onFavorite={onFavorite} favorites={favorites} />
         </>
       )}
