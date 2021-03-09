@@ -31,6 +31,7 @@ export function useGermany() {
   const fetchGermany = async () => {
     setGermany(null);
 
+    const start = Date.now();
     const { data } = await axios(rkiUrlWithProxy);
     const root = parse(data.contents);
 
@@ -42,7 +43,9 @@ export function useGermany() {
     const lastUpdatedUgly = root.querySelector(lastUpdatedSelector).textContent;
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
 
-    setGermany({ newCases, inzidenz, cases, deaths, lastUpdated });
+    const fakeDelay = 600 - (Date.now() - start);
+
+    setTimeout(() => setGermany({ newCases, inzidenz, cases, deaths, lastUpdated }), fakeDelay);
   };
 
   return [germany, fetchGermany];

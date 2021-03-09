@@ -32,6 +32,7 @@ export function useCounties() {
 
   const fetchCounties = async () => {
     setCounties(null);
+    const start = Date.now();
     const { data } = await axios(url);
 
     const mappedData = data.features.map(feature => ({
@@ -45,7 +46,9 @@ export function useCounties() {
       deaths: feature.attributes.deaths,
     }));
 
-    setCounties(mappedData);
+    const fakeDelay = 600 - (Date.now() - start);
+
+    setTimeout(() => setCounties(mappedData), fakeDelay);
   };
 
   return [counties, fetchCounties];
