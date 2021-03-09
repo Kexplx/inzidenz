@@ -2,8 +2,7 @@ import axios from 'axios';
 import { parse } from 'node-html-parser';
 import { useEffect, useState } from 'react';
 
-const rkiUrlWithProxy =
-  'https://thingproxy.freeboard.io/fetch/https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html';
+const rkiUrlWithProxy = `https://api.allorigins.win/get?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
 
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
@@ -33,7 +32,7 @@ export function useGermany() {
     setGermany(null);
 
     const { data } = await axios(rkiUrlWithProxy);
-    const root = parse(data);
+    const root = parse(data.contents);
 
     const newCases = root.querySelector(newCasesSelector).textContent;
     const inzidenz = +root.querySelector(inzidenzSelector).textContent;
