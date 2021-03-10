@@ -1,4 +1,4 @@
-import { Button, Divider, Skeleton } from 'antd';
+import { Button, Divider, Spin } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
@@ -13,12 +13,14 @@ function App() {
   return (
     <div className="container">
       <Divider orientation="right">
-        <Button type="dashed" icon={<ReloadOutlined />} onClick={reloadGermany}>
+        <Button icon={<ReloadOutlined />} onClick={reloadGermany}>
           Deutschland insgesamt
         </Button>
       </Divider>
       {germany === null ? (
-        <Skeleton active paragraph={{ rows: 2, width: '100%' }} />
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <Spin tip="Lade Daten..." />
+        </div>
       ) : (
         <>
           <AlertDate date={germany.lastUpdated} />
@@ -27,12 +29,14 @@ function App() {
       )}
 
       <Divider orientation="right">
-        <Button type="dashed" icon={<ReloadOutlined />} onClick={reloadCounties}>
+        <Button icon={<ReloadOutlined />} onClick={reloadCounties}>
           Städte & Landkreise
         </Button>
       </Divider>
       {counties === null ? (
-        <Skeleton active paragraph={{ rows: 8, width: '100%' }} />
+        <div style={{ textAlign: 'center', marginTop: '100px' }}>
+          <Spin tip="Lade Daten..." />
+        </div>
       ) : (
         <>
           <AlertDate date={counties[0].lastUpdated} />

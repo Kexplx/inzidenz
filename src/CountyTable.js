@@ -33,14 +33,16 @@ const CountyTable = ({ counties }) => {
       render: cases => addDecimalPoint(cases),
     },
     {
-      title: '💀 insges.',
+      title: 'Tote insges.',
       dataIndex: 'deaths',
       key: 'deaths',
       render: deaths => addDecimalPoint(deaths),
     },
   ];
 
-  return <Table pagination={false} showHeader={true} dataSource={data} columns={columns} />;
+  return (
+    <Table size="middle" pagination={false} showHeader={true} dataSource={data} columns={columns} />
+  );
 };
 
 export default CountyTable;
