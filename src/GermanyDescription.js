@@ -8,17 +8,22 @@ const GermanyDescription = ({ germany }) => {
   return (
     <Descriptions column={{ sm: 2, xs: 1 }} size="middle" bordered>
       <Descriptions.Item
-        style={{ textAlign: 'center' }}
+        style={{ padding: '10px' }}
         label={
-          <>
+          <div style={{ fontWeight: 500 }}>
             Neuinfektionen <Text type="secondary">(seit gestern)</Text>
-          </>
+          </div>
         }
       >
-        {newCases}
+        <div style={{ textAlign: 'center' }}>{newCases}</div>
       </Descriptions.Item>
-      <Descriptions.Item style={{ textAlign: 'center' }} label="7-Tage-Inzidenz">
-        <InizidenzTag inzidenz={inzidenz} />
+      <Descriptions.Item
+        style={{ padding: '10px' }}
+        label={<span style={{ fontWeight: 500 }}>7-Tage-Inzidenz</span>}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <InizidenzTag inzidenz={inzidenz} />
+        </div>
       </Descriptions.Item>
     </Descriptions>
   );
