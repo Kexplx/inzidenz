@@ -4,7 +4,7 @@ import { addDecimalPoint } from './helpers';
 import InizidenzTag from './InzidenzTag';
 
 const CountyTable = ({ counties }) => {
-  const data = counties.map(c => ({ ...c, key: c.id }));
+  const data = counties.map(c => ({ ...c, key: c.id })).sort((a, b) => a.inzidenz - b.inzidenz);
 
   const columns = [
     {
@@ -25,22 +25,18 @@ const CountyTable = ({ counties }) => {
       dataIndex: 'inzidenz',
       key: 'inzidenz',
       render: i => <InizidenzTag inzidenz={i} />,
-      sorter: (a, b) => a.inzidenz - b.inzidenz,
-      defaultSortOrder: 'ascend',
     },
     {
       title: 'Fälle insges.',
       dataIndex: 'cases',
       key: 'cases',
       render: cases => addDecimalPoint(cases),
-      sorter: (a, b) => a.cases - b.cases,
     },
     {
       title: 'Tote insges.',
       dataIndex: 'deaths',
       key: 'deaths',
       render: deaths => addDecimalPoint(deaths),
-      sorter: (a, b) => a.deaths - b.deaths,
     },
   ];
 
