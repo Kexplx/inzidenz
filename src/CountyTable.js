@@ -23,7 +23,10 @@ const CountyTable = ({ counties }) => {
       title: 'Name',
       key: 'name',
       render: row => (
-        <span onClick={row.name === 'Regensburg' ? handlePressed : ''}>
+        <span
+          style={{ userSelect: 'none' }}
+          onClick={row.name === 'Regensburg' ? handlePressed : ''}
+        >
           {row.type.includes('kreis') ? (
             <span>
               {row.name}
