@@ -13,12 +13,7 @@ function App() {
   return (
     <div className="container">
       <Divider orientation="right">
-        <Button
-          type="dashed"
-          loading={germany === null}
-          icon={<ReloadOutlined />}
-          onClick={reloadGermany}
-        >
+        <Button loading={germany === null} icon={<ReloadOutlined />} onClick={reloadGermany}>
           Deutschland
         </Button>
       </Divider>
@@ -33,12 +28,7 @@ function App() {
         </>
       )}
       <Divider orientation="right">
-        <Button
-          type="dashed"
-          loading={counties === null}
-          icon={<ReloadOutlined />}
-          onClick={reloadCounties}
-        >
+        <Button loading={counties === null} icon={<ReloadOutlined />} onClick={reloadCounties}>
           Städte & Landkreise
         </Button>
       </Divider>
