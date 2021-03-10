@@ -46,7 +46,7 @@ export function useCounties() {
       deaths: feature.attributes.deaths,
     }));
 
-    const fakeDelay = 500 - (Date.now() - start);
+    const fakeDelay = 400 - (Date.now() - start);
 
     setTimeout(() => setCounties(mappedData), fakeDelay);
   };

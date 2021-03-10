@@ -14,7 +14,7 @@ function App() {
     <div className="container">
       <Divider orientation="right">
         <Button icon={<ReloadOutlined />} onClick={reloadGermany}>
-          Deutschland insgesamt
+          Deutschland
         </Button>
       </Divider>
       {germany === null ? (

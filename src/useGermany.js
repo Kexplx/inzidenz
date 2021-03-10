@@ -43,7 +43,7 @@ export function useGermany() {
     const lastUpdatedUgly = root.querySelector(lastUpdatedSelector).textContent;
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
 
-    const fakeDelay = 500 - (Date.now() - start);
+    const fakeDelay = 400 - (Date.now() - start);
 
     setTimeout(() => setGermany({ newCases, inzidenz, cases, deaths, lastUpdated }), fakeDelay);
   };
