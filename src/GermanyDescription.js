@@ -27,7 +27,7 @@ const GermanyDescription = ({ germany }) => {
       </Descriptions.Item>
       <Descriptions.Item
         style={{ padding: '10px' }}
-        label={<span style={{ fontWeight: 500 }}>Vollständige Geimpfte</span>}
+        label={<span style={{ fontWeight: 500 }}>Vollständig Geimpfte</span>}
       >
         <div style={{ textAlign: 'center' }}>
           {totalVaccinated} ({percentVaccinated})
