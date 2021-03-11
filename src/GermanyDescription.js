@@ -10,25 +10,19 @@ const GermanyDescription = ({ germany }) => {
       <Descriptions.Item
         style={{ padding: '10px' }}
         label={
-          <div style={{ fontWeight: 500 }}>
+          <>
             Neuinfektionen <Text type="secondary">(seit gestern)</Text>
-          </div>
+          </>
         }
       >
         <div style={{ textAlign: 'center' }}>{newCases}</div>
       </Descriptions.Item>
-      <Descriptions.Item
-        style={{ padding: '10px' }}
-        label={<span style={{ fontWeight: 500 }}>7-Tage-Inzidenz</span>}
-      >
+      <Descriptions.Item style={{ padding: '10px' }} label="7-Tage-Inzidenz">
         <div style={{ textAlign: 'center' }}>
           <InizidenzTag inzidenz={inzidenz} />
         </div>
       </Descriptions.Item>
-      <Descriptions.Item
-        style={{ padding: '10px' }}
-        label={<span style={{ fontWeight: 500 }}>Vollständig Geimpfte</span>}
-      >
+      <Descriptions.Item style={{ padding: '10px' }} label="Vollständig Geimpfte">
         <div style={{ textAlign: 'center' }}>
           {totalVaccinated} ({percentVaccinated})
         </div>
