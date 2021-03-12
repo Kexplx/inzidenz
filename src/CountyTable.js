@@ -12,7 +12,7 @@ const CountyTable = ({ counties }) => {
     const newCount = pressCount + 1;
 
     if (newCount % 4 === 0) {
-      message.open({ content: 'Hi Papa, hab dich lieb 💗', icon: '' });
+      message.open({ content: 'Hi Papa, bleib gesund 😉', icon: '' });
     }
 
     setPressCount(newCount);
