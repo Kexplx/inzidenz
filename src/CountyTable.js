@@ -8,11 +8,25 @@ const CountyTable = ({ counties }) => {
   const [pressCount, setPressCount] = useState(0);
   const data = counties.map(c => ({ ...c, key: c.id })).sort((a, b) => a.inzidenz - b.inzidenz);
 
-  const handlePressed = () => {
-    const newCount = pressCount + 1;
+  const handlePressed = row => {
+    let newCount = pressCount;
+    let content = '';
+
+    switch (row.name) {
+      case 'Regensburg':
+        newCount = pressCount + 1;
+        content = 'Hi Papa, bleib gesund 😉';
+        break;
+      case 'Cham':
+        newCount = pressCount + 1;
+        content = 'Hi Mama, hab dich lieb 💓';
+        break;
+      default:
+        return;
+    }
 
     if (newCount % 4 === 0) {
-      message.open({ content: 'Hi Papa, bleib gesund 😉', icon: '' });
+      message.open({ content, icon: '' });
     }
 
     setPressCount(newCount);
@@ -23,10 +37,7 @@ const CountyTable = ({ counties }) => {
       title: 'Name',
       key: 'name',
       render: row => (
-        <span
-          style={{ userSelect: 'none' }}
-          onClick={() => (row.name === 'Regensburg' ? handlePressed() : '')}
-        >
+        <span style={{ userSelect: 'none' }} onClick={() => handlePressed(row)}>
           {row.type.includes('kreis') ? (
             <span>
               {row.name}
