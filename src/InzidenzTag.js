@@ -8,7 +8,7 @@ const InizidenzTag = ({ inzidenz }) => {
         inzidenz < 35 ? 'green' : inzidenz < 50 ? 'orange' : inzidenz < 100 ? 'volcano' : 'red'
       }
     >
-      {inzidenz.toFixed(2)}
+      {inzidenz.toFixed(2).toString().replace('.', ',')}
     </Tag>
   );
 };
