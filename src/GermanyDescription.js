@@ -17,7 +17,7 @@ const GermanyDescription = ({ germany }) => {
       >
         <div style={{ textAlign: 'center' }}>{newCases}</div>
       </Descriptions.Item>
-      <Descriptions.Item style={{ padding: '10px' }} label="7-Tage-Inzidenz">
+      <Descriptions.Item style={{ padding: '10px' }} label="Inzidenz">
         <div style={{ textAlign: 'center' }}>
           <InizidenzTag inzidenz={inzidenz} />
         </div>
