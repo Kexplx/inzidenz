@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function getUrl() {
-  let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278, 9262];
+  let countyCodes = [9362, 9562, 9162, 9564, 9179, 9372, 9248, 9278];
 
   // County codes can also be passed as query params in the url
   const params = new URLSearchParams(window.location.search);
