@@ -1,53 +1,24 @@
-import { message, Table } from 'antd';
+import { Table } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import { useState } from 'react';
 import { addDecimalPoint } from './helpers';
 import InizidenzTag from './InzidenzTag';
 
 const CountyTable = ({ counties }) => {
-  const [pressCount, setPressCount] = useState(0);
   const data = counties.map(c => ({ ...c, key: c.id })).sort((a, b) => a.inzidenz - b.inzidenz);
-
-  const handlePressed = row => {
-    let newCount = pressCount;
-    let content = '';
-
-    switch (row.name) {
-      case 'Regensburg':
-        newCount = pressCount + 1;
-        content = 'Hi Papa, bleib gesund 😉';
-        break;
-      case 'Cham':
-        newCount = pressCount + 1;
-        content = 'Hi Mama, hab dich lieb 💓';
-        break;
-      default:
-        return;
-    }
-
-    if (newCount % 4 === 0) {
-      message.open({ content, icon: '' });
-    }
-
-    setPressCount(newCount);
-  };
 
   const columns = [
     {
       title: 'Name',
       key: 'name',
-      render: row => (
-        <span style={{ userSelect: 'none' }} onClick={() => handlePressed(row)}>
-          {row.type.includes('kreis') ? (
-            <span>
-              {row.name}
-              <Text type="secondary"> (LK)</Text>
-            </span>
-          ) : (
-            row.name
-          )}
-        </span>
-      ),
+      render: row =>
+        row.type.includes('kreis') ? (
+          <span>
+            {row.name}
+            <Text type="secondary"> (LK)</Text>
+          </span>
+        ) : (
+          row.name
+        ),
     },
     {
       title: 'Inzidenz',
