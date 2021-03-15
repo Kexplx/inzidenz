@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { parse } from 'node-html-parser';
 import { useEffect, useState } from 'react';
-const vaccinationUrl = 'https://api.allorigins.win/get?url=https://impfdashboard.de';
-const rkiUrlWithProxy = `https://api.allorigins.win/get?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
+const vaccinationUrl = 'https://crimeview.ew.r.appspot.com?url=https://impfdashboard.de';
+const rkiUrlWithProxy = `https://crimeview.ew.r.appspot.com?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
 
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
@@ -33,7 +33,7 @@ export function useGermany() {
 
     const start = Date.now();
     const { data: casesHtml } = await axios(rkiUrlWithProxy);
-    let root = parse(casesHtml.contents);
+    let root = parse(casesHtml);
 
     const newCases = root.querySelector(newCasesSelector).textContent;
     const inzidenz = +root.querySelector(inzidenzSelector).textContent;
@@ -42,7 +42,7 @@ export function useGermany() {
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
 
     const { data: vaccinatedHtml } = await axios(vaccinationUrl);
-    root = parse(vaccinatedHtml.contents);
+    root = parse(vaccinatedHtml);
 
     const text = root
       .querySelector(vaccinatedTextSelector)
