@@ -31,7 +31,6 @@ export function useGermany() {
   const fetchGermany = async () => {
     setGermany(null);
 
-    const start = Date.now();
     const { data: casesHtml } = await axios(rkiUrlWithProxy);
     let root = parse(casesHtml);
 
@@ -50,19 +49,13 @@ export function useGermany() {
       .replace(/\s\s/g, ' ');
     const [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
 
-    const fakeDelay = 400 - (Date.now() - start);
-
-    setTimeout(
-      () =>
-        setGermany({
-          newCases,
-          inzidenz,
-          lastUpdated,
-          totalVaccinated,
-          percentVaccinated,
-        }),
-      fakeDelay,
-    );
+    setGermany({
+      newCases,
+      inzidenz,
+      lastUpdated,
+      totalVaccinated,
+      percentVaccinated,
+    });
   };
 
   return [germany, fetchGermany];
