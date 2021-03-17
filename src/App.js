@@ -1,4 +1,4 @@
-import { Button, Divider, Row, Spin } from 'antd';
+import { Button, Row, Spin } from 'antd';
 import { LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="container">
-      <Row className="mt-2" align="bottom" style={{ marginBottom: '7px' }} justify="space-between">
+      <Row className="mt-2" align="bottom" style={{ marginBottom: '8px' }} justify="space-between">
         {germany === null ? <span></span> : <AlertDate date={germany.lastUpdated} />}
         <Button loading={germany === null} icon={<ReloadOutlined />} onClick={reloadGermany}>
           Deutschland
@@ -25,8 +25,7 @@ function App() {
       ) : (
         <GermanyDescription germany={germany} />
       )}
-      <Divider dashed></Divider>
-      <Row align="bottom" style={{ marginBottom: '7px' }} justify="space-between">
+      <Row className="mt-3" align="bottom" style={{ marginBottom: '8px' }} justify="space-between">
         {counties === null ? <span></span> : <AlertDate date={counties[0].lastUpdated} />}
         <Button loading={counties === null} icon={<ReloadOutlined />} onClick={reloadCounties}>
           Städte & Landkreise
