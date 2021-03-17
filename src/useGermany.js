@@ -9,7 +9,7 @@ const newCasesSelector =
 const inzidenzSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5) > strong';
 const lastUpdatedSelector = '#main > div.text > p:nth-child(4)';
-const lastUpdatedRegex = /Stand: (.*) \(/;
+const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 
 const vaccinatedTextSelector =
   'body > main > section > div.content.svelte-br2v7d.grow > div > div > div > div > div > div:nth-child(2) > p';
