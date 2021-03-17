@@ -18,3 +18,7 @@ html {
 .m-2 {
   margin: 20px 0;
 }
+
+.ant-table-thead > tr > th {
+  font-weight: 400;
+}
