@@ -35,6 +35,8 @@ export function useCounties() {
     const start = Date.now();
     const { data } = await axios(url);
 
+    console.log(data);
+
     const mappedData = data.features.map(feature => ({
       id: feature.attributes.AdmUnitId,
       name: feature.attributes.GEN,
