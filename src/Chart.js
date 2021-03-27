@@ -1,5 +1,5 @@
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Button, Row, Select } from 'antd';
+import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Button, Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -63,36 +63,38 @@ const Chart = () => {
 
   return (
     <>
-      {germanyChartData && (
-        <>
-          <h3>Deutschland</h3>
-          <ResponsiveContainer className="mt-1" height="100" aspect={4 / 2}>
-            <LineChart
-              margin={{
-                top: 30,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-              data={germanyChartData}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis fontSize={13} dataKey="lastUpdated" />
-              <YAxis fontSize={13} />
-              <Line
-                label={{ fontSize: 10, position: 'top', offset: 10 }}
-                type="monotone"
-                stroke="#8884d8"
-                dataKey="inzidenz"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </>
+      <h2>Historie / 7-Tage-Inzidenz</h2>
+      <h3>Deutschland</h3>
+      {germanyChartData ? (
+        <ResponsiveContainer height="100" aspect={4 / 2}>
+          <LineChart
+            margin={{
+              top: 30,
+              right: 20,
+              left: 5,
+            }}
+            data={germanyChartData}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis fontSize={13} dataKey="lastUpdated" />
+            <YAxis fontSize={13} />
+            <Line
+              label={{ fontSize: 10, position: 'top', offset: 10 }}
+              type="monotone"
+              stroke="#8884d8"
+              dataKey="inzidenz"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      ) : (
+        <Row justify="center">
+          <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
+        </Row>
       )}
-      {chartData && (
+      <h3>Städte & Landkreise</h3>
+      {chartData ? (
         <>
-          <Row justify="space-between">
-            <h3>Städte & Landkreise</h3>
+          <Row className="mr-1" justify="end">
             <Select
               style={{ width: '150px' }}
               onChange={handleSelect}
@@ -106,13 +108,12 @@ const Chart = () => {
               ))}
             </Select>
           </Row>
-          <ResponsiveContainer className="mt-1" width="100%" aspect={4 / 2}>
+          <ResponsiveContainer width="100%" aspect={4 / 2}>
             <LineChart
               margin={{
                 top: 30,
-                right: 30,
-                left: 20,
-                bottom: 5,
+                right: 20,
+                left: 5,
               }}
               data={chartData}
             >
@@ -128,9 +129,13 @@ const Chart = () => {
             </LineChart>
           </ResponsiveContainer>
         </>
+      ) : (
+        <Row justify="center">
+          <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
+        </Row>
       )}
 
-      <Link to="/" className="mr-1">
+      <Link to="/">
         <Button icon={<ArrowLeftOutlined />} type="link">
           Zurück
         </Button>
