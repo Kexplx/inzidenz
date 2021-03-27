@@ -32,7 +32,7 @@ const Chart = () => {
           .map(i => ({
             ...i,
             inzidenz: i.inzidenz.toFixed(2),
-            lastUpdated: i.stand.replace(', 00:00 Uhr', ''),
+            lastUpdated: i.stand.replace('2021, 00:00 Uhr', ''),
           }))
           .slice(sliceStart),
       );
@@ -56,7 +56,7 @@ const Chart = () => {
         ...c,
         name: 'Deutschland',
         inzidenz: c.inzidenz.toFixed(2),
-        lastUpdated: c.lastUpdated.replace(', 00:00 Uhr', ''),
+        lastUpdated: c.lastUpdated.replace('2021, 00:00 Uhr', ''),
       }))
       .slice(sliceStart);
   };
@@ -95,12 +95,12 @@ const Chart = () => {
             </Select>
           </Row>
           <ResponsiveContainer className="mt-1" width="100%" aspect={4 / 2}>
-            <LineChart margin={{ left: 0, top: 10 }} data={chartData}>
+            <LineChart margin={{ left: 10, top: 10, right: 10 }} data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="lastUpdated" />
               <YAxis />
               <Tooltip />
-              <Line dataKey="inzidenz" stroke="#e74c3c" activeDot={{ r: 5 }} />
+              <Line dataKey="inzidenz" activeDot={{ r: 5 }} />
             </LineChart>
           </ResponsiveContainer>
         </>
