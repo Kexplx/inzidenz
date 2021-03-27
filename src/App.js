@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div className="container">
-      <Router>
+      <Router basename="/inzidenz">
         <Route exact path="/">
           <Row
             className="mt-1"
@@ -61,9 +61,7 @@ function App() {
             </Link>
           </Row>
         </Route>
-        <Route path="/history">
-          <Chart />
-        </Route>
+        <Route path="/history" component={Chart} />
       </Router>
     </div>
   );
