@@ -32,7 +32,7 @@ const Chart = () => {
           .map(i => ({
             ...i,
             inzidenz: i.inzidenz.toFixed(2),
-            lastUpdated: i.stand.replace('2021, 00:00 Uhr', ''),
+            lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
           }))
           .slice(sliceStart),
       );
@@ -56,7 +56,7 @@ const Chart = () => {
         ...c,
         name: 'Deutschland',
         inzidenz: c.inzidenz.toFixed(2),
-        lastUpdated: c.lastUpdated.replace('2021, 00:00 Uhr', ''),
+        lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
       }))
       .slice(sliceStart);
   };
@@ -72,7 +72,7 @@ const Chart = () => {
               <XAxis dataKey="lastUpdated" />
               <YAxis />
               <Tooltip />
-              <Line dataKey="inzidenz" stroke="#e74c3c" activeDot={{ r: 5 }} />
+              <Line name="Inzidenz" type="monotone" stroke="#8884d8" dataKey="inzidenz" />
             </LineChart>
           </ResponsiveContainer>
         </>
@@ -100,7 +100,7 @@ const Chart = () => {
               <XAxis dataKey="lastUpdated" />
               <YAxis />
               <Tooltip />
-              <Line dataKey="inzidenz" activeDot={{ r: 5 }} />
+              <Line name="Inzidenz" type="monotone" stroke="#8884d8" dataKey="inzidenz" />
             </LineChart>
           </ResponsiveContainer>
         </>
