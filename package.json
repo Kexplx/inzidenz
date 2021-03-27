@@ -2,7 +2,7 @@
   "name": "inzidenz",
   "version": "1.0.0",
   "private": true,
-  "homepage": "http://kexplx.github.io/inzidenz",
+  "homepage": "http://kexplx.github.io/inzidenz/",
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -20,8 +20,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
