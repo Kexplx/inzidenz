@@ -13,8 +13,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const germanyHistoryUrl = 'http://34.107.49.102:5000/germany-history';
-const countiesHistoryUrl = 'http://34.107.49.102:5000/counties-history';
+const germanyHistoryUrl =
+  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://34.107.5.136:5000/germany-history';
+const countiesHistoryUrl =
+  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://34.107.5.136:5000/counties-history';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
