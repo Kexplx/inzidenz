@@ -18,15 +18,12 @@ const countiesHistoryUrl = 'http://34.107.49.102:5000/counties-history';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
-  const [germanyHistory, setGermanyHistory] = useState(null);
 
   const [chartData, setChartData] = useState(null);
   const [germanyChartData, setGermanyChartData] = useState(null);
 
   useEffect(() => {
     axios(germanyHistoryUrl).then(({ data }) => {
-      setGermanyHistory(data);
-
       const sliceStart = data.length > 7 ? data.length - 6 : 0;
       setGermanyChartData(
         data
