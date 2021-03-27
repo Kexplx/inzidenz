@@ -67,12 +67,24 @@ const Chart = () => {
         <>
           <h3>Deutschland</h3>
           <ResponsiveContainer className="mt-1" height="100" aspect={4 / 2}>
-            <LineChart margin={{ left: 0, top: 10 }} data={germanyChartData}>
+            <LineChart
+              margin={{
+                top: 30,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+              data={germanyChartData}
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="lastUpdated" />
-              <YAxis />
-              <Tooltip />
-              <Line name="Inzidenz" type="monotone" stroke="#8884d8" dataKey="inzidenz" />
+              <XAxis fontSize={13} dataKey="lastUpdated" />
+              <YAxis fontSize={13} />
+              <Line
+                label={{ fontSize: 10, position: 'top', offset: 10 }}
+                type="monotone"
+                stroke="#8884d8"
+                dataKey="inzidenz"
+              />
             </LineChart>
           </ResponsiveContainer>
         </>
@@ -95,12 +107,24 @@ const Chart = () => {
             </Select>
           </Row>
           <ResponsiveContainer className="mt-1" width="100%" aspect={4 / 2}>
-            <LineChart margin={{ left: 10, top: 10, right: 10 }} data={chartData}>
+            <LineChart
+              margin={{
+                top: 30,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+              data={chartData}
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="lastUpdated" />
-              <YAxis />
-              <Tooltip />
-              <Line name="Inzidenz" type="monotone" stroke="#8884d8" dataKey="inzidenz" />
+              <XAxis fontSize={13} dataKey="lastUpdated" />
+              <YAxis fontSize={13} />
+              <Line
+                label={{ fontSize: 10, position: 'top', offset: 10 }}
+                type="monotone"
+                stroke="#8884d8"
+                dataKey="inzidenz"
+              />
             </LineChart>
           </ResponsiveContainer>
         </>
