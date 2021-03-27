@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 const germanyHistoryUrl =
-  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://34.107.5.136:5000/germany-history';
+  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
 const countiesHistoryUrl =
-  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://34.107.5.136:5000/counties-history';
+  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/counties-history';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
