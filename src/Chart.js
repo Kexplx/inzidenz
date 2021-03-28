@@ -61,7 +61,11 @@ const Chart = () => {
 
   return (
     <>
-      <Alert closable message="🚧 Seite unter laufender Entwicklung 🚧" type="warning" />
+      <Alert
+        closable
+        message="🚧 Seite unter laufender Entwicklung - Betreten auf eigene Gefahr 🚧"
+        type="warning"
+      />
       <div className="mt-2">
         <Link to="/">
           <ArrowLeftOutlined className="mr-1" />
