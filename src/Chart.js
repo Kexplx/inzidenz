@@ -3,7 +3,7 @@ import { Alert, Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { XAxis, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
+import { XAxis, ResponsiveContainer, BarChart, Bar, CartesianGrid, Legend } from 'recharts';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
@@ -90,7 +90,7 @@ const Chart = () => {
             <XAxis fontSize={13} dataKey="lastUpdated" />
             <Bar
               isAnimationActive={false}
-              fill="rgba(44, 62, 80, 0.6)"
+              fill="rgba(52, 152, 219, 0.6)"
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
@@ -118,10 +118,12 @@ const Chart = () => {
           <BarChart margin={{ top: 20 }} data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis fontSize={13} dataKey="lastUpdated" />
+            <Legend />
             <Bar
               isAnimationActive={false}
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
-              fill="rgba(44, 62, 80, 0.6)"
+              fill="rgba(52, 152, 219, 0.6)"
+              name="Inzidenz"
               dataKey="inzidenz"
             />
           </BarChart>
