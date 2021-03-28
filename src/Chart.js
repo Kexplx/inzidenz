@@ -90,7 +90,7 @@ const Chart = () => {
             <XAxis fontSize={13} dataKey="lastUpdated" />
             <Bar
               isAnimationActive={false}
-              fill="rgba(44, 62, 80, 0.4)"
+              fill="rgba(44, 62, 80, 0.6)"
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
@@ -121,7 +121,7 @@ const Chart = () => {
             <Bar
               isAnimationActive={false}
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
-              fill="rgba(44, 62, 80, 0.4)"
+              fill="rgba(44, 62, 80, 0.6)"
               dataKey="inzidenz"
             />
           </BarChart>
