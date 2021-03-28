@@ -61,11 +61,7 @@ const Chart = () => {
 
   return (
     <>
-      <Alert
-        closable
-        message="🚧 Seite unter laufender Entwicklung - Betreten auf eigene Gefahr 🚧"
-        type="warning"
-      />
+      <Alert closable message="🚧 Seite unter laufender Entwicklung 🚧" type="warning" />
       <div className="mt-2">
         <Link to="/">
           <ArrowLeftOutlined className="mr-1" />
@@ -76,7 +72,7 @@ const Chart = () => {
       <Row justify="space-between">
         <h3>Deutschland</h3>
         {germanyChartData && (
-          <Select onChange={handleSelect2} defaultValue="inzidenz" style={{ width: '140px' }}>
+          <Select onChange={handleSelect2} defaultValue="inzidenz">
             <Select.Option value="inzidenz">Inzidenz</Select.Option>
             <Select.Option value="newInfections">Neuinfektionen</Select.Option>
           </Select>
@@ -108,7 +104,7 @@ const Chart = () => {
       <Row justify="space-between">
         <h3>Städte & Landkreise</h3>
         {chartData && (
-          <Select style={{ width: '180px' }} onChange={handleSelect} defaultValue={'9362'}>
+          <Select onChange={handleSelect} defaultValue={'9362'}>
             {Object.entries(countiesHistory).map(([a, b]) => (
               <Select.Option key={a} value={a}>
                 {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
