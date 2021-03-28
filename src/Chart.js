@@ -1,9 +1,9 @@
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Row, Select, Spin } from 'antd';
+import { Alert, Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { XAxis, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { XAxis, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
@@ -61,68 +61,71 @@ const Chart = () => {
 
   return (
     <>
+      <Alert closable message="🚧 Seite unter laufender Entwicklung 🚧" type="warning" />
       <div className="mt-2">
         <Link to="/">
           <ArrowLeftOutlined className="mr-1" />
           Zurück
         </Link>
       </div>
-      <h2>Historie</h2>
-      <h3>Deutschland</h3>
+      <h2>COVID-19 Historie</h2>
+      <Row justify="space-between">
+        <h3>Deutschland</h3>
+        {germanyChartData && (
+          <Select onChange={handleSelect2} defaultValue="inzidenz" style={{ width: '140px' }}>
+            <Select.Option value="inzidenz">Inzidenz</Select.Option>
+            <Select.Option value="newInfections">Neuinfektionen</Select.Option>
+          </Select>
+        )}
+      </Row>
       {germanyChartData ? (
-        <>
-          <Row className="mr-2" justify="end">
-            <Select onChange={handleSelect2} defaultValue="inzidenz" style={{ width: '140px' }}>
-              <Select.Option value="inzidenz">Inzidenz</Select.Option>
-              <Select.Option value="newInfections">Neuinfektionen</Select.Option>
-            </Select>
-          </Row>
-          <ResponsiveContainer aspect={2 / 1}>
-            <BarChart
-              margin={{
-                top: 20,
-              }}
-              data={germanyChartData}
-            >
-              <XAxis fontSize={13} dataKey="lastUpdated" />
-              <Bar
-                isAnimationActive={false}
-                fill="#353b48"
-                label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
-                dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </>
+        <ResponsiveContainer aspect={2 / 1}>
+          <BarChart
+            margin={{
+              top: 20,
+            }}
+            data={germanyChartData}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis fontSize={13} dataKey="lastUpdated" />
+            <Bar
+              isAnimationActive={false}
+              fill="rgba(44, 62, 80, 0.4)"
+              label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
+              dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
+            />
+          </BarChart>
+        </ResponsiveContainer>
       ) : (
         <Row justify="center">
           <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
         </Row>
       )}
-      <h3>Städte & Landkreise</h3>
+      <Row justify="space-between">
+        <h3>Städte & Landkreise</h3>
+        {chartData && (
+          <Select style={{ width: '180px' }} onChange={handleSelect} defaultValue={'9362'}>
+            {Object.entries(countiesHistory).map(([a, b]) => (
+              <Select.Option key={a} value={a}>
+                {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
+      </Row>
       {chartData ? (
-        <>
-          <Row className="mr-2" justify="end">
-            <Select style={{ width: '180px' }} onChange={handleSelect} defaultValue={'9362'}>
-              {Object.entries(countiesHistory).map(([a, b]) => (
-                <Select.Option key={a} value={a}>
-                  {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
-                </Select.Option>
-              ))}
-            </Select>
-          </Row>
-          <ResponsiveContainer aspect={2 / 1}>
-            <BarChart margin={{ top: 20 }} data={chartData}>
-              <XAxis fontSize={13} dataKey="lastUpdated" />
-              <Bar
-                isAnimationActive={false}
-                label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
-                fill="#353b48"
-                dataKey="inzidenz"
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </>
+        <ResponsiveContainer aspect={2 / 1}>
+          <BarChart margin={{ top: 20 }} data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis fontSize={13} dataKey="lastUpdated" />
+            <Bar
+              isAnimationActive={false}
+              label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
+              fill="rgba(44, 62, 80, 0.4)"
+              dataKey="inzidenz"
+            />
+          </BarChart>
+        </ResponsiveContainer>
       ) : (
         <Row justify="center">
           <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
