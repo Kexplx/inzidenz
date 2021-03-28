@@ -3,7 +3,15 @@ import { Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from 'recharts';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
@@ -24,7 +32,7 @@ const Chart = () => {
         data
           .map(i => ({
             ...i,
-            inzidenz: i.inzidenz.toFixed(2),
+            inzidenz: i.inzidenz.toFixed(0),
             lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
           }))
           .slice(sliceStart),
@@ -53,8 +61,7 @@ const Chart = () => {
     return history
       .map(c => ({
         ...c,
-        name: 'Deutschland',
-        inzidenz: c.inzidenz.toFixed(2),
+        inzidenz: c.inzidenz.toFixed(0),
         lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
       }))
       .slice(sliceStart);
@@ -79,23 +86,20 @@ const Chart = () => {
             </Select>
           </Row>
           <ResponsiveContainer aspect={2 / 1}>
-            <LineChart
+            <BarChart
               margin={{
-                top: 30,
-                right: 20,
-                left: 20,
+                top: 20,
               }}
               data={germanyChartData}
             >
-              <CartesianGrid strokeDasharray="3 3" />
               <XAxis fontSize={13} dataKey="lastUpdated" />
-              <Line
-                label={{ fontSize: 10, position: 'top', offset: 10 }}
-                type="monotone"
-                stroke="#8884d8"
+              <Bar
+                isAnimationActive={false}
+                fill="#353b48"
+                label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
                 dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
               />
-            </LineChart>
+            </BarChart>
           </ResponsiveContainer>
         </>
       ) : (
@@ -107,32 +111,24 @@ const Chart = () => {
       {chartData ? (
         <>
           <Row className="mr-2" justify="end">
-            <Select style={{ width: '150px' }} onChange={handleSelect} defaultValue={'9362'}>
+            <Select style={{ width: '180px' }} onChange={handleSelect} defaultValue={'9362'}>
               {Object.entries(countiesHistory).map(([a, b]) => (
                 <Select.Option key={a} value={a}>
-                  {b[0].name}
+                  {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
                 </Select.Option>
               ))}
             </Select>
           </Row>
           <ResponsiveContainer aspect={2 / 1}>
-            <LineChart
-              margin={{
-                top: 30,
-                right: 20,
-                left: 20,
-              }}
-              data={chartData}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
+            <BarChart margin={{ top: 20 }} data={chartData}>
               <XAxis fontSize={13} dataKey="lastUpdated" />
-              <Line
-                label={{ fontSize: 10, position: 'top', offset: 10 }}
-                type="monotone"
-                stroke="#8884d8"
+              <Bar
+                isAnimationActive={false}
+                label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
+                fill="#353b48"
                 dataKey="inzidenz"
               />
-            </LineChart>
+            </BarChart>
           </ResponsiveContainer>
         </>
       ) : (
