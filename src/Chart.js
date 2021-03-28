@@ -3,15 +3,7 @@ import { Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from 'recharts';
+import { XAxis, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
