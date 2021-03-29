@@ -1,5 +1,5 @@
 import { Button, Row, Spin } from 'antd';
-import { ArrowRightOutlined, LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
+import { LineChartOutlined, LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
 import GermanyDescription from './GermanyDescription';
@@ -16,12 +16,14 @@ function App() {
     <div className="container">
       <Router basename="/inzidenz">
         <Route exact path="/">
-          <Row
-            className="mt-1"
-            align="bottom"
-            style={{ marginBottom: '8px' }}
-            justify="space-between"
-          >
+          <div className="mt-2">
+            <Link to="/history">
+              <Button type="primary" size="small" icon={<LineChartOutlined />}>
+                Historie
+              </Button>
+            </Link>
+          </div>
+          <Row align="bottom" style={{ marginBottom: '8px' }} justify="space-between">
             {germany === null ? <span></span> : <AlertDate date={germany.lastUpdated} />}
             <Button loading={germany === null} icon={<ReloadOutlined />} onClick={reloadGermany}>
               Deutschland
@@ -52,14 +54,6 @@ function App() {
           ) : (
             <CountyTable counties={counties} />
           )}
-
-          <Row className="mt-1" justify="end">
-            <Link to="/history">
-              <Button icon={<ArrowRightOutlined />} type="link">
-                Historie
-              </Button>
-            </Link>
-          </Row>
         </Route>
         <Route path="/history" component={Chart} />
       </Router>

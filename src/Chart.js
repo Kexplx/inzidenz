@@ -1,17 +1,11 @@
-import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Row, Select, Spin } from 'antd';
+import { HomeOutlined, LoadingOutlined } from '@ant-design/icons';
+import { Button, Row, Select, Spin } from 'antd';
+import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  XAxis,
-  ResponsiveContainer,
-  CartesianGrid,
-  Legend,
-  LineChart,
-  Line,
-  YAxis,
-} from 'recharts';
+import { XAxis, ResponsiveContainer, LineChart, Line, YAxis } from 'recharts';
+import { addDecimalPoint } from './helpers';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
@@ -21,34 +15,36 @@ const countiesHistoryUrl =
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
 
-  const [chartData, setChartData] = useState(null);
+  const [countiesChartData, setCountiesChartData] = useState(null);
   const [germanyChartData, setGermanyChartData] = useState(null);
-  const [showInzidenz, setShowInzidenz] = useState(true);
+  const [showInzidenz, setShowInzidenz] = useState(false);
+
+  const getSlicedHistory = history => {
+    const sliceStart = history.length > 7 ? history.length - 7 : 0;
+    return history.slice(sliceStart);
+  };
 
   useEffect(() => {
     axios(germanyHistoryUrl).then(({ data }) => {
-      const sliceStart = data.length > 7 ? data.length - 6 : 0;
       setGermanyChartData([
-        ...data
-          .map(i => ({
-            ...i,
-            newCases: Number(i.newCases.replace('.', '')),
-            inzidenz: i.inzidenz.toFixed(0),
-            lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
-          }))
-          .slice(sliceStart),
+        ...data.map(i => ({
+          ...i,
+          newCases: Number(i.newCases.replace('.', '')),
+          inzidenz: i.inzidenz.toFixed(0),
+          lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
+        })),
       ]);
     });
 
     axios(countiesHistoryUrl).then(({ data }) => {
       setCountiesHistory(data);
-      setChartData(mapToChartData(data['9362']));
+      setCountiesChartData(mapToChartData(data['9362']));
     });
   }, []);
 
   const handleSelect = id => {
     const selectedHistory = countiesHistory[id];
-    setChartData(mapToChartData(selectedHistory));
+    setCountiesChartData(mapToChartData(selectedHistory));
   };
 
   const handleSelect2 = value => {
@@ -72,42 +68,55 @@ const Chart = () => {
     <>
       <div className="mt-2">
         <Link to="/">
-          <ArrowLeftOutlined className="mr-1" />
-          Zurück
+          <Button type="primary" size="small" icon={<HomeOutlined />}>
+            Übersicht
+          </Button>
         </Link>
       </div>
-      <Row justify="space-between">
-        <h3>Deutschland</h3>
-        {germanyChartData && (
-          <Select className="mr-2" onChange={handleSelect2} defaultValue="inzidenz">
-            <Select.Option value="inzidenz">Inzidenz</Select.Option>
+
+      {germanyChartData && (
+        <Row className="mt-1" align="middle" justify="space-between">
+          <h4 className="m-0">
+            Deutschland{' '}
+            <Text type="secondary">({showInzidenz ? 'Inzidenz' : 'Neuinfektionen'})</Text>
+          </h4>
+          <Select size="small" onChange={handleSelect2} defaultValue="newInfections">
             <Select.Option value="newInfections">Neuinfektionen</Select.Option>
+            <Select.Option value="inzidenz">Inzidenz</Select.Option>
           </Select>
-        )}
-      </Row>
+        </Row>
+      )}
       {germanyChartData ? (
         <ResponsiveContainer height={300}>
           <LineChart
             margin={{
-              top: 20,
-              left: -20,
-              right: 20,
+              top: 10,
             }}
-            data={germanyChartData}
+            data={getSlicedHistory(germanyChartData)}
           >
-            <CartesianGrid strokeDasharray="1 3" />
             <YAxis
               fontSize={11}
+              width={0}
               domain={
                 showInzidenz
                   ? ['dataMin - 50', 'dataMax + 50']
                   : ['dataMin - 1000', 'dataMax + 2000']
               }
             />
-            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20 }} />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
+              stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
               isAnimationActive={false}
-              label={{ fontSize: 12, position: 'top', fill: 'rgb(102,102,102)' }}
+              strokeWidth={2}
+              dot={{ strokeWidth: 2, r: 4 }}
+              type="monotone"
+              label={{
+                formatter: v => addDecimalPoint(v),
+                fontSize: 11,
+                offset: 8,
+                position: 'top',
+                fill: 'rgb(102,102,102)',
+              }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
           </LineChart>
@@ -117,35 +126,39 @@ const Chart = () => {
           <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
         </Row>
       )}
-      <Row justify="space-between">
-        <h3>Städte & Landkreise</h3>
-        {chartData && (
-          <Select className="mr-2" onChange={handleSelect} defaultValue={'9362'}>
+      {countiesChartData && (
+        <Row align="bottom" justify="space-between">
+          <h4 className="m-0">
+            Städte & Landkreise <Text type="secondary">(Inzidenz)</Text>
+          </h4>
+          <Select size="small" onChange={handleSelect} defaultValue={'9362'}>
             {Object.entries(countiesHistory).map(([a, b]) => (
               <Select.Option key={a} value={a}>
                 {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
               </Select.Option>
             ))}
           </Select>
-        )}
-      </Row>
-      {chartData ? (
+        </Row>
+      )}
+      {countiesChartData ? (
         <ResponsiveContainer height={300}>
-          <LineChart margin={{ top: 5, left: -20, right: 20 }} data={chartData}>
-            <CartesianGrid strokeDasharray="1 3" />
-            <YAxis fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
-            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20 }} />
-            <Legend />
+          <LineChart margin={{ top: 10 }} data={getSlicedHistory(countiesChartData)}>
+            <YAxis width={0} fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
+              strokeWidth={2}
+              dot={{ strokeWidth: 2, r: 4 }}
+              type="monotone"
+              stroke="#8884d8"
               isAnimationActive={false}
-              label={{ fontSize: 12, position: 'top', fill: 'rgb(102,102,102)' }}
+              label={{ fontSize: 11, position: 'top', offset: 8, fill: 'rgb(102,102,102)' }}
               name="Inzidenz"
               dataKey="inzidenz"
             />
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <Row justify="center">
+        <Row className="mt-4" justify="center">
           <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
         </Row>
       )}

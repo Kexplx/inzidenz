@@ -1,4 +1,4 @@
-// 9181 -> "29.181"
+// 29181 -> "29.181"
 // am i overthinking the fuck out of this??
 export function addDecimalPoint(n) {
   const t = String(n);
