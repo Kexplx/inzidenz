@@ -30,8 +30,6 @@ const Chart = () => {
           }))
           .slice(sliceStart),
       ]);
-
-      console.log(data);
     });
 
     axios(countiesHistoryUrl).then(({ data }) => {
