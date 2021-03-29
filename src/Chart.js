@@ -20,15 +20,18 @@ const Chart = () => {
   useEffect(() => {
     axios(germanyHistoryUrl).then(({ data }) => {
       const sliceStart = data.length > 7 ? data.length - 6 : 0;
-      setGermanyChartData(
-        data
+      setGermanyChartData([
+        ...data
           .map(i => ({
             ...i,
+            newCases: Number(i.newCases.replace('.', '')),
             inzidenz: i.inzidenz.toFixed(0),
             lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
           }))
           .slice(sliceStart),
-      );
+      ]);
+
+      console.log(data);
     });
 
     axios(countiesHistoryUrl).then(({ data }) => {
@@ -77,7 +80,7 @@ const Chart = () => {
         )}
       </Row>
       {germanyChartData ? (
-        <ResponsiveContainer aspect={2 / 1}>
+        <ResponsiveContainer height={300}>
           <LineChart
             margin={{
               top: 20,
@@ -89,6 +92,7 @@ const Chart = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis fontSize={13} dataKey="lastUpdated" />
             <Line
+              isAnimationActive={false}
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
@@ -112,12 +116,13 @@ const Chart = () => {
         )}
       </Row>
       {chartData ? (
-        <ResponsiveContainer aspect={2 / 1}>
+        <ResponsiveContainer height={300}>
           <LineChart margin={{ top: 20, left: 20, right: 20 }} data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis fontSize={13} dataKey="lastUpdated" />
             <Legend />
             <Line
+              isAnimationActive={false}
               label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
               name="Inzidenz"
               dataKey="inzidenz"
