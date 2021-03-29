@@ -3,7 +3,15 @@ import { Row, Select, Spin } from 'antd';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { XAxis, ResponsiveContainer, CartesianGrid, Legend, LineChart, Line } from 'recharts';
+import {
+  XAxis,
+  ResponsiveContainer,
+  CartesianGrid,
+  Legend,
+  LineChart,
+  Line,
+  YAxis,
+} from 'recharts';
 
 const germanyHistoryUrl =
   'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
@@ -82,16 +90,24 @@ const Chart = () => {
           <LineChart
             margin={{
               top: 20,
+              left: -20,
               right: 20,
-              left: 20,
             }}
             data={germanyChartData}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis fontSize={13} dataKey="lastUpdated" />
+            <CartesianGrid strokeDasharray="1 3" />
+            <YAxis
+              fontSize={11}
+              domain={
+                showInzidenz
+                  ? ['dataMin - 50', 'dataMax + 50']
+                  : ['dataMin - 1000', 'dataMax + 2000']
+              }
+            />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20 }} />
             <Line
               isAnimationActive={false}
-              label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
+              label={{ fontSize: 12, position: 'top', fill: 'rgb(102,102,102)' }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
           </LineChart>
@@ -115,13 +131,14 @@ const Chart = () => {
       </Row>
       {chartData ? (
         <ResponsiveContainer height={300}>
-          <LineChart margin={{ top: 20, left: 20, right: 20 }} data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis fontSize={13} dataKey="lastUpdated" />
+          <LineChart margin={{ top: 5, left: -20, right: 20 }} data={chartData}>
+            <CartesianGrid strokeDasharray="1 3" />
+            <YAxis fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20 }} />
             <Legend />
             <Line
               isAnimationActive={false}
-              label={{ fontSize: 13, position: 'top', fill: 'rgb(102,102,102)' }}
+              label={{ fontSize: 12, position: 'top', fill: 'rgb(102,102,102)' }}
               name="Inzidenz"
               dataKey="inzidenz"
             />
