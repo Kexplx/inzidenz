@@ -25,7 +25,12 @@ function App() {
           </div>
           <Row align="bottom" style={{ marginBottom: '8px' }} justify="space-between">
             {germany === null ? <span></span> : <AlertDate date={germany.lastUpdated} />}
-            <Button loading={germany === null} icon={<ReloadOutlined />} onClick={reloadGermany}>
+            <Button
+              size="small"
+              loading={germany === null}
+              icon={<ReloadOutlined />}
+              onClick={reloadGermany}
+            >
               Deutschland
             </Button>
           </Row>
@@ -43,7 +48,12 @@ function App() {
             justify="space-between"
           >
             {counties === null ? <span></span> : <AlertDate date={counties[0].lastUpdated} />}
-            <Button loading={counties === null} icon={<ReloadOutlined />} onClick={reloadCounties}>
+            <Button
+              size="small"
+              loading={counties === null}
+              icon={<ReloadOutlined />}
+              onClick={reloadCounties}
+            >
               Städte & Landkreise
             </Button>
           </Row>
