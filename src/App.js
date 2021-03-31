@@ -23,7 +23,12 @@ function App() {
               </Button>
             </Link>
           </div>
-          <Row align="bottom" style={{ marginBottom: '8px' }} justify="space-between">
+          <Row
+            className="mt-1"
+            align="bottom"
+            style={{ marginBottom: '8px' }}
+            justify="space-between"
+          >
             {germany === null ? <span></span> : <AlertDate date={germany.lastUpdated} />}
             <Button
               size="small"
