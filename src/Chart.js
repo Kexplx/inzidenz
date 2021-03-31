@@ -77,8 +77,7 @@ const Chart = () => {
       {germanyChartData && (
         <Row className="mt-1" align="middle" justify="space-between">
           <h4 className="m-0">
-            Deutschland{' '}
-            <Text type="secondary">({showInzidenz ? 'Inzidenz' : 'Neuinfektionen'})</Text>
+            Deutschland
           </h4>
           <Select size="small" onChange={handleSelect2} defaultValue="newInfections">
             <Select.Option value="newInfections">Neuinfektionen</Select.Option>
