@@ -54,14 +54,13 @@ const Chart = () => {
   };
 
   const mapToChartData = history => {
-    const sliceStart = history.length > 7 ? history.length - 6 : 0;
     return history
       .map(c => ({
         ...c,
         inzidenz: c.inzidenz.toFixed(0),
         lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
       }))
-      .slice(sliceStart);
+      .slice(-10);
   };
 
   return (
@@ -76,9 +75,7 @@ const Chart = () => {
 
       {germanyChartData && (
         <Row className="mt-1" align="middle" justify="space-between">
-          <h4 className="m-0">
-            Deutschland
-          </h4>
+          <h4 className="m-0">Deutschland</h4>
           <Select size="small" onChange={handleSelect2} defaultValue="newInfections">
             <Select.Option value="newInfections">Neuinfektionen</Select.Option>
             <Select.Option value="inzidenz">Inzidenz</Select.Option>
