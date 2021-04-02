@@ -20,8 +20,7 @@ const Chart = () => {
   const [showInzidenz, setShowInzidenz] = useState(false);
 
   const getSlicedHistory = history => {
-    const sliceStart = history.length > 7 ? history.length - 7 : 0;
-    return history.slice(sliceStart);
+    return history.slice(-10);
   };
 
   useEffect(() => {
@@ -54,13 +53,11 @@ const Chart = () => {
   };
 
   const mapToChartData = history => {
-    return history
-      .map(c => ({
-        ...c,
-        inzidenz: c.inzidenz.toFixed(0),
-        lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
-      }))
-      .slice(-10);
+    return history.map(c => ({
+      ...c,
+      inzidenz: c.inzidenz.toFixed(0),
+      lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
+    }));
   };
 
   return (
