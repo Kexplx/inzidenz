@@ -18,7 +18,7 @@ const Chart = () => {
   const [showInzidenz, setShowInzidenz] = useState(false);
 
   const getSlicedHistory = history => {
-    return history.slice(-10);
+    return history.slice(-9);
   };
 
   useEffect(() => {
