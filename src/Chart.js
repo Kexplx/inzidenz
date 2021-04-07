@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import { XAxis, ResponsiveContainer, LineChart, Line, YAxis } from 'recharts';
 import { addDecimalPoint } from './helpers';
 
-const germanyHistoryUrl = 'http://localhost:8080/germany-history';
-const countiesHistoryUrl = 'http://localhost:8080/counties';
+const germanyHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com//germany-history';
+const countiesHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com//counties';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
