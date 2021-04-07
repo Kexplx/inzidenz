@@ -7,10 +7,8 @@ import { Link } from 'react-router-dom';
 import { XAxis, ResponsiveContainer, LineChart, Line, YAxis } from 'recharts';
 import { addDecimalPoint } from './helpers';
 
-const germanyHistoryUrl =
-  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/germany-history';
-const countiesHistoryUrl =
-  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=http://35.225.234.174:5000/counties-history';
+const germanyHistoryUrl = 'http://localhost:8080/germany-history';
+const countiesHistoryUrl = 'http://localhost:8080/counties';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
@@ -30,7 +28,7 @@ const Chart = () => {
           ...i,
           newCases: Number(i.newCases.replace('.', '')),
           inzidenz: i.inzidenz.toFixed(0),
-          lastUpdated: i.stand.replace('.2021, 00:00 Uhr', ''),
+          lastUpdated: i.lastUpdated.replace('.2021, 00:00 Uhr', ''),
         })),
       ]);
     });
