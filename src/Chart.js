@@ -18,7 +18,7 @@ const Chart = () => {
   const [showInzidenz, setShowInzidenz] = useState(false);
 
   const getSlicedHistory = history => {
-    return history.slice(-10);
+    return history.slice(-9);
   };
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const Chart = () => {
               dot={{ strokeWidth: 2, r: 4 }}
               label={{
                 formatter: v => addDecimalPoint(v),
-                fontSize: 10,
+                fontSize: 11,
                 offset: 10,
                 position: 'top',
               }}
@@ -137,7 +137,7 @@ const Chart = () => {
               dot={{ strokeWidth: 2, r: 4 }}
               stroke="#8884d8"
               isAnimationActive={false}
-              label={{ fontSize: 10, position: 'top', offset: 10 }}
+              label={{ fontSize: 11, position: 'top', offset: 10 }}
               name="Inzidenz"
               dataKey="inzidenz"
             />
