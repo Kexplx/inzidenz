@@ -4,7 +4,7 @@ import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { XAxis, ResponsiveContainer, LineChart, Line, YAxis } from 'recharts';
+import { XAxis, ResponsiveContainer, LineChart, Line, YAxis, ReferenceDot } from 'recharts';
 import { addDecimalPoint } from './helpers';
 
 const germanyHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com//germany-history';
@@ -50,8 +50,9 @@ const Chart = () => {
   };
 
   const mapToChartData = history => {
-    return history.map(c => ({
+    return history.map((c, i) => ({
       ...c,
+      index: i,
       inzidenz: c.inzidenz.toFixed(0),
       lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
     }));
@@ -92,6 +93,18 @@ const Chart = () => {
                   : ['dataMin - 1000', 'dataMax + 2000']
               }
             />
+            <ReferenceDot
+              strokeDasharray="2 2"
+              stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
+              r={25}
+              y={
+                showInzidenz
+                  ? getSlicedHistory(germanyChartData)[1].inzidenz
+                  : getSlicedHistory(germanyChartData)[1].newCases
+              }
+              x={getSlicedHistory(germanyChartData)[1].lastUpdated}
+            />
+
             <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
               stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
@@ -130,8 +143,15 @@ const Chart = () => {
       {countiesChartData ? (
         <ResponsiveContainer height={300}>
           <LineChart margin={{ top: 10 }} data={getSlicedHistory(countiesChartData)}>
-            <YAxis hide fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
+            <YAxis hide fontSize={11} domain={['dataMin - 60', 'dataMax + 60']} />
             <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
+            <ReferenceDot
+              strokeDasharray="2 2"
+              stroke="#8884d8"
+              r={25}
+              y={getSlicedHistory(countiesChartData)[1]?.inzidenz}
+              x={getSlicedHistory(countiesChartData)[1]?.lastUpdated}
+            />
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}

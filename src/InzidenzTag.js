@@ -5,7 +5,7 @@ const InizidenzTag = ({ inzidenz }) => {
     <Tag
       style={{ fontSize: '13px' }}
       color={
-        inzidenz < 35 ? 'green' : inzidenz < 50 ? 'orange' : inzidenz < 100 ? 'volcano' : 'red'
+        inzidenz < 50 ? 'green' : inzidenz < 100 ? 'orange' : inzidenz < 150 ? 'volcano' : 'red'
       }
     >
       {inzidenz.toFixed(2).toString().replace('.', ',')}
