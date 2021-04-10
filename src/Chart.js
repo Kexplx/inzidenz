@@ -18,7 +18,7 @@ const Chart = () => {
   const [showInzidenz, setShowInzidenz] = useState(false);
 
   const getSlicedHistory = history => {
-    return history.slice(-9);
+    return history.slice(-10);
   };
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const Chart = () => {
         })),
       ]);
     });
-
     axios(countiesHistoryUrl).then(({ data }) => {
       setCountiesHistory(data);
       setCountiesChartData(mapToChartData(data['9362']));
@@ -86,35 +85,32 @@ const Chart = () => {
             data={getSlicedHistory(germanyChartData)}
           >
             <YAxis
-              fontSize={11}
-              width={0}
+              hide
               domain={
                 showInzidenz
                   ? ['dataMin - 50', 'dataMax + 50']
                   : ['dataMin - 1000', 'dataMax + 2000']
               }
             />
-            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
+            <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
               stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
               isAnimationActive={false}
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
-              type="monotone"
               label={{
                 formatter: v => addDecimalPoint(v),
-                fontSize: 11,
-                offset: 8,
+                fontSize: 10,
+                offset: 10,
                 position: 'top',
-                fill: 'rgb(102,102,102)',
               }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <Row justify="center">
-          <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
+        <Row className="mt-4" justify="center">
+          <Spin indicator={<LoadingOutlined />} tip="Lade Historie" />
         </Row>
       )}
       {countiesChartData && (
@@ -134,23 +130,22 @@ const Chart = () => {
       {countiesChartData ? (
         <ResponsiveContainer height={300}>
           <LineChart margin={{ top: 10 }} data={getSlicedHistory(countiesChartData)}>
-            <YAxis width={0} fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
-            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
+            <YAxis hide fontSize={11} domain={['dataMin - 50', 'dataMax + 50']} />
+            <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
-              type="monotone"
               stroke="#8884d8"
               isAnimationActive={false}
-              label={{ fontSize: 11, position: 'top', offset: 8, fill: 'rgb(102,102,102)' }}
+              label={{ fontSize: 10, position: 'top', offset: 10 }}
               name="Inzidenz"
               dataKey="inzidenz"
             />
           </LineChart>
         </ResponsiveContainer>
       ) : (
-        <Row className="mt-4" justify="center">
-          <Spin indicator={<LoadingOutlined />} tip="Lade Daten" />
+        <Row className="mt-20" justify="center">
+          <Spin indicator={<LoadingOutlined />} tip="Lade Historie" />
         </Row>
       )}
     </>
