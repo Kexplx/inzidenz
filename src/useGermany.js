@@ -2,8 +2,8 @@ import axios from 'axios';
 import { parse } from 'node-html-parser';
 import { useEffect, useState } from 'react';
 const vaccinationUrl =
-  'https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=https://impfdashboard.de';
-const rkiUrlWithProxy = `https://europe-west3-crimeview.cloudfunctions.net/handleGet?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
+  'https://europe-west3-node02-307615.cloudfunctions.net/func-1?url=https://impfdashboard.de';
+const rkiUrlWithProxy = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
 
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';

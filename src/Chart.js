@@ -101,8 +101,9 @@ const Chart = () => {
             />
             <ReferenceDot
               strokeDasharray="3 3"
+              stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
               fill="transparent"
-              strokeWidth={1}
+              strokeWidth={2}
               r={25}
               y={showInzidenz ? germanyChartData[1].inzidenz : germanyChartData[1].newCases}
               x={germanyChartData[1].lastUpdated}
@@ -110,6 +111,7 @@ const Chart = () => {
                 position: 'bottom',
                 value: `Letzter ${getWeekday(
                   germanyChartData[germanyChartData.length - 1].lastUpdated,
+                  false,
                 )}`,
                 fill: 'gray',
                 fontSize: 11,
@@ -143,7 +145,8 @@ const Chart = () => {
             <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             {countiesChartData.length === 9 && (
               <ReferenceDot
-                strokeWidth={1}
+                strokeWidth={2}
+                stroke="#8884d8"
                 strokeDasharray="3 3"
                 r={25}
                 y={countiesChartData[1].inzidenz}
@@ -152,6 +155,7 @@ const Chart = () => {
                   position: 'bottom',
                   value: `Letzter ${getWeekday(
                     countiesChartData[countiesChartData.length - 1].lastUpdated,
+                    false,
                   )}`,
                   fill: 'gray',
                   fontSize: 11,
