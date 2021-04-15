@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { XAxis, ResponsiveContainer, LineChart, Line, YAxis, ReferenceDot } from 'recharts';
-import { addDecimalPoint } from './helpers';
+import { addDecimalPoint, getWeekday } from './helpers';
 
 const germanyHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com//germany-history';
 const countiesHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com//counties';
@@ -17,42 +17,32 @@ const Chart = () => {
   const [germanyChartData, setGermanyChartData] = useState(null);
   const [showInzidenz, setShowInzidenz] = useState(false);
 
-  const getSlicedHistory = history => {
-    return history.slice(-9);
-  };
-
   useEffect(() => {
     axios(germanyHistoryUrl).then(({ data }) => {
-      setGermanyChartData([
-        ...data.map(i => ({
-          ...i,
-          newCases: Number(i.newCases.replace('.', '')),
-          inzidenz: i.inzidenz.toFixed(0),
-          lastUpdated: i.lastUpdated.replace('.2021, 00:00 Uhr', ''),
-        })),
-      ]);
+      setGermanyChartData(mapToChartData(data).slice(-9));
     });
+
     axios(countiesHistoryUrl).then(({ data }) => {
       setCountiesHistory(data);
-      setCountiesChartData(mapToChartData(data['9362']));
+      setCountiesChartData(mapToChartData(data['9362']).slice(-9));
     });
   }, []);
 
-  const handleSelect = id => {
+  const handleCountySelect = id => {
     const selectedHistory = countiesHistory[id];
-    setCountiesChartData(mapToChartData(selectedHistory));
+    setCountiesChartData(mapToChartData(selectedHistory).slice(-9));
   };
 
-  const handleSelect2 = value => {
+  const handleGermanyDataTypeSelect = value => {
     const showInzidenz = value === 'inzidenz';
 
     setShowInzidenz(showInzidenz);
   };
 
   const mapToChartData = history => {
-    return history.map((c, i) => ({
+    return history.map(c => ({
       ...c,
-      index: i,
+      newCases: Number(c.newCases?.replace('.', '')),
       inzidenz: c.inzidenz.toFixed(0),
       lastUpdated: c.lastUpdated.replace('.2021, 00:00 Uhr', ''),
     }));
@@ -71,7 +61,7 @@ const Chart = () => {
       {germanyChartData && (
         <Row className="mt-1" align="middle" justify="space-between">
           <h4 className="m-0">Deutschland</h4>
-          <Select size="small" onChange={handleSelect2} defaultValue="newInfections">
+          <Select size="small" onChange={handleGermanyDataTypeSelect} defaultValue="newInfections">
             <Select.Option value="newInfections">Neuinfektionen</Select.Option>
             <Select.Option value="inzidenz">Inzidenz</Select.Option>
           </Select>
@@ -83,7 +73,7 @@ const Chart = () => {
             margin={{
               top: 10,
             }}
-            data={getSlicedHistory(germanyChartData)}
+            data={germanyChartData}
           >
             <YAxis
               hide
@@ -93,23 +83,13 @@ const Chart = () => {
                   : ['dataMin - 1000', 'dataMax + 2000']
               }
             />
-            <ReferenceDot
-              strokeDasharray="2 2"
-              stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
-              r={25}
-              y={
-                showInzidenz
-                  ? getSlicedHistory(germanyChartData)[1].inzidenz
-                  : getSlicedHistory(germanyChartData)[1].newCases
-              }
-              x={getSlicedHistory(germanyChartData)[1].lastUpdated}
-            />
 
-            <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
               stroke={showInzidenz ? '#8884d8' : '#82ca9d'}
               isAnimationActive={false}
               strokeWidth={2}
+              type="monotone"
               dot={{ strokeWidth: 2, r: 4 }}
               label={{
                 formatter: v => addDecimalPoint(v),
@@ -118,6 +98,22 @@ const Chart = () => {
                 position: 'top',
               }}
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
+            />
+            <ReferenceDot
+              strokeDasharray="3 3"
+              fill="transparent"
+              strokeWidth={1}
+              r={25}
+              y={showInzidenz ? germanyChartData[1].inzidenz : germanyChartData[1].newCases}
+              x={germanyChartData[1].lastUpdated}
+              label={{
+                position: 'bottom',
+                value: `Letzter ${getWeekday(
+                  germanyChartData[germanyChartData.length - 1].lastUpdated,
+                )}`,
+                fill: 'gray',
+                fontSize: 11,
+              }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -131,7 +127,7 @@ const Chart = () => {
           <h4 className="m-0">
             Städte & Landkreise <Text type="secondary">(Inzidenz)</Text>
           </h4>
-          <Select size="small" onChange={handleSelect} defaultValue={'9362'}>
+          <Select size="small" onChange={handleCountySelect} defaultValue={'9362'}>
             {Object.entries(countiesHistory).map(([a, b]) => (
               <Select.Option key={a} value={a}>
                 {b[0].name} {b[0].type.includes('kreis') ? '(LK)' : ''}
@@ -142,16 +138,26 @@ const Chart = () => {
       )}
       {countiesChartData ? (
         <ResponsiveContainer height={300}>
-          <LineChart margin={{ top: 10 }} data={getSlicedHistory(countiesChartData)}>
-            <YAxis hide fontSize={11} domain={['dataMin - 60', 'dataMax + 60']} />
-            <XAxis fontSize={10} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
-            <ReferenceDot
-              strokeDasharray="2 2"
-              stroke="#8884d8"
-              r={25}
-              y={getSlicedHistory(countiesChartData)[1]?.inzidenz}
-              x={getSlicedHistory(countiesChartData)[1]?.lastUpdated}
-            />
+          <LineChart margin={{ top: 10 }} data={countiesChartData}>
+            <YAxis hide fontSize={11} domain={['dataMin - 60', 'dataMax + 100']} />
+            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
+            {countiesChartData.length === 9 && (
+              <ReferenceDot
+                strokeWidth={1}
+                strokeDasharray="3 3"
+                r={25}
+                y={countiesChartData[1].inzidenz}
+                x={countiesChartData[1].lastUpdated}
+                label={{
+                  position: 'bottom',
+                  value: `Letzter ${getWeekday(
+                    countiesChartData[countiesChartData.length - 1].lastUpdated,
+                  )}`,
+                  fill: 'gray',
+                  fontSize: 11,
+                }}
+              />
+            )}
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
