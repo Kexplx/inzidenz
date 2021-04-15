@@ -113,7 +113,7 @@ const Chart = () => {
                   germanyChartData[germanyChartData.length - 1].lastUpdated,
                   false,
                 )}`,
-                fill: 'gray',
+                fill: '#6666',
                 fontSize: 11,
               }}
             />
@@ -157,7 +157,7 @@ const Chart = () => {
                     countiesChartData[countiesChartData.length - 1].lastUpdated,
                     false,
                   )}`,
-                  fill: 'gray',
+                  fill: '#6666',
                   fontSize: 11,
                 }}
               />
