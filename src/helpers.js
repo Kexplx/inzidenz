@@ -47,3 +47,13 @@ export function getWeekday(ds, short = true) {
 
   return weekdaysLong[date.getDay()];
 }
+
+export function getCountyName(county) {
+  let name = county.name;
+
+  if (county.type.includes('Landkreis')) {
+    name += ' (LK)';
+  }
+
+  return name;
+}
