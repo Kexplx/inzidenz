@@ -142,7 +142,6 @@ const Chart = () => {
                 style={{ display: 'block' }}
                 onClick={() => setShowDrawer(true)}
                 icon={<WarningOutlined />}
-                danger
                 type="dashed"
               >
                 Notbremse
