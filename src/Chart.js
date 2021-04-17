@@ -1,4 +1,9 @@
-import { HomeOutlined, LoadingOutlined, WarningOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  LineChartOutlined,
+  LoadingOutlined,
+  WarningOutlined,
+} from '@ant-design/icons';
 import { Button, Drawer, Row, Select, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
@@ -99,7 +104,7 @@ const Chart = () => {
 
             <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
-              stroke="#7f8c8d"
+              stroke="#1890FF"
               isAnimationActive={false}
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
@@ -112,10 +117,11 @@ const Chart = () => {
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
             <ReferenceDot
-              stroke="#7f8c8d"
+              stroke="#1890FF"
               fill="transparent"
-              strokeWidth={1}
-              r={30}
+              strokeWidth={2}
+              strokeDasharray="3 3"
+              r={27}
               y={showInzidenz ? germanyChartData[1].inzidenz : germanyChartData[1].newCases}
               x={germanyChartData[1].lastUpdated}
             />
@@ -136,9 +142,10 @@ const Chart = () => {
                 style={{ display: 'block' }}
                 onClick={() => setShowDrawer(true)}
                 icon={<WarningOutlined />}
+                danger
                 type="dashed"
               >
-                Notbremse gilt
+                Notbremse
               </Button>
             )}
           </h4>
@@ -158,9 +165,10 @@ const Chart = () => {
             <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             {countiesChartData.length === 9 && (
               <ReferenceDot
-                strokeWidth={1}
-                stroke="#7f8c8d"
-                r={30}
+                strokeWidth={2}
+                strokeDasharray="3 3"
+                stroke="#1890FF"
+                r={27}
                 y={countiesChartData[1].inzidenz}
                 x={countiesChartData[1].lastUpdated}
               />
@@ -168,7 +176,7 @@ const Chart = () => {
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
-              stroke="#7f8c8d"
+              stroke="#1890FF"
               isAnimationActive={false}
               label={{ fontSize: 11, position: 'top', offset: 10 }}
               name="Inzidenz"
@@ -182,6 +190,7 @@ const Chart = () => {
         </Row>
       )}
       <Drawer
+        style={{ margin: 0, padding: '-10px' }}
         placement="bottom"
         height="100%"
         closable={false}
@@ -189,7 +198,26 @@ const Chart = () => {
         visible={showDrawer}
       >
         {countiesChartData && (
-          <div className="container">
+          <div style={{ textAlign: 'justify' }} className="container mt-2">
+            <Link to="/">
+              <Button
+                onClick={() => setShowDrawer(false)}
+                type="primary"
+                size="small"
+                icon={<HomeOutlined />}
+              >
+                Übersicht
+              </Button>
+            </Link>
+            <Button
+              className="ml-1"
+              onClick={() => setShowDrawer(false)}
+              type="primary"
+              size="small"
+              icon={<LineChartOutlined />}
+            >
+              Historie
+            </Button>
             <h2>§ 28b Infektionsschutzgesetz</h2>
             <h4>
               Überschreitet in einem Landkreis oder einer kreisfreien Stadt an drei aufeinander
@@ -256,12 +284,6 @@ const Chart = () => {
               </li>
               <li>Baumärkte sind geschlossen.</li>
             </ul>
-
-            <Row justify="end">
-              <Button onClick={() => setShowDrawer(false)} type="primary">
-                Alles klar
-              </Button>
-            </Row>
           </div>
         )}
       </Drawer>

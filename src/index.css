@@ -11,6 +11,10 @@ html {
   margin: 0 auto;
 }
 
+.ml-1 {
+  margin-left: 10px;
+}
+
 .m-0 {
   margin: 0;
 }
@@ -51,4 +55,8 @@ html {
 
 .ant-table-thead > tr > th {
   font-weight: 400;
+}
+
+.ant-drawer-body {
+  padding: 0;
 }
