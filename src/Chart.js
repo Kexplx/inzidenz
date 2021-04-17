@@ -198,7 +198,13 @@ const Chart = () => {
           <h4>
             Überschreitet in einem Landkreis oder einer kreisfreien Stadt an drei aufeinander
             folgenden Tagen die 7-Tage-Inzidenz den Schwellenwert von 100, gelten die folgenden
-            Maßnahmen (<Text type="danger">Gilt für {getCountyName(countiesChartData[0])}</Text>).
+            Maßnahmen (
+            {notbremseApplies(countiesChartData) ? (
+              <Text type="danger">Gilt in {getCountyName(countiesChartData[0])}</Text>
+            ) : (
+              <Text type="success">Gilt nicht in {getCountyName(countiesChartData[0])}</Text>
+            )}
+            ).
           </h4>
           <ul>
             <li>
