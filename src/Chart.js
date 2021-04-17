@@ -104,7 +104,7 @@ const Chart = () => {
 
             <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
-              stroke="#1890FF"
+              stroke="#34495e"
               isAnimationActive={false}
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
@@ -117,7 +117,7 @@ const Chart = () => {
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
             <ReferenceDot
-              stroke="#1890FF"
+              stroke="#34495e"
               fill="transparent"
               strokeWidth={2}
               strokeDasharray="3 3"
@@ -167,7 +167,7 @@ const Chart = () => {
               <ReferenceDot
                 strokeWidth={2}
                 strokeDasharray="3 3"
-                stroke="#1890FF"
+                stroke="#34495e"
                 r={27}
                 y={countiesChartData[1].inzidenz}
                 x={countiesChartData[1].lastUpdated}
@@ -176,7 +176,7 @@ const Chart = () => {
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
-              stroke="#1890FF"
+              stroke="#34495e"
               isAnimationActive={false}
               label={{ fontSize: 11, position: 'top', offset: 10 }}
               name="Inzidenz"
