@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { parse } from 'node-html-parser';
 import { useEffect, useState } from 'react';
-const vaccinationUrl =
+const impfdashboardUrl =
   'https://europe-west3-node02-307615.cloudfunctions.net/func-1?url=https://impfdashboard.de';
-const rkiUrlWithProxy = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
+const rkiUrl = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url=https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Fallzahlen.html`;
 
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
@@ -15,6 +15,7 @@ const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 const vaccinatedTextSelector =
   'body > main > section > div.content.svelte-br2v7d.grow > div > div > div > div > div > div:nth-child(2) > p';
 const vaccinatedRegex = /Damit sind nun (.*) Personen \((.*%)/;
+const firstTimesVacciantedRegex = /Insgesamt haben (.*) Personen mindestens eine/;
 
 function addPadding(text) {
   const boxes = text.split('.');
@@ -32,7 +33,7 @@ export function useGermany() {
   const fetchGermany = async () => {
     setGermany(null);
 
-    const { data: casesHtml } = await axios(rkiUrlWithProxy);
+    const { data: casesHtml } = await axios(rkiUrl);
     let root = parse(casesHtml);
 
     const newCases = root.querySelector(newCasesSelector).textContent;
@@ -41,7 +42,7 @@ export function useGermany() {
     const lastUpdatedUgly = root.querySelector(lastUpdatedSelector).textContent;
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
 
-    const { data: vaccinatedHtml } = await axios(vaccinationUrl);
+    const { data: vaccinatedHtml } = await axios(impfdashboardUrl);
     root = parse(vaccinatedHtml);
 
     const text = root
@@ -49,9 +50,15 @@ export function useGermany() {
       .textContent.replace(/(\n|\r)/g, '')
       .replace(/\s\s/g, ' ');
     const [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
+    const [, firstTimeVaccinated] = firstTimesVacciantedRegex.exec(text);
+    const firstTimeVaccinatedPercent =
+      (Number(firstTimeVaccinated.replace(/\./g, '')) / 820000).toFixed(1).replace(/\./g, ',') +
+      '%';
 
     setGermany({
       newCases,
+      firstTimeVaccinated,
+      firstTimeVaccinatedPercent,
       inzidenz,
       lastUpdated,
       totalVaccinated,
