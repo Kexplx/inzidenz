@@ -104,7 +104,7 @@ const Chart = () => {
 
             <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
             <Line
-              stroke="#34495e"
+              stroke="#7f8c8d"
               isAnimationActive={false}
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
@@ -117,7 +117,7 @@ const Chart = () => {
               dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
             />
             <ReferenceDot
-              stroke="#34495e"
+              stroke="#7f8c8d"
               fill="transparent"
               strokeWidth={2}
               strokeDasharray="3 3"
@@ -166,7 +166,7 @@ const Chart = () => {
               <ReferenceDot
                 strokeWidth={2}
                 strokeDasharray="3 3"
-                stroke="#34495e"
+                stroke="#7f8c8d"
                 r={27}
                 y={countiesChartData[1].inzidenz}
                 x={countiesChartData[1].lastUpdated}
@@ -175,7 +175,7 @@ const Chart = () => {
             <Line
               strokeWidth={2}
               dot={{ strokeWidth: 2, r: 4 }}
-              stroke="#34495e"
+              stroke="#7f8c8d"
               isAnimationActive={false}
               label={{ fontSize: 11, position: 'top', offset: 10 }}
               name="Inzidenz"
@@ -198,18 +198,7 @@ const Chart = () => {
       >
         {countiesChartData && (
           <div style={{ textAlign: 'justify' }} className="container mt-2">
-            <Link to="/">
-              <Button
-                onClick={() => setShowDrawer(false)}
-                type="primary"
-                size="small"
-                icon={<HomeOutlined />}
-              >
-                Übersicht
-              </Button>
-            </Link>
             <Button
-              className="ml-1"
               onClick={() => setShowDrawer(false)}
               type="primary"
               size="small"
@@ -217,7 +206,7 @@ const Chart = () => {
             >
               Historie
             </Button>
-            <h2>§ 28b Infektionsschutzgesetz</h2>
+            <h2 className="mt-2">§ 28b Infektionsschutzgesetz</h2>
             <h4>
               Überschreitet in einem Landkreis oder einer kreisfreien Stadt an drei aufeinander
               folgenden Tagen die 7-Tage-Inzidenz den Schwellenwert von 100, gelten die folgenden
