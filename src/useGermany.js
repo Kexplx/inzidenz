@@ -16,6 +16,7 @@ const vaccinatedTextSelector =
   'body > main > section > div.content.svelte-br2v7d.grow > div > div > div > div > div > div:nth-child(2) > p';
 const vaccinatedRegex = /Damit sind nun (.*) Personen \((.*%)/;
 const firstTimesVacciantedRegex = /Insgesamt haben (.*) Personen mindestens eine/;
+const latestVaccinedDayRegex = /(Am .* wurden in Deutschland .* Impfdosen verabreicht.)/;
 
 function addPadding(text) {
   const boxes = text.split('.');
@@ -54,10 +55,12 @@ export function useGermany() {
     const firstTimeVaccinatedPercent =
       (Number(firstTimeVaccinated.replace(/\./g, '')) / 820000).toFixed(1).replace(/\./g, ',') +
       '%';
+    const [, latestVaccinedDay] = latestVaccinedDayRegex.exec(text);
 
     setGermany({
       newCases,
       firstTimeVaccinated,
+      latestVaccinedDay,
       firstTimeVaccinatedPercent,
       inzidenz,
       lastUpdated,
