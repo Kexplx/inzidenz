@@ -28,7 +28,7 @@ const GermanyDescription = ({ germany }) => {
           <InizidenzTag inzidenz={inzidenz} />
         </div>
       </Descriptions.Item>
-      <Descriptions.Item label="Impfungen" style={{ width: '0px' }}>
+      <Descriptions.Item label="Impfungen" style={{ paddingLeft: '7px' }}>
         {latestVaccinedDay} Insgesamt haben{' '}
         <Text strong type="success">
           {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
