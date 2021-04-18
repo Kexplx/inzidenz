@@ -15,6 +15,7 @@ const GermanyDescription = ({ germany }) => {
   return (
     <Descriptions column={{ sm: 2, xs: 1 }} size="small" bordered>
       <Descriptions.Item
+        style={{ paddingLeft: '7px' }}
         label={
           <>
             Neuinfektionen <Text type="secondary">(seit gestern)</Text>
@@ -23,17 +24,17 @@ const GermanyDescription = ({ germany }) => {
       >
         <div style={{ textAlign: 'center' }}>{newCases}</div>
       </Descriptions.Item>
-      <Descriptions.Item label="Inzidenz">
+      <Descriptions.Item style={{ paddingLeft: '7px' }} label="Inzidenz">
         <div style={{ textAlign: 'center' }}>
           <InizidenzTag inzidenz={inzidenz} />
         </div>
       </Descriptions.Item>
-      <Descriptions.Item label="Erstgeimpfte">
+      <Descriptions.Item style={{ paddingLeft: '7px' }} label="Erstgeimpfte">
         <div style={{ textAlign: 'center' }}>
           {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
         </div>
       </Descriptions.Item>
-      <Descriptions.Item label="Vollständig Geimpfte">
+      <Descriptions.Item style={{ paddingLeft: '7px' }} label="Vollständig Geimpfte">
         <div style={{ textAlign: 'center' }}>
           {totalVaccinated} ({percentVaccinated})
         </div>
