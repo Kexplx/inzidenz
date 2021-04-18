@@ -1,16 +1,9 @@
-import { Descriptions, Tag } from 'antd';
+import { Descriptions } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import InizidenzTag from './InzidenzTag';
 
 const GermanyDescription = ({ germany }) => {
-  const {
-    newCases,
-    inzidenz,
-    totalVaccinated,
-    percentVaccinated,
-    firstTimeVaccinated,
-    firstTimeVaccinatedPercent,
-  } = germany;
+  const { newCases, inzidenz, firstTimeVaccinated, firstTimeVaccinatedPercent } = germany;
 
   return (
     <Descriptions column={{ sm: 2, xs: 1 }} size="small" bordered>
