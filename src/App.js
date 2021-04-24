@@ -149,7 +149,7 @@ function App() {
                   negativen Corona-Test vorlegen und einen Termin gebucht haben. Viele Geschäfte
                   müssen außerdem ab einer Inzidenz von 150 dichtmachen und dürfen dann nur noch das
                   Abholen bestellter Waren anbieten. Ausgenommen sind unter anderem Supermärkte,
-                  Drogerien und Apotheken umschalten.
+                  Drogerien und Apotheken.
                 </li>
 
                 <li>
