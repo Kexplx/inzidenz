@@ -5,6 +5,7 @@ import {
   LineChartOutlined,
   LoadingOutlined,
   ReloadOutlined,
+  SmileOutlined,
 } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
@@ -15,11 +16,14 @@ import CountyTable from './CountyTable';
 import Chart from './Chart';
 import { useState } from 'react';
 import Text from 'antd/lib/typography/Text';
+import useJokeOfTheDay from './useJokeOfTheDay';
 
 function App() {
   const [counties, reloadCounties] = useCounties();
   const [germany, reloadGermany] = useGermany();
-  const [showDrawer, setShowDrawer] = useState(false);
+  const joke = useJokeOfTheDay();
+  const [showNotbremseDrawer, setShowNotbremseDrawer] = useState(false);
+  const [showJokeDrawer, setJokeShowDrawer] = useState(false);
 
   return (
     <div className="container">
@@ -33,12 +37,23 @@ function App() {
             </Link>
             <Button
               className="ml-1"
-              onClick={() => setShowDrawer(!showDrawer)}
+              onClick={() => setShowNotbremseDrawer(!showNotbremseDrawer)}
               type="dashed"
+              danger
               size="small"
               icon={<AlertOutlined />}
             >
               Notbremse
+            </Button>
+            <Button
+              className="ml-1"
+              onClick={() => setJokeShowDrawer(!showJokeDrawer)}
+              type="dashed"
+              size="small"
+              style={{ color: 'rgb(39,174,96)', borderColor: 'rgb(39,174,96)' }}
+              icon={<SmileOutlined />}
+            >
+              Joke of the day
             </Button>
           </div>
           <Row
@@ -93,12 +108,11 @@ function App() {
             placement="bottom"
             height="100%"
             closable={false}
-            onClose={() => setShowDrawer(false)}
-            visible={showDrawer}
+            visible={showNotbremseDrawer}
           >
             <div style={{ textAlign: 'justify' }} className="container mt-2">
               <Button
-                onClick={() => setShowDrawer(false)}
+                onClick={() => setShowNotbremseDrawer(false)}
                 type="primary"
                 icon={<HomeOutlined />}
                 size="small"
@@ -143,6 +157,26 @@ function App() {
                   Konzerthäuser, Museen, Ausstellungen und Gedenkstätten.
                 </li>
               </ul>
+            </div>
+          </Drawer>
+          <Drawer
+            style={{ margin: 0, padding: '-10px' }}
+            placement="bottom"
+            height="100%"
+            closable={false}
+            visible={showJokeDrawer}
+          >
+            <div style={{ textAlign: 'justify' }} className="container mt-2">
+              <Button
+                onClick={() => setJokeShowDrawer(false)}
+                type="primary"
+                icon={<HomeOutlined />}
+                size="small"
+              >
+                Übersicht
+              </Button>
+              <h2 className="mt-2">Joke of the day</h2>
+              {joke}
             </div>
           </Drawer>
         </Route>
