@@ -17,11 +17,13 @@ import Chart from './Chart';
 import { useState } from 'react';
 import Text from 'antd/lib/typography/Text';
 import useJokeOfTheDay from './useJokeOfTheDay';
+import { parseDate } from './helpers';
+import bat from './assets/bat.jpg';
 
 function App() {
   const [counties, reloadCounties] = useCounties();
   const [germany, reloadGermany] = useGermany();
-  const joke = useJokeOfTheDay();
+  const [joke, reloadJoke] = useJokeOfTheDay();
   const [showNotbremseDrawer, setShowNotbremseDrawer] = useState(false);
   const [showJokeDrawer, setJokeShowDrawer] = useState(false);
 
@@ -50,7 +52,6 @@ function App() {
               onClick={() => setJokeShowDrawer(!showJokeDrawer)}
               type="dashed"
               size="small"
-              style={{ color: 'rgb(39,174,96)', borderColor: 'rgb(39,174,96)' }}
               icon={<SmileOutlined />}
             >
               Joke of the day
@@ -167,16 +168,27 @@ function App() {
             visible={showJokeDrawer}
           >
             <div style={{ textAlign: 'justify' }} className="container mt-2">
-              <Button
-                onClick={() => setJokeShowDrawer(false)}
-                type="primary"
-                icon={<HomeOutlined />}
-                size="small"
-              >
-                Übersicht
-              </Button>
+              <Row justify="space-between">
+                <Button
+                  onClick={() => setJokeShowDrawer(false)}
+                  type="primary"
+                  icon={<HomeOutlined />}
+                  size="small"
+                >
+                  Übersicht
+                </Button>
+
+                <Button onClick={reloadJoke} icon={<ReloadOutlined />} size="small">
+                  Aktualisieren
+                </Button>
+              </Row>
               <h2 className="mt-2">Joke of the day</h2>
+              <h4 style={{ color: 'gray' }}>{parseDate(new Date(), false)}</h4>
               {joke}
+
+              <Row justify="center">
+                <img width="200px" src={bat} alt="" />
+              </Row>
             </div>
           </Drawer>
         </Route>

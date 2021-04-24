@@ -57,3 +57,38 @@ export function getCountyName(county) {
 
   return name;
 }
+
+export function parseDate(d, addTime = true) {
+  return addPadding(
+    `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}` +
+      (addTime ? ` ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}` : ''),
+    addTime,
+  );
+}
+
+function addPadding(s, addTime = true) {
+  if (s[2] !== '.') {
+    s = insertAt(s, '0', 0);
+  }
+  if (s[5] !== '.') {
+    s = insertAt(s, '0', 3);
+  }
+
+  if (addTime) {
+    if (s[13] !== ':') {
+      s = insertAt(s, '0', 11);
+    }
+    if (s[16] !== ':') {
+      s = insertAt(s, '0', 14);
+    }
+    if (s.length < 19) {
+      s = insertAt(s, '0', 17);
+    }
+  }
+
+  return s;
+}
+
+function insertAt(s, stringToInsert, index) {
+  return s.substr(0, index) + stringToInsert + s.substr(index);
+}
