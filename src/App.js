@@ -1,62 +1,25 @@
-import { Button, Drawer, Row, Spin } from 'antd';
-import {
-  AlertOutlined,
-  HomeOutlined,
-  LineChartOutlined,
-  LoadingOutlined,
-  ReloadOutlined,
-  SmileOutlined,
-} from '@ant-design/icons';
+import { Button, Row, Spin } from 'antd';
+import { LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
 import GermanyDescription from './GermanyDescription';
 import AlertDate from './AlertDate';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CountyTable from './CountyTable';
 import Chart from './Chart';
-import { useState } from 'react';
-import Text from 'antd/lib/typography/Text';
-import useJokeOfTheDay from './useJokeOfTheDay';
-import { parseDate } from './helpers';
-import bat from './assets/bat.jpg';
+import JokeOfTheDay from './JokeOfTheDay';
+import Notbremse from './Notbremse';
+import Bar from './Bar';
 
 function App() {
   const [counties, reloadCounties] = useCounties();
   const [germany, reloadGermany] = useGermany();
-  const [joke, reloadJoke] = useJokeOfTheDay();
-  const [showNotbremseDrawer, setShowNotbremseDrawer] = useState(false);
-  const [showJokeDrawer, setJokeShowDrawer] = useState(false);
 
   return (
     <div className="container">
       <Router basename="/inzidenz">
+        <Bar />
         <Route exact path="/">
-          <div className="mt-2">
-            <Link to="/history">
-              <Button type="primary" size="small" icon={<LineChartOutlined />}>
-                Historie
-              </Button>
-            </Link>
-            <Button
-              className="ml-1"
-              onClick={() => setShowNotbremseDrawer(!showNotbremseDrawer)}
-              type="dashed"
-              danger
-              size="small"
-              icon={<AlertOutlined />}
-            >
-              Notbremse
-            </Button>
-            <Button
-              className="ml-1"
-              onClick={() => setJokeShowDrawer(!showJokeDrawer)}
-              type="dashed"
-              size="small"
-              icon={<SmileOutlined />}
-            >
-              Joke of the day
-            </Button>
-          </div>
           <Row
             className="mt-1"
             align="bottom"
@@ -103,96 +66,10 @@ function App() {
           ) : (
             <CountyTable counties={counties} />
           )}
-
-          <Drawer
-            style={{ margin: 0, padding: '-10px' }}
-            placement="bottom"
-            height="100%"
-            closable={false}
-            visible={showNotbremseDrawer}
-          >
-            <div style={{ textAlign: 'justify' }} className="container mt-2">
-              <Button
-                onClick={() => setShowNotbremseDrawer(false)}
-                type="primary"
-                icon={<HomeOutlined />}
-                size="small"
-              >
-                Übersicht
-              </Button>
-              <h2 className="mt-2">§ 28b Infektionsschutzgesetz</h2>
-              <h4>
-                Überschreitet in einem Landkreis oder einer kreisfreien Stadt an drei aufeinander
-                folgenden Tagen die 7-Tage-Inzidenz den Schwellenwert von 100, gelten die folgenden
-                Maßnahmen.
-              </h4>
-              <ul>
-                <li>
-                  <Text strong>Ausgangsbeschränkungen: </Text>Ausgangsbeschränkung von 22 bis 5 Uhr
-                  (Spaziergänge und Joggen alleine bleiben bis Mitternacht erlaubt).{' '}
-                </li>
-
-                <li>
-                  <Text strong>Kontaktbeschränkungen: </Text>Im privaten und öffentlichen Raum darf
-                  sich ein Haushalt mit höchstens einer weiteren Person treffen, wobei Kinder bis 14
-                  Jahre ausgenommen sind.
-                </li>
-
-                <li>
-                  <Text strong>Schulen und Kitas: </Text>Ab einer Sieben-Tage-Inzidenz von 165
-                  sollen Schulen schließen und auf Distanzunterricht umstellen, bei dem die Schüler
-                  mittels digitaler Lösungen zu Hause lernen. Kindertagesstätten müssen ab einer
-                  7-Tage-Inzidenz von 165 in den Notbetrieb umschalten.
-                </li>
-
-                <li>
-                  <Text strong>Einkaufen: </Text> Läden dürfen nur für Kunden öffnen, die einen
-                  negativen Corona-Test vorlegen und einen Termin gebucht haben. Viele Geschäfte
-                  müssen außerdem ab einer Inzidenz von 150 dichtmachen und dürfen dann nur noch das
-                  Abholen bestellter Waren anbieten. Ausgenommen sind unter anderem Supermärkte,
-                  Drogerien und Apotheken.
-                </li>
-
-                <li>
-                  <Text strong>Kultur: </Text> Schließen müssen gemäß Notbremse Theater, Opern,
-                  Konzerthäuser, Museen, Ausstellungen und Gedenkstätten.
-                </li>
-              </ul>
-            </div>
-          </Drawer>
-          <Drawer
-            style={{ margin: 0, padding: '-10px' }}
-            placement="bottom"
-            height="100%"
-            closable={false}
-            visible={showJokeDrawer}
-          >
-            <div style={{ textAlign: 'justify' }} className="container mt-2">
-              <Row justify="space-between">
-                <Button
-                  onClick={() => setJokeShowDrawer(false)}
-                  type="primary"
-                  icon={<HomeOutlined />}
-                  size="small"
-                >
-                  Übersicht
-                </Button>
-
-                <Button onClick={reloadJoke} icon={<ReloadOutlined />} size="small">
-                  Aktualisieren
-                </Button>
-              </Row>
-              <h2 className="mt-2">Joke of the day</h2>
-              <h4 style={{ color: 'gray' }}>{parseDate(new Date(), false)}</h4>
-              {joke}
-
-              <Row justify="center">
-                <img width="200px" src={bat} alt="" />
-              </Row>
-            </div>
-          </Drawer>
         </Route>
         <Route path="/history" component={Chart} />
+        <Route path="/joke-of-the-day" component={JokeOfTheDay} />
+        <Route path="/notbremse" component={Notbremse} />
       </Router>
     </div>
   );

@@ -1,9 +1,8 @@
-import { HomeOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button, Row, Select, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Row, Select, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { XAxis, ResponsiveContainer, LineChart, Line, YAxis, ReferenceDot } from 'recharts';
 import { addDecimalPoint } from './helpers';
 
@@ -49,14 +48,6 @@ const Chart = () => {
 
   return (
     <>
-      <div className="mt-2">
-        <Link to="/">
-          <Button type="primary" size="small" icon={<HomeOutlined />}>
-            Übersicht
-          </Button>
-        </Link>
-      </div>
-
       {germanyChartData && (
         <Row className="mt-1" align="middle" justify="space-between">
           <h4 className="m-0">Deutschland</h4>
