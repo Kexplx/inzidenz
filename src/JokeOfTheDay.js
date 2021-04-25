@@ -9,12 +9,12 @@ const JokeOfTheDay = () => {
   return (
     <>
       <Row align="middle" className="mt-2" justify="space-between">
-        <h2>Joke of the day</h2>
+        <h2 style={{ margin: 0 }}>Joke of the day</h2>
         <Button onClick={reloadJoke} icon={<ReloadOutlined />} size="small">
           Aktualisieren
         </Button>
       </Row>
-      <h4>{parseDate(new Date(), false)}</h4>
+      <h3 style={{ color: 'gray', fontWeight: 400 }}>{parseDate(new Date(), false)}</h3>
       {joke}
 
       <Row justify="center">

@@ -12,7 +12,11 @@ html {
 }
 
 .ml-1 {
-  margin-left: 10px;
+  margin-left: 5px;
+}
+
+.mb-2 {
+  margin-bottom: 20px;
 }
 
 .m-0 {

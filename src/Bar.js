@@ -1,22 +1,22 @@
 import { AlertOutlined, HomeOutlined, LineChartOutlined, SmileOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, Row } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 
 const Bar = () => {
   const location = useLocation();
 
   return (
-    <div className="mt-2">
+    <Row justify="space-between" className="mt-2 mb-2">
       <Link to="/">
         <Button
           type={location.pathname === '/' ? 'primary' : 'dashed'}
           size="small"
           icon={<HomeOutlined />}
         >
-          Übersicht
+          Home
         </Button>
       </Link>
-      <Link className="ml-1" to="/history">
+      <Link to="/history">
         <Button
           type={location.pathname === '/history' ? 'primary' : 'dashed'}
           size="small"
@@ -25,16 +25,16 @@ const Bar = () => {
           Historie
         </Button>
       </Link>
-      <Link className="ml-1" to="/joke-of-the-day">
+      <Link to="/joke-of-the-day">
         <Button
           type={location.pathname === '/joke-of-the-day' ? 'primary' : 'dashed'}
           size="small"
           icon={<SmileOutlined />}
         >
-          Joke of the day
+          Jokes
         </Button>
       </Link>
-      <Link className="ml-1" to="/notbremse">
+      <Link to="/notbremse">
         <Button
           type={location.pathname === '/notbremse' ? 'primary' : 'dashed'}
           size="small"
@@ -43,7 +43,7 @@ const Bar = () => {
           Notbremse
         </Button>
       </Link>
-    </div>
+    </Row>
   );
 };
 
