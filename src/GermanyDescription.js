@@ -3,7 +3,14 @@ import Text from 'antd/lib/typography/Text';
 import InizidenzTag from './InzidenzTag';
 
 const GermanyDescription = ({ germany }) => {
-  const { newCases, inzidenz, firstTimeVaccinated, firstTimeVaccinatedPercent } = germany;
+  const {
+    newCases,
+    inzidenz,
+    firstTimeVaccinated,
+    totalVaccinated,
+    percentVaccinated,
+    firstTimeVaccinatedPercent,
+  } = germany;
 
   return (
     <Descriptions column={1} size="small" bordered>
@@ -15,13 +22,18 @@ const GermanyDescription = ({ germany }) => {
           <InizidenzTag inzidenz={inzidenz} />
         </div>
       </Descriptions.Item>
-      <Descriptions.Item label="Impfquote" style={{ paddingLeft: '7px' }}>
+      <Descriptions.Item label="Erstgeimpfte" style={{ paddingLeft: '7px' }}>
         <div style={{ textAlign: 'center' }}>
-          Es haben{' '}
           <Text style={{ color: '#27ae60' }} strong>
             {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
-          </Text>{' '}
-          Personen <Text strong>mind.</Text> eine Impfodsis erhalten
+          </Text>
+        </div>
+      </Descriptions.Item>
+      <Descriptions.Item label="Vollst. Geimpfte" style={{ paddingLeft: '7px' }}>
+        <div style={{ textAlign: 'center' }}>
+          <Text style={{ color: '#27ae60' }} strong>
+            {totalVaccinated} ({percentVaccinated})
+          </Text>
         </div>
       </Descriptions.Item>
     </Descriptions>
