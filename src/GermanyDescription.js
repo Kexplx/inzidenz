@@ -24,14 +24,14 @@ const GermanyDescription = ({ germany }) => {
       </Descriptions.Item>
       <Descriptions.Item label="Erstgeimpfte" style={{ paddingLeft: '7px' }}>
         <div style={{ textAlign: 'center' }}>
-          <Text style={{ color: '#27ae60' }} strong>
+          <Text type="success">
             {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
           </Text>
         </div>
       </Descriptions.Item>
       <Descriptions.Item label="Vollst. Geimpfte" style={{ paddingLeft: '7px' }}>
         <div style={{ textAlign: 'center' }}>
-          <Text style={{ color: '#27ae60' }} strong>
+          <Text type="success">
             {totalVaccinated} ({percentVaccinated})
           </Text>
         </div>
