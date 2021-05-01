@@ -9,7 +9,8 @@ const Bar = () => {
     <Row justify="space-between" className="mt-2 mb-2">
       <Link to="/">
         <Button
-          type={location.pathname === '/' ? 'primary' : 'link'}
+          disabled={location.pathname === '/'}
+          type="link"
           size="small"
           icon={<HomeOutlined />}
         >
@@ -18,7 +19,8 @@ const Bar = () => {
       </Link>
       <Link to="/history">
         <Button
-          type={location.pathname === '/history' ? 'primary' : 'link'}
+          disabled={location.pathname === '/history'}
+          type="link"
           size="small"
           icon={<LineChartOutlined />}
         >
@@ -27,7 +29,8 @@ const Bar = () => {
       </Link>
       <Link to="/joke-of-the-day">
         <Button
-          type={location.pathname === '/joke-of-the-day' ? 'primary' : 'link'}
+          disabled={location.pathname === '/joke-of-the-day'}
+          type="link"
           size="small"
           icon={<SmileOutlined />}
         >
@@ -36,7 +39,8 @@ const Bar = () => {
       </Link>
       <Link to="/notbremse">
         <Button
-          type={location.pathname === '/notbremse' ? 'primary' : 'link'}
+          disabled={location.pathname === '/notbremse'}
+          type="link"
           size="small"
           icon={<AlertOutlined />}
         >
