@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CountyTable from './CountyTable';
 import Chart from './Chart';
 import JokeOfTheDay from './JokeOfTheDay';
-import Notbremse from './Notbremse';
 import Bar from './Bar';
 
 function App() {
@@ -69,7 +68,6 @@ function App() {
         </Route>
         <Route path="/history" component={Chart} />
         <Route path="/joke-of-the-day" component={JokeOfTheDay} />
-        <Route path="/notbremse" component={Notbremse} />
       </Router>
     </div>
   );

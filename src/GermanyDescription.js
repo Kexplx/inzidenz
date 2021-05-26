@@ -24,16 +24,12 @@ const GermanyDescription = ({ germany }) => {
       </Descriptions.Item>
       <Descriptions.Item label="Erstgeimpfte" style={{ paddingLeft: '7px' }}>
         <div style={{ textAlign: 'center' }}>
-          <Text type="success">
-            {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
-          </Text>
+          {firstTimeVaccinated} ({firstTimeVaccinatedPercent})
         </div>
       </Descriptions.Item>
       <Descriptions.Item label="Vollst. Geimpfte" style={{ paddingLeft: '7px' }}>
         <div style={{ textAlign: 'center' }}>
-          <Text type="success">
-            {totalVaccinated} ({percentVaccinated})
-          </Text>
+          {totalVaccinated} ({percentVaccinated})
         </div>
       </Descriptions.Item>
     </Descriptions>

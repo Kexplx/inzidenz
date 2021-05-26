@@ -1,4 +1,4 @@
-import { AlertOutlined, HomeOutlined, LineChartOutlined, SmileOutlined } from '@ant-design/icons';
+import { HomeOutlined, LineChartOutlined, SmileOutlined } from '@ant-design/icons';
 import { Button, Row } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -34,17 +34,7 @@ const Bar = () => {
           size="small"
           icon={<SmileOutlined />}
         >
-          Jokes
-        </Button>
-      </Link>
-      <Link to="/notbremse">
-        <Button
-          disabled={location.pathname === '/notbremse'}
-          type="link"
-          size="small"
-          icon={<AlertOutlined />}
-        >
-          Notbremse
+          Joke of the Day
         </Button>
       </Link>
     </Row>
