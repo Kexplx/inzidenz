@@ -1,5 +1,4 @@
 import { Descriptions } from 'antd';
-import Text from 'antd/lib/typography/Text';
 import InizidenzTag from './InzidenzTag';
 
 const GermanyDescription = ({ germany }) => {
