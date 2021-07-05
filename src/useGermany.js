@@ -9,7 +9,7 @@ const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
 const inzidenzSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5) > strong';
-const lastUpdatedSelector = '#main > div.text > p:nth-child(4)';
+const lastUpdatedSelector = '#main > div.text > p:nth-child(5)';
 const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 
 const vaccinatedTextSelector =
@@ -51,9 +51,8 @@ export function useGermany() {
       .textContent.replace(/(\n|\r)/g, '')
       .replace(/\s\s/g, ' ');
     const [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
-    const [, firstTimeVaccinated, firstTimeVaccinatedPercent] = firstTimesVacciantedRegex.exec(
-      text,
-    );
+    const [, firstTimeVaccinated, firstTimeVaccinatedPercent] =
+      firstTimesVacciantedRegex.exec(text);
     const [, latestVaccinedDay] = latestVaccinedDayRegex.exec(text);
 
     setGermany({
