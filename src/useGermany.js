@@ -51,9 +51,8 @@ export function useGermany() {
       .textContent.replace(/(\n|\r)/g, '')
       .replace(/\s\s/g, ' ');
     const [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
-    const [, firstTimeVaccinated, firstTimeVaccinatedPercent] = firstTimesVacciantedRegex.exec(
-      text,
-    );
+    const [, firstTimeVaccinated, firstTimeVaccinatedPercent] =
+      firstTimesVacciantedRegex.exec(text);
     const [, latestVaccinedDay] = latestVaccinedDayRegex.exec(text);
 
     setGermany({
