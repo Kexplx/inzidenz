@@ -8,8 +8,8 @@ const rkiUrl = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
 const inzidenzSelector =
-  '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5) > strong';
-const lastUpdatedSelector = '#main > div.text > p:nth-child(4)';
+  '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5)';
+const lastUpdatedSelector = '#main > div.text > p:nth-child(5)';
 const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 
 const vaccinatedTextSelector =
