@@ -1,5 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons';
-import { Row, Select, Spin } from 'antd';
+import { Alert, Row, Select, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -34,14 +34,16 @@ const Chart = () => {
 
   return (
     <>
-      <h4>Wo ist die Deutschland-Historie?</h4>
-      <p>
+      <Alert
+        closable
+        message="Wo ist die Deutschland-Historie?"
+        description="
         Das RKI aktualisiert die Corona Kennzahlen für ganz Deutschland seit Juli 2021 nur noch von
         Mo - Fr. Eine Deutschland-Historie mit täglichen Fallzahlen ist daher, ohne erhöhten
         Programmieraufwand meinerseits, aktuell nicht möglich. Sobald die dritte Welle anrollt und
-        das RKI die Fallzahlen wieder täglich meldet, kommt auch die Deutschland-Historie zurück 😉
-      </p>
-
+        das RKI die Fallzahlen wieder täglich meldet, kommt auch die Deutschland-Historie zurück 😉"
+      ></Alert>
+      <br />
       {countiesChartData && (
         <Row align="middle" justify="space-between">
           <h4 className="m-0">
