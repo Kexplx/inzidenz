@@ -4,22 +4,14 @@ import Text from 'antd/lib/typography/Text';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { XAxis, ResponsiveContainer, LineChart, Line, YAxis, ReferenceDot } from 'recharts';
-import { addDecimalPoint } from './helpers';
 
-const germanyHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com/germany-history';
 const countiesHistoryUrl = 'https://valid-alpha-268602.ew.r.appspot.com/counties';
 
 const Chart = () => {
   const [countiesHistory, setCountiesHistory] = useState(null);
   const [countiesChartData, setCountiesChartData] = useState(null);
-  const [germanyChartData, setGermanyChartData] = useState(null);
-  const [showInzidenz, setShowInzidenz] = useState(false);
 
   useEffect(() => {
-    axios(germanyHistoryUrl).then(({ data }) => {
-      setGermanyChartData(mapToChartData(data).slice(-9));
-    });
-
     axios(countiesHistoryUrl).then(({ data }) => {
       setCountiesHistory(data);
       setCountiesChartData(mapToChartData(data['9362']).slice(-9));
@@ -29,12 +21,6 @@ const Chart = () => {
   const handleCountySelect = id => {
     const selectedHistory = countiesHistory[id];
     setCountiesChartData(mapToChartData(selectedHistory).slice(-9));
-  };
-
-  const handleGermanyDataTypeSelect = value => {
-    const showInzidenz = value === 'inzidenz';
-
-    setShowInzidenz(showInzidenz);
   };
 
   const mapToChartData = history => {
@@ -48,62 +34,14 @@ const Chart = () => {
 
   return (
     <>
-      {germanyChartData && (
-        <Row className="mt-1" align="middle" justify="space-between">
-          <h4 className="m-0">Deutschland</h4>
-          <Select size="small" onChange={handleGermanyDataTypeSelect} defaultValue="newInfections">
-            <Select.Option value="newInfections">Neuinfektionen</Select.Option>
-            <Select.Option value="inzidenz">Inzidenz</Select.Option>
-          </Select>
-        </Row>
-      )}
-      {germanyChartData ? (
-        <ResponsiveContainer height={290}>
-          <LineChart
-            margin={{
-              top: 10,
-            }}
-            data={germanyChartData}
-          >
-            <YAxis
-              hide
-              domain={
-                showInzidenz
-                  ? ['dataMin - 50', 'dataMax + 50']
-                  : ['dataMin - 1000', 'dataMax + 2000']
-              }
-            />
+      <h4>Wo ist die Deutschland-Historie?</h4>
+      <p>
+        Das RKI aktualisiert die Corona Kennzahlen für ganz Deutschland seit Juli 2021 nur noch von
+        Mo - Fr. Eine Deutschland-Historie mit täglichen Fallzahlen ist daher, ohne erhöhten
+        Programmieraufwand meinerseits, aktuell nicht möglich. Sobald die dritte Welle anrollt und
+        das RKI die Fallzahlen wieder täglich meldet, kommt auch die Deutschland-Historie zurück 😉
+      </p>
 
-            <XAxis fontSize={11} dataKey="lastUpdated" padding={{ left: 20, right: 20 }} />
-            <Line
-              stroke="#7f8c8d"
-              isAnimationActive={false}
-              strokeWidth={2}
-              dot={{ strokeWidth: 2, r: 4 }}
-              label={{
-                formatter: v => addDecimalPoint(v),
-                fontSize: 11,
-                offset: 10,
-                position: 'top',
-              }}
-              dataKey={showInzidenz ? 'inzidenz' : 'newCases'}
-            />
-            <ReferenceDot
-              stroke="#7f8c8d"
-              fill="transparent"
-              strokeWidth={2}
-              strokeDasharray="3 3"
-              r={27}
-              y={showInzidenz ? germanyChartData[1].inzidenz : germanyChartData[1].newCases}
-              x={germanyChartData[1].lastUpdated}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      ) : (
-        <Row className="mt-4" justify="center">
-          <Spin indicator={<LoadingOutlined />} tip="Lade Historie" />
-        </Row>
-      )}
       {countiesChartData && (
         <Row align="middle" justify="space-between">
           <h4 className="m-0">

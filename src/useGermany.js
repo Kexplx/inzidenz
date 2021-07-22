@@ -7,16 +7,14 @@ const rkiUrl = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url
 
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
-const inzidenzSelector =
-  '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5)';
+const inzidenzSelector = '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5)';
 const lastUpdatedSelector = '#main > div.text > p:nth-child(5)';
 const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 
-const vaccinatedTextSelector =
-  'body > main > section > div.content.svelte-br2v7d.grow > div > div > div > div > div > div:nth-child(2) > p';
+const vaccinatedTextSelector = '.text-summary';
 const vaccinatedRegex = /Damit sind nun (.*) Personen \((.*%) der Gesamt/;
 const firstTimesVacciantedRegex = /Insgesamt haben (.*) Personen \((.*%)\) mindestens eine/;
-const latestVaccinedDayRegex = /(Am .* wurden in Deutschland .* Impfdosen verabreicht.)/;
+const latestVaccinedDayRegex = /(Am .* wurden in Deutschland .* Im)/;
 
 function addPadding(text) {
   const boxes = text.split('.');
@@ -37,8 +35,8 @@ export function useGermany() {
     const { data: casesHtml } = await axios(rkiUrl);
     let root = parse(casesHtml);
 
-    const newCases = root.querySelector(newCasesSelector).textContent;
-    const inzidenz = +root.querySelector(inzidenzSelector).textContent;
+    const newCases = root.querySelector(newCasesSelector).textContent.replace(',', '.');
+    const inzidenz = +root.querySelector(inzidenzSelector).textContent.replace(',', '.');
 
     const lastUpdatedUgly = root.querySelector(lastUpdatedSelector).textContent;
     const lastUpdated = addPadding(lastUpdatedRegex.exec(lastUpdatedUgly)[1]);
