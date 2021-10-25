@@ -8,12 +8,12 @@ const rkiUrl = `https://europe-west3-node02-307615.cloudfunctions.net/func-1?url
 const newCasesSelector =
   '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(3) > strong';
 const inzidenzSelector = '#main > div.text > table > tbody > tr:nth-child(17) > td:nth-child(5)';
-const lastUpdatedSelector = '#main > div.text > p:nth-child(5)';
+const lastUpdatedSelector = '#main > div.text > p:nth-child(4)';
 const lastUpdatedRegex = /Stand: \D*\s?(\d.*) \(onlin/;
 
 const vaccinatedTextSelector = '.text-summary';
 const vaccinatedRegex = /Damit sind nun (.*) Personen \((.*%) der Gesamt/;
-const firstTimesVacciantedRegex = /Insgesamt haben (.*) Personen \((.*%)\) mindestens eine/;
+const firstTimesVacciantedRegex = /Insgesamt haben mindestens (.*) Personen \((.*%.?)\) eine/;
 const latestVaccinedDayRegex = /(Am .* wurden in Deutschland .* Im)/;
 
 function addPadding(text) {
@@ -48,9 +48,12 @@ export function useGermany() {
       .querySelector(vaccinatedTextSelector)
       .textContent.replace(/(\n|\r)/g, '')
       .replace(/\s\s/g, ' ');
-    const [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
-    const [, firstTimeVaccinated, firstTimeVaccinatedPercent] =
-      firstTimesVacciantedRegex.exec(text);
+    let [, totalVaccinated, percentVaccinated] = vaccinatedRegex.exec(text);
+    totalVaccinated = totalVaccinated.replace('mindestens', '').trim();
+    percentVaccinated = percentVaccinated.replace(' ', '');
+    let [, firstTimeVaccinated, firstTimeVaccinatedPercent] = firstTimesVacciantedRegex.exec(text);
+    firstTimeVaccinatedPercent = firstTimeVaccinatedPercent.replace(' ', '');
+
     const [, latestVaccinedDay] = latestVaccinedDayRegex.exec(text);
 
     setGermany({
