@@ -26,18 +26,18 @@ function App() {
         description={
           <>
             <h2>Neue Version verfügbar!</h2>
-            Eine neue Version dieser App ist verfügbar, mit diesen neuen Features:
+            Pünktlich zur vierten Welle haben wir eine neue Version dieser App entwickelt, mit
+            diesen Features:
             <ul>
-              <li>COVID-19 Kennzahlen für Bayern</li>
+              <li>Kennzahlen für Bayern</li>
+              <li>Kennzahlen für Deutschland an 7 Tagen die Woche</li>
               <li>8-Tage Deutschland Historie (sie ist zurück 😎)</li>
-              <li>Kleineres Bundle (ca. ~150 KB weniger zu downloaden) </li>
+              <li>Kleineres Bundle (ca. 150 KB weniger zu downloaden) </li>
             </ul>
-            Außerdem haben wir unser Backend vollständig überarbeitet, wodurch die Ladeprobleme, die
-            in der ersten Version häufig auftraten, behoben wurden.
-            <br></br>
-            <strong>Diese Version wird ab sofort nicht mehr weiterentwickelt oder gewartet.</strong>
-            <br></br>
-            <br></br>
+            <p>
+              Außerdem haben wir unser Backend vollständig überarbeitet, wodurch die Ladeprobleme,
+              die in der ersten Version häufig auftraten, behoben wurden.
+            </p>
             <Button onClick={redirectToV2} type="primary">
               Zur neuen Version
             </Button>
