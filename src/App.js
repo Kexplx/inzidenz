@@ -1,4 +1,4 @@
-import { Button, Row, Spin } from 'antd';
+import { Alert, Button, Row, Spin } from 'antd';
 import { LoadingOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useCounties } from './useCounties';
 import { useGermany } from './useGermany';
@@ -10,12 +10,40 @@ import Chart from './Chart';
 import JokeOfTheDay from './JokeOfTheDay';
 import Bar from './Bar';
 
+function redirectToV2() {
+  window.location.href = 'https://kexplx.github.io/covid';
+}
+
 function App() {
   const [counties, reloadCounties] = useCounties();
   const [germany, reloadGermany] = useGermany();
 
   return (
     <div className="container">
+      <Alert
+        closable
+        type="error"
+        description={
+          <>
+            <h2>Neue Version verfügbar!</h2>
+            Eine neue Version dieser App ist verfügbar, mit diesen neuen Features:
+            <ul>
+              <li>COVID-19 Kennzahlen für Bayern</li>
+              <li>8-Tage Deutschland Historie (sie ist zurück 😎)</li>
+              <li>Kleineres Bundle (ca. ~150 KB weniger zu downloaden) </li>
+            </ul>
+            Außerdem haben wir unser Backend vollständig überarbeitet, wodurch die Ladeprobleme, die
+            in der ersten Version häufig auftraten, behoben wurden.
+            <br></br>
+            <strong>Diese Version wird ab sofort nicht mehr weiterentwickelt oder gewartet.</strong>
+            <br></br>
+            <br></br>
+            <Button onClick={redirectToV2} type="primary">
+              Zur neuen Version
+            </Button>
+          </>
+        }
+      ></Alert>
       <Router basename="/inzidenz">
         <Bar />
         <Route exact path="/">
