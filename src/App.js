@@ -29,9 +29,10 @@ function App() {
             Pünktlich zur vierten Welle haben wir eine neue Version dieser App entwickelt, mit
             diesen Features:
             <ul>
-              <li>Kennzahlen für Bayern</li>
-              <li>Kennzahlen für Deutschland an 7 Tagen die Woche</li>
-              <li>8-Tage Deutschland Historie (sie ist zurück 😎)</li>
+              <li>Hospitalisierungsinzidenz</li>
+              <li>Top 10 Landkreise (7T Inzidenz)</li>
+              <li>Kennzahlen für Bayern und Deutschland an 7 Tagen die Woche</li>
+              <li>8-Tage Deutschland Historie</li>
               <li>Kleineres Bundle (ca. 150 KB weniger zu downloaden) </li>
             </ul>
             <p>
@@ -39,8 +40,10 @@ function App() {
               die in der ersten Version häufig auftraten, behoben wurden.
             </p>
             <Button onClick={redirectToV2} type="primary">
-              Zur neuen Version
-            </Button>
+              Hier klicken
+            </Button>{' '}
+            oder via URL:
+            <strong> https://kexplx.github.io/covid</strong>
           </>
         }
       ></Alert>
